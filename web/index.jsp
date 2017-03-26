@@ -1,17 +1,6 @@
-<%-- 
-    Document   : index
-    Created on : Mar 26, 2017, 12:27:21 PM
-    Author     : boon8
---%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="templates/header.jsp" />
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<h1>Hello World!</h1>
+
+<jsp:include page="templates/footer.jsp" />
