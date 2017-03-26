@@ -1,0 +1,39 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+footer {
+    height: 15vh;
+    background: #2a2730;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    color: white;
+}
+
+#favorite-btn {
+    margin-top: 10px;
+    margin-left: 0;
+}
+
+#comment-box {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#comment-box textarea {
+    width: 100%;
+}
+
+#comment-box img{
+    width: 5vw;
+}
+
+#tag-group {
+    margin-top: 3px;
+    margin-bottom: 10px;
+}
+
+.tag {
+    margin: 3px;
+}
