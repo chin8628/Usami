@@ -9,7 +9,7 @@
                     <div class="panel-body text-center">
                         <p>
                             <a href="#" class="thumbnail">
-                                <img src="${pageContext.request.contextPath}/asset/img/avatar.jpg">
+                                <img src="${pageContext.request.contextPath}/asset/img/avatar.jpg" class="img-responsive">
                             </a>
                         </p>
                         <p>御免なさい＠単行本発売中</p>
