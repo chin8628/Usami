@@ -2,7 +2,7 @@
 <jsp:include page="templates/header.jsp" />
 
 <section id="art">
-    <div class="col-sm-8 col-sm-offset-2 row">
+    <div class="row">
         <div class="col-sm-3">
             <div class="row">
                 <div class="panel panel-default">

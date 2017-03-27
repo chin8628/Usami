@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../templates/header.jsp" />
 
-<section class="container col-sm-10 col-sm-offset-1">
+<section id="setting_profile">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h1 class="page-title">My Profile</h1>

@@ -1,3 +1,4 @@
+    </div>
     <footer class="col-sm-12">
         <div class="container">
             <p>Thank you for Bootstrap that make my work success.</p>

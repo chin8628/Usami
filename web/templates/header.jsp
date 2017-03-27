@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset=UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
 
@@ -38,4 +38,4 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
+    <div class="container col-sm-8 col-sm-offset-2">
