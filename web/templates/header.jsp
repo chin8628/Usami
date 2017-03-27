@@ -22,7 +22,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Usami</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}">Usami</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,7 +32,7 @@
                     <li><a href="#">Market</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Profile</a></li>
+                    <li><a href="${pageContext.request.contextPath}/profile.jsp">Profile</a></li>
                     <li><a href="#">Sign Out</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
