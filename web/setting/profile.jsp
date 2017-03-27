@@ -9,16 +9,27 @@
         <div class="panel-body">
             <div class="col-sm-8 col-sm-offset-2">
                 <form method="post">
-                    <div class="form-group">
-                        <label for="name">Username</label>
-                        <input type="text" class="form-control" id="Username">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <span class="thumbnail">
+                              <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-responsive">
+                            </span>
+                        </div>
+                        <div class="col-sm-9">
+                            <label for="avatar">Avatar Image</label>
+                            <input type="file" class="form-control" id="avatar">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="name">First Name</label>
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname">First Name</label>
                         <input type="text" class="form-control" id="firstname">
                     </div>
                     <div class="form-group">
-                        <label for="name">Last Name</label>
+                        <label for="lastname">Last Name</label>
                         <input type="text" class="form-control" id="lastname">
                     </div>
                     <div class="form-group">
