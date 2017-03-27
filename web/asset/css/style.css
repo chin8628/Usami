@@ -6,6 +6,7 @@ html, body {
 
 footer {
     height: 15vh;
+    min-height: 100px;
     background: #2a2730;
     padding-top: 20px;
     padding-bottom: 15px;
@@ -37,4 +38,13 @@ footer {
 
 .tag {
     margin: 3px;
+}
+
+.image-art {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.image-art img:hover {
+    outline: #AAA solid 1px;
 }
