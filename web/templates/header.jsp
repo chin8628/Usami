@@ -30,7 +30,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="#">Discover</a></li>
-                    <li><a href="#">Market</a></li>
+                    <li><a href="${pageContext.request.contextPath}/market.jsp">Market</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
