@@ -3,6 +3,7 @@
 <html>
 <head>
     <meta charset=UTF-8">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/asset/img/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
 
