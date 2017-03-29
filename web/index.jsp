@@ -9,10 +9,12 @@
             </div>
             <p><span class="label label-default">Standard User</span></p>
             <p><strong>chin8628</strong></p>
-            <small>Follower</small>
-            <h4>21</h4>
-            <small>Following</small>
-            <h4>203</h4>
+            <a href="${pageContext.request.contextPath}/follow.jsp">
+                <small>Follower</small>
+                <h4>21</h4>
+                <small>Following</small>
+                <h4>203</h4>
+            </a>
         </div>
     </div>
 </div>

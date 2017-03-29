@@ -12,8 +12,14 @@
             <h3>chin8628</h3>
             <p>Boonyarith Piriyothinkul</p>
             <p>Email: 58070077@kmitl.ac.th</p>
-            <span><h4>21 </h4> <small> Follower</small></span>
-            <span><h4>202 </h4> <small> Following</small></span>
+            <a href="${pageContext.request.contextPath}/follow.jsp">
+                <h4>21</h4>
+                <small>Follower</small>
+            </a>
+            <a href="${pageContext.request.contextPath}/follow.jsp">
+                <h4>293</h4>
+                <small>Follower</small>
+            </a>
         </div>
     </div>
 </div>

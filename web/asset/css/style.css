@@ -73,11 +73,11 @@ footer {
     max-height: 170px;
 }
 
-#profile #description span{
+#profile #description a{
     margin-right: 10px;
 }
 
-#profile #description span h4{
+#profile #description a h4{
     display: inline-block;
 }
 
@@ -91,4 +91,19 @@ footer {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
+}
+
+/* FOLLOW PAGE */
+.follow {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.media .follow-name {
+    vertical-align: middle;
+}
+
+.media .follow-img {
+    height: 60px;
+    width: 60px;
 }
