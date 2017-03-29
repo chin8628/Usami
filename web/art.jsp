@@ -3,16 +3,14 @@
 
 <div class="row">
     <div class="col-sm-3">
-        <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-body text-center">
-                    <div class="thumbnail">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar.jpg" class="img-responsive">
-                    </div>
-                    <p>御免なさい＠単行本発売中</p>
-                    <p><span class="label label-default">Standard User</span></p>
-                    <p><button class="btn btn-success btn-sm" type="submit">Follow</button></p>
+        <div class="panel panel-default">
+            <div class="panel-body text-center">
+                <div class="thumbnail">
+                    <img src="${pageContext.request.contextPath}/asset/img/avatar.jpg" class="img-responsive">
                 </div>
+                <p>御免なさい＠単行本発売中</p>
+                <p><span class="label label-default">Standard User</span></p>
+                <p><button class="btn btn-success btn-sm" type="submit">Follow</button></p>
             </div>
         </div>
     </div>
