@@ -21,6 +21,15 @@ footer {
     border-bottom:1px solid #eee;
 }
 
+/* HELPER */
+.no-margin-top {
+    margin-top: 0;
+}
+
+.opacity-9{
+    opacity: 0.9;
+}
+
 /* ART PAGE */
 
 #favorite-btn {

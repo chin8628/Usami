@@ -40,7 +40,7 @@
                         </ul>
                     </li>
                     <li><a href="${pageContext.request.contextPath}/profile.jsp">Profile</a></li>
-                    <li><a href="#">Sign Out</a></li>
+                    <li><a href="${pageContext.request.contextPath}/non-auth/auth.jsp">Sign Out</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

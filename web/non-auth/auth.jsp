@@ -1,12 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../templates/header-non-auth.jsp" />
 
-<div class="container col-sm-12">
-    <div class="col-sm-12 page-header">
-        <h1>Welcome to USAMI.</h1>
-        <small>Best of marketplace and community of the world</small>
+<div class="container col-sm-12" style="margin-top: 5vh;">
+    <div class="col-sm-12 opacity-9">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1 class="no-margin-top">Welcome to USAMI.</h1>
+                <small>Best of marketplace and community of the world</small>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-6" id="signup">
+    <div class="col-sm-6 opacity-9" id="signup">
         <div class="panel panel-default">
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
@@ -32,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6" id="signin">
+    <div class="col-sm-6 opacity-9" id="signin">
         <div class="panel panel-default">
             <div class="panel-heading">Sign In</div>
             <div class="panel-body">
