@@ -1,7 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../templates/header.jsp" />
+<jsp:include page="../templates/header-non-auth.jsp" />
 
 <div class="container col-sm-12">
+    <div class="col-sm-12 page-header">
+        <h1>Welcome to USAMI.</h1>
+        <small>Best of marketplace and community of the world</small>
+    </div>
     <div class="col-sm-6" id="signup">
         <div class="panel panel-default">
             <div class="panel-heading">Sign Up</div>
