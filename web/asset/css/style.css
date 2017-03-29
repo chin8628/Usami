@@ -73,6 +73,14 @@ footer {
     max-height: 170px;
 }
 
+#profile #description span{
+    margin-right: 10px;
+}
+
+#profile #description span h4{
+    display: inline-block;
+}
+
 /* MARKET PAGE */
 
 .image-product img:hover{

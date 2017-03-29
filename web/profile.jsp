@@ -8,10 +8,12 @@
                 <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-responsive">
             </span>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-9" id="description">
             <h3>chin8628</h3>
             <p>Boonyarith Piriyothinkul</p>
             <p>Email: 58070077@kmitl.ac.th</p>
+            <span><h4>21 </h4> <small> Follower</small></span>
+            <span><h4>202 </h4> <small> Following</small></span>
         </div>
     </div>
 </div>
