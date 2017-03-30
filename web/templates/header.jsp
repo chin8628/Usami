@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="SITE_URL" value="${pageContext.request.contextPath}" scope="application"/>
+<c:set var="SITE_URL" value="${pageContext.request.contextPath}" scope="request"/>
 
 <!DOCTYPE html>
 <html>
