@@ -3,19 +3,19 @@
 <html>
 <head>
     <meta charset=UTF-8">
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/asset/img/favicon.ico">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/asset/css/style.css">
+    <link rel="shortcut icon" href="${SITE_URL}/asset/img/favicon.ico">
+    <link rel="stylesheet" href="${SITE_URL}/asset/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${SITE_URL}/asset/css/style.css">
 
-    <script src="${pageContext.request.contextPath}/asset/js/jquery-3.2.0.min.js"></script>
-    <script src="${pageContext.request.contextPath}/asset/js/bootstrap.min.js"></script>
+    <script src="${SITE_URL}/asset/js/jquery-3.2.0.min.js"></script>
+    <script src="${SITE_URL}/asset/js/bootstrap.min.js"></script>
 
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 4) + 1 %></c:set>
 
     <style>
         html, body {
-            background-image: url('${pageContext.request.contextPath}/asset/img/background/background-${rand}.jpg');
+            background-image: url('${SITE_URL}/asset/img/background/background-${rand}.jpg');
             background-size: cover;
             background-position: center;
         }

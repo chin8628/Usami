@@ -6,7 +6,7 @@
         <div class="panel panel-default">
             <div class="panel-body text-center">
                 <div class="thumbnail">
-                    <img src="${pageContext.request.contextPath}/asset/img/avatar.jpg" class="img-responsive">
+                    <img src="${SITE_URL}/asset/img/avatar.jpg" class="img-responsive">
                 </div>
                 <p>御免なさい＠単行本発売中</p>
                 <p><span class="label label-default">Standard User</span></p>
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="col-sm-12">
-                    <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                 </div>
 
                 <div class="col-sm-12">
@@ -62,7 +62,7 @@
                         <div class="panel-body">
                             <div class="media">
                                 <div class="media-left">
-                                    <img class="media-object" src="${pageContext.request.contextPath}/asset/img/avatar2.jpg">
+                                    <img class="media-object" src="${SITE_URL}/asset/img/avatar2.jpg">
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">Comment</h4>
@@ -76,7 +76,7 @@
 
                             <div class="media comment-reply">
                                 <div class="media-left">
-                                    <img class="media-object" src="${pageContext.request.contextPath}/asset/img/avatar2.jpg">
+                                    <img class="media-object" src="${SITE_URL}/asset/img/avatar2.jpg">
                                 </div>
                                 <div class="media-body">
                                     <p><a href="#">chin8628</a> <small>12/25/2015 23:08</small></p>
@@ -87,7 +87,7 @@
 
                             <div class="media comment-reply">
                                 <div class="media-left">
-                                    <img class="media-object" src="${pageContext.request.contextPath}/asset/img/avatar.jpg">
+                                    <img class="media-object" src="${SITE_URL}/asset/img/avatar.jpg">
                                 </div>
                                 <div class="media-body">
                                     <p><a href="#">御免なさい＠単行本発売中</a> <small>12/25/2015 20:28</small></p>

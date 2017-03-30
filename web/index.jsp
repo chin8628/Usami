@@ -5,11 +5,11 @@
     <div class="panel panel-default">
         <div class="panel-body text-center">
             <div class="thumbnail">
-                <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-responsive">
+                <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-responsive">
             </div>
             <p><span class="label label-default">Standard User</span></p>
             <p><strong>chin8628</strong></p>
-            <a href="${pageContext.request.contextPath}/follow.jsp">
+            <a href="${SITE_URL}/follow.jsp">
                 <small>Follower</small>
                 <h4>21</h4>
                 <small>Following</small>
@@ -25,8 +25,8 @@
         <div class="panel-body">
             <div class="col-sm-12">
                 <div class="col-sm-3 image-art">
-                    <a  href="${pageContext.request.contextPath}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                         <div class="title">
                             <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
                         </div>
@@ -34,8 +34,8 @@
                 </div>
 
                 <div class="col-sm-3 image-art">
-                    <a  href="${pageContext.request.contextPath}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                         <div class="title">
                             <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
                         </div>
@@ -43,8 +43,8 @@
                 </div>
 
                 <div class="col-sm-3 image-art">
-                    <a  href="${pageContext.request.contextPath}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                         <div class="title">
                             <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
                         </div>
@@ -52,8 +52,8 @@
                 </div>
 
                 <div class="col-sm-3 image-art">
-                    <a  href="${pageContext.request.contextPath}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                         <div class="title">
                             <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
                         </div>
@@ -68,8 +68,8 @@
         <div class="panel-body">
             <div class="col-sm-12">
                 <div class="col-sm-3 image-art">
-                    <a  href="${pageContext.request.contextPath}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                         <div class="title">
                             <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
                         </div>
@@ -84,8 +84,8 @@
         <div class="panel-body">
             <div class="col-sm-12">
                 <div class="col-sm-3 image-art">
-                    <a  href="${pageContext.request.contextPath}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                         <div class="title">
                             <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
                         </div>
@@ -93,8 +93,8 @@
                 </div>
 
                 <div class="col-sm-3 image-art">
-                    <a  href="${pageContext.request.contextPath}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                         <div class="title">
                             <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
                         </div>
@@ -102,8 +102,8 @@
                 </div>
 
                 <div class="col-sm-3 image-art">
-                    <a  href="${pageContext.request.contextPath}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                         <div class="title">
                             <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
                         </div>
@@ -111,8 +111,8 @@
                 </div>
 
                 <div class="col-sm-3 image-art">
-                    <a  href="${pageContext.request.contextPath}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                         <div class="title">
                             <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
                         </div>

@@ -11,7 +11,7 @@
                 <div class="form-group row">
                     <div class="col-sm-3">
                         <span class="thumbnail">
-                          <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-responsive">
+                          <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-responsive">
                         </span>
                     </div>
                     <div class="col-sm-9">

@@ -26,9 +26,9 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <ul class="nav nav-pills">
-                        <a href="${pageContext.request.contextPath}/art.jsp">
+                        <a href="${SITE_URL}/art.jsp">
                             <p>
-                                <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="
+                                <img src="${SITE_URL}/asset/img/art.jpg" class="
                                 img-responsive">
                             </p>
                             <div class="title">
@@ -50,9 +50,9 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <ul class="nav nav-pills">
-                        <a href="${pageContext.request.contextPath}/art.jsp">
+                        <a href="${SITE_URL}/art.jsp">
                             <p>
-                                <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="
+                                <img src="${SITE_URL}/asset/img/art.jpg" class="
                                 img-responsive">
                             </p>
                             <div class="title">
@@ -74,9 +74,9 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <ul class="nav nav-pills">
-                        <a href="${pageContext.request.contextPath}/art.jsp">
+                        <a href="${SITE_URL}/art.jsp">
                             <p>
-                                <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="
+                                <img src="${SITE_URL}/asset/img/art.jpg" class="
                                 img-responsive">
                             </p>
                             <div class="title">
@@ -98,9 +98,9 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <ul class="nav nav-pills">
-                        <a href="${pageContext.request.contextPath}/art.jsp">
+                        <a href="${SITE_URL}/art.jsp">
                             <p>
-                                <img src="${pageContext.request.contextPath}/asset/img/art.jpg" class="img-responsive">
+                                <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
                             </p>
                             <div class="title">
                                 <p>

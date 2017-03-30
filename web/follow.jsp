@@ -6,9 +6,9 @@
     <div class="panel-body">
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
@@ -20,9 +20,9 @@
 
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
@@ -34,9 +34,9 @@
 
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
@@ -48,9 +48,9 @@
 
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
@@ -62,9 +62,9 @@
 
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
@@ -81,9 +81,9 @@
     <div class="panel-body">
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
@@ -95,9 +95,9 @@
 
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
@@ -109,9 +109,9 @@
 
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
@@ -123,9 +123,9 @@
 
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
@@ -137,9 +137,9 @@
 
         <div class="col-sm-4 follow">
             <div class="media">
-                <a href="${pageContext.request.contextPath}/profile.jsp" target="blank">
+                <a href="${SITE_URL}/profile.jsp" target="blank">
                     <div class="media-left">
-                        <img src="${pageContext.request.contextPath}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
+                        <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-circle media-object follow-img">
                     </div>
                     <div class="media-body follow-name">
                         <strong>Lorem</strong>
