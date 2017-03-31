@@ -28,6 +28,46 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel-default panel">
+            <div class="panel-heading">Overview</div>
+            <div class="panel-body">
+                <canvas id="myChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p><strong>Income</strong> <small>Last 30 days</small></p>
+                <h3>$102.85</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p><strong>Visited</strong> <small>Last 30 days</small></p>
+                <h3>39,304 <small>visted</small></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p><strong>Favorited</strong> <small>Last 30 days</small></p>
+                <h3>3,032 <small>times</small></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="panel panel-default">
     <div class="panel-heading"><h2>Arts</h2></div>
     <div class="panel-body" id="profile">
@@ -79,5 +119,36 @@
         </div>
     </div>
 </div>
+
+<script>
+    /* Create chart by Chart.js */
+    var ctx = $("#myChart");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["1/03/2017", "8/03/2017", "16/03/2017", "24/03/2017", "31/03/2017"],
+            datasets: [{
+                label: '# of Purchased (US Dollar)',
+                data: [20, 25, 30, 21, 27],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 
 <jsp:include page="templates/footer.jsp" />
