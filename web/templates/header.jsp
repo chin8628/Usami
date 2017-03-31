@@ -38,17 +38,23 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="${SITE_URL}/market.jsp">Market</a></li>
-                    <li><a href="${SITE_URL}/profile.jsp">MyProfile</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="${SITE_URL}/administrator/index.jsp">Admin</a></li>
+                    <li><a href="${SITE_URL}/cart.jsp">Cart</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setting <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            chin8628
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
+                            <li><a href="${SITE_URL}/profile.jsp">MyProfile</a></li>
                             <li><a href="${SITE_URL}/setting/profile.jsp">Edit profile</a></li>
+                            <li><a href="${SITE_URL}/history.jsp">History</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="${SITE_URL}/non-auth/auth.jsp">Sign Out</a></li>
                         </ul>
                     </li>
-                    <li><a href="${SITE_URL}/non-auth/auth.jsp">Sign Out</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
