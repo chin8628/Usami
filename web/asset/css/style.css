@@ -21,6 +21,11 @@ footer {
     border-bottom:1px solid #eee;
 }
 
+.tab-content-custom {
+    border: 1px solid #ecf0f1;
+    padding: 10px;
+}
+
 /* HELPER */
 .no-margin-top {
     margin-top: 0;

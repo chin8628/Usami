@@ -28,6 +28,35 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p><strong>Income</strong> <small>Last 30 days</small></p>
+                <h3>$102.85</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p><strong>Visited</strong> <small>Last 30 days</small></p>
+                <h3>39,304 <small>visted</small></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p><strong>Favorited</strong> <small>Last 30 days</small></p>
+                <h3>3,032 <small>times</small></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="panel panel-default">
     <div class="panel-heading"><h2>Arts</h2></div>
     <div class="panel-body" id="profile">
