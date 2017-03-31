@@ -118,8 +118,8 @@
                             <tr>
                                 <th class="col-sm-2"></th>
                                 <th class="col-sm-3">Art</th>
-                                <th class="col-sm-3">Creator</th>
-                                <th class="col-sm-4">Comment</th>
+                                <th class="col-sm-2">Creator</th>
+                                <th class="col-sm-5">Comment</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
