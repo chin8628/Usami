@@ -38,6 +38,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="${SITE_URL}/market.jsp">Market</a></li>
+                    <li><a href="${SITE_URL}/upload.jsp">Upload</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="${SITE_URL}/administrator/index.jsp">Admin</a></li>
@@ -49,6 +50,8 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="${SITE_URL}/profile.jsp">MyProfile</a></li>
+                            <li><a href="${SITE_URL}/storage.jsp">MyStorage</a></li>
+                            <li role="separator" class="divider"></li>
                             <li><a href="${SITE_URL}/setting/profile.jsp">Edit profile</a></li>
                             <li><a href="${SITE_URL}/history.jsp">History</a></li>
                             <li role="separator" class="divider"></li>
