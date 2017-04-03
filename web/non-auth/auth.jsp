@@ -14,24 +14,24 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
-                <form method="post">
-                    <div class="form-group">
+                <form action="${pageContext.request.contextPath}/SignUp" method="post">
+                    <div class="form-group" id="userInDiv">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username">
+                        <input type="text" class="form-control" name="username" id="userIn">
                     </div>
                     <div class="form-group">
                         <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email">
+                        <input type="email" class="form-control" name="email">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" name="password">
                     </div>
                     <div class="form-group">
                         <label for="re-password">Re-Password</label>
-                        <input type="password" class="form-control" id="re-password">
+                        <input type="password" class="form-control" name="re-password">
                     </div>
-                    <button type="submit" class="btn btn-default">Sign Up</button>
+                    <button type="submit" class="btn btn-default" id="signUpButton" disabled="disabled">Sign Up</button>
                 </form>
             </div>
         </div>
@@ -56,4 +56,6 @@
     </div>
 </div>
 
+<script src="../usernameAva.js"></script>
+                
 <jsp:include page="../templates/footer.jsp" />
