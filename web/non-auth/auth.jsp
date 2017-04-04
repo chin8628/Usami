@@ -15,23 +15,27 @@
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
                 <form action="${SITE_URL}/SignUp" method="POST">
-                    <div class="form-group" id="userInDiv">
-                        <label for="username">Username</label>
+                    <div class="form-group has-feedback" id="userInDiv">
+                        <label class="control-label" for="username">Username</label>
                         <input type="text" class="form-control" name="username" id="userIn">
+                        <span class="glyphicon glyphicon-user form-control-feedback" id="usSpan"></span>
                     </div>
-                    <div class="form-group" id="emailInDiv">
-                        <label for="email">Email address</label>
+                    <div class="form-group has-feedback" id="emailInDiv">
+                        <label class="control-label" for="email">Email address</label>
                         <input type="email" class="form-control" name="email" id="emailIn">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback" id="emSpan"></span>
                     </div>
-                    <div class="form-group" id="passInDiv">
-                        <label for="password">Password</label>
+                    <div class="form-group has-feedback" id="passInDiv">
+                        <label class="control-label" for="password">Password</label>
                         <input type="password" class="form-control" name="password" id="passIn">
+                        <span class="glyphicon glyphicon-eye-close form-control-feedback" id="psSpan"></span>
                     </div>
-                    <div class="form-group" id="repassInDiv">
-                        <label for="re-password">Re-Password</label>
+                    <div class="form-group has-feedback" id="repassInDiv">
+                        <label class="control-label" for="re-password">Re-Password</label>
                         <input type="password" class="form-control" name="re-password" id="repassIn">
+                        <span class="glyphicon glyphicon-eye-close form-control-feedback" id="rpSpan"></span>
                     </div>
-                    <button type="submit" class="btn btn-default" id="signUpButton" disabled="disabled">Sign Up</button>
+                    <button type="submit" class="btn btn-default" id="signUpButton">Sign Up</button>
                 </form>
             </div>
         </div>

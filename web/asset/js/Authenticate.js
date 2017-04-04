@@ -21,9 +21,10 @@ document.getElementById("userIn").addEventListener("input", function(){
     
     var userIn = document.getElementById("userIn");
     var userInDiv = document.getElementById("userInDiv");
+    var usSpan = document.getElementById("usSpan");
     var username = userIn.value;
     
-    if(username.length >= 8) {
+    if(username.length >= 5) {
         
         var http = new XMLHttpRequest();
         var url = "../CheckUsername";
@@ -38,12 +39,18 @@ document.getElementById("userIn").addEventListener("input", function(){
                 if(result === "error") {
                     userInDiv.classList.remove("has-success");
                     userInDiv.classList.add("has-error");
+                    usSpan.classList.remove("glyphicon-user");
+                    usSpan.classList.remove("glyphicon-ok");
+                    usSpan.classList.add("glyphicon-remove");
                     usernameCorrect = false;
                     check();
                     
                 } else {
                     userInDiv.classList.remove("has-error");
                     userInDiv.classList.add("has-success");
+                    usSpan.classList.remove("glyphicon-user");
+                    usSpan.classList.remove("glyphicon-remove");
+                    usSpan.classList.add("glyphicon-ok");
                     usernameCorrect = true;
                     check();
                 }
@@ -56,6 +63,9 @@ document.getElementById("userIn").addEventListener("input", function(){
     } else {
             userInDiv.classList.remove("has-error");
             userInDiv.classList.remove("has-success");
+            usSpan.classList.add("glyphicon-user");
+            usSpan.classList.remove("glyphicon-ok");
+            usSpan.classList.remove("glyphicon-remove");
             usernameCorrect = false;
             check();
     }
@@ -66,6 +76,7 @@ document.getElementById("emailIn").addEventListener("input", function(){
     
     var emailIn = document.getElementById("emailIn");
     var userInDiv = document.getElementById("emailInDiv");
+    var emSpan = document.getElementById("emSpan");
     var email = emailIn.value;
     
     if(email.length >= 10) {
@@ -83,12 +94,18 @@ document.getElementById("emailIn").addEventListener("input", function(){
                 if(result === "error") {
                     userInDiv.classList.remove("has-success");
                     userInDiv.classList.add("has-error");
+                    emSpan.classList.remove("glyphicon-envelope");
+                    emSpan.classList.remove("glyphicon-ok");
+                    emSpan.classList.add("glyphicon-remove");
                     emailCorrect = false;
                     check();
                     
                 } else {
                     userInDiv.classList.remove("has-error");
                     userInDiv.classList.add("has-success");
+                    emSpan.classList.remove("glyphicon-envelope");
+                    emSpan.classList.remove("glyphicon-remove");
+                    emSpan.classList.add("glyphicon-ok");
                     emailCorrect = true;
                     check();
                 }
@@ -100,6 +117,9 @@ document.getElementById("emailIn").addEventListener("input", function(){
     } else {
             userInDiv.classList.remove("has-error");
             userInDiv.classList.remove("has-success");
+            emSpan.classList.remove("glyphicon-remove");
+            emSpan.classList.remove("glyphicon-ok");
+            emSpan.classList.add("glyphicon-envelope");
             emailCorrect = false;
             check();
     }
@@ -108,21 +128,35 @@ document.getElementById("emailIn").addEventListener("input", function(){
 // Password
 document.getElementById("passIn").addEventListener("input", function(){ 
     
+    var psSpan = document.getElementById("psSpan");
+    var rpSpan = document.getElementById("rpSpan");
     password = passIn.value;
     repassword = repassIn.value;
     
-    if (password.length >= 10) {
+    if (password.length >= 8) {
         if (password === repassword) {
             passInDiv.classList.remove("has-error");
             passInDiv.classList.add("has-success");
             repassInDiv.classList.remove("has-error");
             repassInDiv.classList.add("has-success");
+            psSpan.classList.remove("glyphicon-eye-close");
+            psSpan.classList.remove("glyphicon-remove");
+            psSpan.classList.add("glyphicon-ok");
+            rpSpan.classList.remove("glyphicon-eye-close");
+            rpSpan.classList.remove("glyphicon-remove");
+            rpSpan.classList.add("glyphicon-ok");
             
         } else {
             passInDiv.classList.remove("has-success");
             passInDiv.classList.add("has-error");
             repassInDiv.classList.remove("has-success");
             repassInDiv.classList.add("has-error");
+            psSpan.classList.remove("glyphicon-eye-close");
+            psSpan.classList.remove("glyphicon-ok");
+            psSpan.classList.add("glyphicon-remove");
+            rpSpan.classList.remove("glyphicon-eye-close");
+            rpSpan.classList.remove("glyphicon-ok");
+            rpSpan.classList.add("glyphicon-remove");
         }
         
     } else {
@@ -130,26 +164,47 @@ document.getElementById("passIn").addEventListener("input", function(){
             passInDiv.classList.remove("has-success");
             repassInDiv.classList.remove("has-error");
             repassInDiv.classList.remove("has-success");
+            psSpan.classList.remove("glyphicon-ok");
+            psSpan.classList.remove("glyphicon-remove");
+            psSpan.classList.add("glyphicon-eye-close");
+            rpSpan.classList.remove("glyphicon-ok");
+            rpSpan.classList.remove("glyphicon-remove");
+            rpSpan.classList.add("glyphicon-eye-close");
         }
 });
 
 // Re Password
 document.getElementById("repassIn").addEventListener("input", function(){ 
     
+    var psSpan = document.getElementById("psSpan");
+    var rpSpan = document.getElementById("rpSpan");
+    
     password = passIn.value;
     repassword = repassIn.value;
 
-    if (repassword.length >= 10) {
+    if (repassword.length >= 8) {
         if (password === repassword) {
             passInDiv.classList.remove("has-error");
             passInDiv.classList.add("has-success");
             repassInDiv.classList.remove("has-error");
             repassInDiv.classList.add("has-success");
+            psSpan.classList.remove("glyphicon-eye-close");
+            psSpan.classList.remove("glyphicon-remove");
+            psSpan.classList.add("glyphicon-ok");
+            rpSpan.classList.remove("glyphicon-eye-close");
+            rpSpan.classList.remove("glyphicon-remove");
+            rpSpan.classList.add("glyphicon-ok");
         } else {
             passInDiv.classList.remove("has-success");
             passInDiv.classList.add("has-error");
             repassInDiv.classList.remove("has-success");
             repassInDiv.classList.add("has-error");
+            psSpan.classList.remove("glyphicon-eye-close");
+            psSpan.classList.remove("glyphicon-ok");
+            psSpan.classList.add("glyphicon-remove");
+            rpSpan.classList.remove("glyphicon-eye-close");
+            rpSpan.classList.remove("glyphicon-ok");
+            rpSpan.classList.add("glyphicon-remove");
         }
         
     } else {
@@ -157,6 +212,12 @@ document.getElementById("repassIn").addEventListener("input", function(){
             passInDiv.classList.remove("has-success");
             repassInDiv.classList.remove("has-error");
             repassInDiv.classList.remove("has-success");
+            psSpan.classList.remove("glyphicon-ok");
+            psSpan.classList.remove("glyphicon-remove");
+            psSpan.classList.add("glyphicon-eye-close");
+            rpSpan.classList.remove("glyphicon-ok");
+            rpSpan.classList.remove("glyphicon-remove");
+            rpSpan.classList.add("glyphicon-eye-close");
     }
     check();
     
