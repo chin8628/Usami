@@ -30,8 +30,6 @@ document.getElementById("userIn").addEventListener("input", function(){
         http.open("POST", url, true);
 
         http.setRequestHeader("Content-type", "application/json; charset=utf-8");
-        http.setRequestHeader("Content-length", 0);
-        http.setRequestHeader("Connection", "close");
         http.setRequestHeader("username", username);
 
         http.onreadystatechange = function() {
@@ -77,10 +75,7 @@ document.getElementById("emailIn").addEventListener("input", function(){
         http.open("POST", url, true);
 
         http.setRequestHeader("Content-type", "application/json; charset=utf-8");
-        http.setRequestHeader("Content-length", 0);
-        http.setRequestHeader("Connection", "close");
         http.setRequestHeader("email", email);
-        http.setRequestHeader("selected", "email");
 
         http.onreadystatechange = function() {
             if(http.readyState == 4 && http.status == 200) {

@@ -56,8 +56,8 @@ public class SignUp extends HttpServlet {
 
                 pstmt.executeUpdate();
                 
-                RequestDispatcher obj = request.getRequestDispatcher("non-auth/auth.jsp");
-                obj.forward(request, response);
+//                RequestDispatcher obj = request.getRequestDispatcher("non-auth/auth.jsp");
+                response.sendRedirect("non-auth/auth.jsp");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
