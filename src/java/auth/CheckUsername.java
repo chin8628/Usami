@@ -6,7 +6,6 @@
 package auth;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,12 +39,10 @@ public class CheckUsername extends HttpServlet {
             throws ServletException, IOException, SQLException {
             response.setContentType("text/html;charset=UTF-8");
        
-            String username = request.getHeader("username");
-            
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
-            
             Statement stmt = conn.createStatement();
+            String username = request.getHeader("username");
             ResultSet rs =  stmt.executeQuery("SELECT user_id FROM usami.User WHERE user_id = '"+username + "'");
             
             response.setContentType("application/json");
@@ -57,7 +54,6 @@ public class CheckUsername extends HttpServlet {
                 response.getWriter().write("passed");
             }
          
-            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

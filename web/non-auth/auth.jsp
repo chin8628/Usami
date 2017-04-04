@@ -14,22 +14,22 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
-                <form action="${pageContext.request.contextPath}/SignUp" method="post">
+                <form action="${SITE_URL}/SignUp" method="POST">
                     <div class="form-group" id="userInDiv">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" name="username" id="userIn">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="emailInDiv">
                         <label for="email">Email address</label>
-                        <input type="email" class="form-control" name="email">
+                        <input type="email" class="form-control" name="email" id="emailIn">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="passInDiv">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password" id="passIn">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="repassInDiv">
                         <label for="re-password">Re-Password</label>
-                        <input type="password" class="form-control" name="re-password">
+                        <input type="password" class="form-control" name="re-password" id="repassIn">
                     </div>
                     <button type="submit" class="btn btn-default" id="signUpButton" disabled="disabled">Sign Up</button>
                 </form>
@@ -56,6 +56,6 @@
     </div>
 </div>
 
-<script src="../usernameAva.js"></script>
+<script src="${SITE_URL}/asset/js/Authenticate.js"></script>
                 
 <jsp:include page="../templates/footer.jsp" />
