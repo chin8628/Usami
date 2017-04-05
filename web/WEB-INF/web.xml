@@ -11,7 +11,7 @@
         </session-timeout>
     </session-config>
     <resource-ref>
-        <description>jdbc:mysql://localhost:3306/usami?zeroDateTimeBehavior=convertToNull</description>
+        <description>Usami Database</description>
         <res-ref-name>usami</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
