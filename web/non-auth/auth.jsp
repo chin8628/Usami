@@ -40,14 +40,14 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign In</div>
             <div class="panel-body">
-                <form>
+                <form action="${SITE_URL}/Sign_inServlet" method="POST" >
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username">
+                        <input type="text" class="form-control" name="username">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" name="password">
                     </div>
                     <button type="submit" class="btn btn-default">Sign In</button>
                 </form>

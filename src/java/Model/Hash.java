@@ -13,11 +13,8 @@ import java.security.NoSuchAlgorithmException;
  * @author Chiib_000
  */
 public class Hash {
-    // We need a bytesToHex method first. So, from -
-// http://stackoverflow.com/a/9855338/2970947
 
-    final protected static char[] hexArray = "0123456789ABCDEF"
-            .toCharArray();
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
@@ -31,7 +28,7 @@ public class Hash {
     }
 
 // Change this to something else.
-    private static String SALT = "123456";
+    private static String SALT = "usami"; //<<--- Set SALT here
 
 // A password hashing method.
     public static String hashPassword(String in) {
@@ -48,5 +45,10 @@ public class Hash {
         }
         return "";
     }
-
+    // test here
+    /*public static void main(String[] args) {
+    
+        System.out.println(hashPassword("pard")); // <---- set string here
+  
+    }*/
 }
