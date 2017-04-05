@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package auth;
 
-import static Model.Hash.hashPassword;
+import static auth.Hash.hashPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
