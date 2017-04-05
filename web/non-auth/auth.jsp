@@ -14,24 +14,28 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
-                <form method="post">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username">
+                <form action="${SITE_URL}/SignUp" method="POST">
+                    <div class="form-group has-feedback" id="userInDiv">
+                        <label class="control-label" for="username">Username</label>
+                        <input type="text" class="form-control" name="username" id="userIn">
+                        <span class="glyphicon glyphicon-user form-control-feedback" id="usSpan"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email">
+                    <div class="form-group has-feedback" id="emailInDiv">
+                        <label class="control-label" for="email">Email address</label>
+                        <input type="email" class="form-control" name="email" id="emailIn">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback" id="emSpan"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password">
+                    <div class="form-group has-feedback" id="passInDiv">
+                        <label class="control-label" for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="passIn">
+                        <span class="glyphicon glyphicon-eye-close form-control-feedback" id="psSpan"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="re-password">Re-Password</label>
-                        <input type="password" class="form-control" id="re-password">
+                    <div class="form-group has-feedback" id="repassInDiv">
+                        <label class="control-label" for="re-password">Re-Password</label>
+                        <input type="password" class="form-control" name="re-password" id="repassIn">
+                        <span class="glyphicon glyphicon-eye-close form-control-feedback" id="rpSpan"></span>
                     </div>
-                    <button type="submit" class="btn btn-default">Sign Up</button>
+                    <button type="submit" class="btn btn-default" id="signUpButton">Sign Up</button>
                 </form>
             </div>
         </div>
@@ -56,4 +60,6 @@
     </div>
 </div>
 
+<script src="${SITE_URL}/asset/js/Authenticate.js"></script>
+                
 <jsp:include page="../templates/footer.jsp" />

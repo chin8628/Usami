@@ -23,6 +23,9 @@
             background-size: cover;
             background-position: center;
         }
+        .error {
+            blackground-color: red;
+        }
     </style>
 
     <title>Usami | Marketplace of Creative</title>
