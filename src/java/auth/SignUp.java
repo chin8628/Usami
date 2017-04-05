@@ -5,7 +5,7 @@
  */
 package auth;
 
-import static auth.Hash.hashPassword;
+import static model.Hash.hashPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -36,11 +36,14 @@ public class SignUp extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String[] fullname = request.getParameter("fullname").split("\\s+");
+            String firstname = fullname[0];
+            String lastname = fullname[1];
             String username = request.getParameter("username");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String repassword = request.getParameter("re-password");
-        
+            
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
         
@@ -53,9 +56,14 @@ public class SignUp extends HttpServlet {
                 pstmt.setInt(4, 0);
                 pstmt.setTimestamp(5, Timestamp.valueOf("2013-09-04 13:30:00"));
                 pstmt.setString(6, "STD");
-
                 pstmt.executeUpdate();
                 
+                pstmt = conn.prepareStatement("INSERT INTO usami.Profile(user_id, first_name, last_name) VALUES(?,?,?)");
+                pstmt.setString(1, username);
+                pstmt.setString(2, firstname);
+                pstmt.setString(3, lastname);
+                pstmt.executeUpdate();
+
 //                RequestDispatcher obj = request.getRequestDispatcher("non-auth/auth.jsp");
                 response.sendRedirect("non-auth/auth.jsp");
                 } catch (SQLException ex) {

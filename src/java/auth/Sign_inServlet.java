@@ -5,7 +5,7 @@
  */
 package auth;
 
-import static auth.Hash.hashPassword;
+import static model.Hash.hashPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;

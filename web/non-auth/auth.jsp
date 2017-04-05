@@ -15,14 +15,19 @@
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
                 <form action="${SITE_URL}/SignUp" method="POST">
+                    <div class="form-group has-feedback" id="fNameInDiv">
+                        <label class="control-label" for="fullname">Full Name</label>
+                        <input type="text" class="form-control" name="fullname" id="fNameIn" placeholder="John Doe">
+                        <span class="glyphicon glyphicon-user form-control-feedback" id="fnSpan"></span>
+                    </div>
                     <div class="form-group has-feedback" id="userInDiv">
                         <label class="control-label" for="username">Username</label>
-                        <input type="text" class="form-control" name="username" id="userIn">
-                        <span class="glyphicon glyphicon-user form-control-feedback" id="usSpan"></span>
+                        <input type="text" class="form-control" name="username" id="userIn" placeholder="Johnny007">
+                        <span class="glyphicon glyphicon-globe form-control-feedback" id="usSpan"></span>
                     </div>
                     <div class="form-group has-feedback" id="emailInDiv">
                         <label class="control-label" for="email">Email address</label>
-                        <input type="email" class="form-control" name="email" id="emailIn">
+                        <input type="email" class="form-control" name="email" id="emailIn" placeholder="Johnny_lnwza_007@gmail.com">
                         <span class="glyphicon glyphicon-envelope form-control-feedback" id="emSpan"></span>
                     </div>
                     <div class="form-group has-feedback" id="passInDiv">
