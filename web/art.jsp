@@ -57,6 +57,7 @@
                     </button>
                 </div>
 
+
                 <div class="col-sm-12">
                     <div class="panel panel-default" id="comment-box">
                         <div class="panel-body">
@@ -65,8 +66,9 @@
                                     <img class="media-object" src="${SITE_URL}/asset/img/avatar2.jpg">
                                 </div>
                                 <div class="media-body">
+                                    <!--Comment Box-->
                                     <h4 class="media-heading">Comment</h4>
-                                    <form method="POST">
+                                    <form action="${SITE_URL}/Comment" method="POST">
                                         <textarea name="comment"></textarea>
                                         <button type="submit" class="btn btn-success btn-sm">Send</button>
                                     </form>
@@ -74,6 +76,7 @@
                                 <hr>
                             </div>
 
+                            <!--All Comment-->
                             <div class="media comment-reply">
                                 <div class="media-left">
                                     <img class="media-object" src="${SITE_URL}/asset/img/avatar2.jpg">
