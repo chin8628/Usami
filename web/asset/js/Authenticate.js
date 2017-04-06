@@ -64,7 +64,7 @@ document.getElementById("userIn").addEventListener("input", function(){
     if(username.length >= 5) {
         
         var http = new XMLHttpRequest();
-        var url = "../CheckUsername";
+        var url = "CheckUsername";
         http.open("POST", url, true);
 
         http.setRequestHeader("Content-type", "application/json; charset=utf-8");
@@ -119,7 +119,7 @@ document.getElementById("emailIn").addEventListener("input", function(){
     if(email.length >= 10) {
         
         var http = new XMLHttpRequest();
-        var url = "../CheckEmail";
+        var url = "CheckEmail";
         http.open("POST", url, true);
 
         http.setRequestHeader("Content-type", "application/json; charset=utf-8");

@@ -38,7 +38,10 @@ public class SignUp extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String[] fullname = request.getParameter("fullname").split("\\s+");
             String firstname = fullname[0];
-            String lastname = fullname[1];
+            String lastname = "";
+            if (fullname.length == 2) {
+                lastname = fullname[1];
+            }
             String username = request.getParameter("username");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
