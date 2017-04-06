@@ -9,15 +9,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +22,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.CommentModel;
+import model.Profiles;
 
 /**
  *
@@ -48,24 +47,46 @@ public class Comment extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String text = request.getParameter("comment");
-//            DateFormat df = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-//            Date dateobj = new Date();
             Calendar calendar = Calendar.getInstance();
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
             HttpSession session = request.getSession();
+            Profiles user = (Profiles) session.getAttribute("user");
             
             try {
                 PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.Comment VALUES(?,?,?,?)");
-                pstmt.setString(1, (String) session.getAttribute("username"));
-                pstmt.setString(2, "1111");
+                pstmt.setString(1, (String) user.getUsername());
+                pstmt.setString(2, "12345");
                 pstmt.setString(3, text);
                 pstmt.setTimestamp(4, new Timestamp(calendar.getTime().getTime()));
                 pstmt.executeUpdate();
                 
-                response.sendRedirect("art.jsp");
+                ArrayList<CommentModel> allComm = new ArrayList<>();
+                CommentModel comm;
+                
+                pstmt = conn.prepareStatement("SELECT p.user_id, i.image_id, p.first_name, p.last_name, c.comm_date, c.text "
+                + "FROM usami.Profile p JOIN usami.Comment c USING (user_id) JOIN usami.Image i USING (image_id) "
+                + "WHERE i.image_id ='"+"12345"+"' ORDER BY c.comm_date DESC;");
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()){
+                    comm = new CommentModel();
+                    comm.setUsername(rs.getString("user_id"));
+                    comm.setImage_id(rs.getString("image_id"));
+                    comm.setFirst_name(rs.getString("first_name"));
+                    comm.setLast_name(rs.getString("last_name"));
+                    comm.setComm_date(rs.getString("comm_date"));
+                    comm.setText(rs.getString("text"));
+                    allComm.add(comm);
+                }
+                
+//                CommentModel comm = new CommentModel(conn, "12345"); // send db and image_id
+                
+                request.setAttribute("allComm", allComm);
+                RequestDispatcher obj = request.getRequestDispatcher("art.jsp");
+                obj.forward(request, response);
+//                response.sendRedirect("art.jsp");
                 
                 
             } catch (SQLException ex) {
