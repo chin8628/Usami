@@ -8,7 +8,7 @@
                 <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-responsive">
             </div>
             <p><span class="label label-default">Standard User</span></p>
-            <p><strong>chin8628</strong></p>
+            <p><strong>${sessionScope.user.first_name} ${sessionScope.user.last_name}</strong></p>
             <a href="${SITE_URL}/follow.jsp">
                 <small>Follower</small>
                 <h4>21</h4>

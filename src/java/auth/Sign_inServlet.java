@@ -5,7 +5,7 @@
  */
 package auth;
 
-import static auth.Hash.hashPassword;
+import static model.Hash.hashPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Profiles;
 
 /**
  *
@@ -53,19 +54,24 @@ public class Sign_inServlet extends HttpServlet {
 
             ResultSet rs = pstm.executeQuery();
             
+            HttpSession session = request.getSession();
+            
             if(!rs.next()){
                 //add warning text when incorrect ************************
                 /*
                 
                 */
-                response.sendRedirect("non-auth/auth.jsp");
+                response.sendRedirect("/Usami");
             }else{
 
                 //give a token*******************
                 /*
                 
                 */
-                response.sendRedirect("/Usami");
+                
+                Profiles profile = new Profiles(conn, request.getParameter("username"));
+                session.setAttribute("user", profile);
+                response.sendRedirect("index.jsp");
             }
         
     }

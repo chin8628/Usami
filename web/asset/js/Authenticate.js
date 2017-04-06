@@ -5,6 +5,7 @@
  */
 var usernameCorrect = false;
 var emailCorrect = false;
+var fullNamePass = false;
 var password = "1";
 var repassword = "2";
 
@@ -15,6 +16,42 @@ var passInDiv = document.getElementById("passInDiv");
     
 var repassIn = document.getElementById("repassIn");
 var repassInDiv = document.getElementById("repassInDiv");
+
+// Full Name
+document.getElementById("fNameIn").addEventListener("input", function(){ 
+    
+    var fNameIn = document.getElementById("fNameIn");
+    var fNameInDiv = document.getElementById("fNameInDiv");
+    var fnSpan = document.getElementById("fnSpan");
+    var fullname = fNameIn.value;
+    
+    if (fullname.length <= 2) {
+        fNameInDiv.classList.remove("has-error");
+        fNameInDiv.classList.remove("has-success");
+        fnSpan.classList.remove("glyphicon-ok");
+        fnSpan.classList.remove("glyphicon-remove");
+        fnSpan.classList.add("glyphicon-user");
+        fullNamePass = false;
+        check();
+        
+    } else if(fullname.length >= 3 && fullname.length <= 50) {
+        fNameInDiv.classList.remove("has-error");
+        fNameInDiv.classList.add("has-success");
+        fnSpan.classList.remove("glyphicon-user");
+        fnSpan.classList.remove("glyphicon-remove");
+        fnSpan.classList.add("glyphicon-ok");
+        fullNamePass = true;
+        check();
+    } else {
+        fNameInDiv.classList.remove("has-success");
+        fNameInDiv.classList.add("has-error");
+        fnSpan.classList.remove("glyphicon-user");
+        fnSpan.classList.remove("glyphicon-ok");
+        fnSpan.classList.add("glyphicon-remove");
+        fullNamePass = false;
+        check();
+    }
+});
 
 // Username
 document.getElementById("userIn").addEventListener("input", function(){ 
@@ -27,7 +64,7 @@ document.getElementById("userIn").addEventListener("input", function(){
     if(username.length >= 5) {
         
         var http = new XMLHttpRequest();
-        var url = "../CheckUsername";
+        var url = "CheckUsername";
         http.open("POST", url, true);
 
         http.setRequestHeader("Content-type", "application/json; charset=utf-8");
@@ -39,7 +76,7 @@ document.getElementById("userIn").addEventListener("input", function(){
                 if(result === "error") {
                     userInDiv.classList.remove("has-success");
                     userInDiv.classList.add("has-error");
-                    usSpan.classList.remove("glyphicon-user");
+                    usSpan.classList.remove("glyphicon-globe");
                     usSpan.classList.remove("glyphicon-ok");
                     usSpan.classList.add("glyphicon-remove");
                     usernameCorrect = false;
@@ -48,7 +85,7 @@ document.getElementById("userIn").addEventListener("input", function(){
                 } else {
                     userInDiv.classList.remove("has-error");
                     userInDiv.classList.add("has-success");
-                    usSpan.classList.remove("glyphicon-user");
+                    usSpan.classList.remove("glyphicon-globe");
                     usSpan.classList.remove("glyphicon-remove");
                     usSpan.classList.add("glyphicon-ok");
                     usernameCorrect = true;
@@ -63,7 +100,7 @@ document.getElementById("userIn").addEventListener("input", function(){
     } else {
             userInDiv.classList.remove("has-error");
             userInDiv.classList.remove("has-success");
-            usSpan.classList.add("glyphicon-user");
+            usSpan.classList.add("glyphicon-globe");
             usSpan.classList.remove("glyphicon-ok");
             usSpan.classList.remove("glyphicon-remove");
             usernameCorrect = false;
@@ -82,7 +119,7 @@ document.getElementById("emailIn").addEventListener("input", function(){
     if(email.length >= 10) {
         
         var http = new XMLHttpRequest();
-        var url = "../CheckEmail";
+        var url = "CheckEmail";
         http.open("POST", url, true);
 
         http.setRequestHeader("Content-type", "application/json; charset=utf-8");
@@ -224,7 +261,7 @@ document.getElementById("repassIn").addEventListener("input", function(){
 });
 
 function check() {
-    if (usernameCorrect && emailCorrect && password === repassword) {
+    if (fullNamePass && usernameCorrect && emailCorrect && password === repassword) {
         signupButton.removeAttribute("disabled");
     } else {
         signupButton.setAttribute("disabled", "disabled");
