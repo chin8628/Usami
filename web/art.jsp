@@ -1,5 +1,8 @@
+<%@page import="java.util.*"%>
+<%@page import="model.CommentModel"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="row">
     <div class="col-sm-3">
@@ -77,18 +80,28 @@
                             </div>
 
                             <!--All Comment-->
-                            <div class="media comment-reply">
-                                <div class="media-left">
-                                    <img class="media-object" src="${SITE_URL}/asset/img/avatar2.jpg">
-                                </div>
-                                <div class="media-body">
-                                    <p><a href="#">chin8628</a> <small>12/25/2015 23:08</small></p>
-                                    <p>Your art is very cute!.</p>
-                                </div>
-                                <hr>
-                            </div>
+                            
+                            <% if (request.getAttribute("allComm") != null) { %>
+                                <% ArrayList<CommentModel> allComm = (ArrayList<CommentModel>) request.getAttribute("allComm"); 
+                                for (model.CommentModel comm: allComm) { %>
+                                <% System.out.println("-------------------"); %>
+                                <% System.out.println(comm.first_name); %>
+                                <% System.out.println(comm.last_name); %>
+                                        <div class="media comment-reply">
+                                            <div class="media-left">
+                                                <img class="media-object" src="${SITE_URL}/asset/img/avatar2.jpg">
+                                            </div>
+                                            <div class="media-body">
+                                                <p><a href="#"><%= comm.first_name %> <%= comm.last_name %></a> <small><%= comm.comm_date %></small></p>
+                                                <p><%= comm.text %></p>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                <% } %>
+                            <% } %>
+                            <% System.out.println("-------------------"); %>
 
-                            <div class="media comment-reply">
+<!--                            <div class="media comment-reply">
                                 <div class="media-left">
                                     <img class="media-object" src="${SITE_URL}/asset/img/avatar.jpg">
                                 </div>
@@ -97,7 +110,7 @@
                                     <p>おのれDMMですか・・・。 ただ、まさかのそのDMMで先生の本 買えるようになったのはビビリました・・。</p>
                                 </div>
                                 <hr>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
