@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Profiles;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
@@ -62,8 +63,7 @@ public class EditProfile extends HttpServlet {
                 
             
             String appPath = request.getServletContext().getRealPath("");
-            appPath = appPath.substring(0, appPath.length()-4);
-            String savePath = appPath + "img/user-avatar";
+            String savePath = appPath + "/asset/img/avatar-img";
 
             File fileSaveDir = new File(savePath);
             if (!fileSaveDir.exists()) {
@@ -75,9 +75,13 @@ public class EditProfile extends HttpServlet {
             fileName = new File(fileName).getName();
             part.write(savePath + File.separator + fileName);
             
+            Thumbnails.of(new File(savePath + File.separator + fileName))
+            .size(512, 512)
+            .toFile(new File(savePath + File.separator + profile.username.hashCode() + ".jpg"));
+            
             profile.setFirst_name(fName);
             profile.setLast_name(lName);
-            profile.setUrl_image(savePath + File.separator + fileName);
+            profile.setUrl_image(profile.username.hashCode() + ".jpg");
 
             //update password
             
