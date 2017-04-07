@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package auth;
+package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author bellkung
  */
-@WebServlet(name = "CheckUsername", urlPatterns = {"/CheckUsername"})
-public class CheckUsername extends HttpServlet {
+@WebServlet(name = "CheckEmail", urlPatterns = {"/CheckEmail"})
+public class CheckEmail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,13 +38,14 @@ public class CheckUsername extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-            response.setContentType("text/html;charset=UTF-8");
-       
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             Statement stmt = conn.createStatement();
-            String username = request.getHeader("username");
-            ResultSet rs =  stmt.executeQuery("SELECT user_id FROM usami.User WHERE user_id = '"+username + "'");
+            String email = request.getHeader("email");
+            ResultSet rs =  stmt.executeQuery("SELECT email FROM usami.User WHERE email = '"+email + "'");
             
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
@@ -53,7 +55,7 @@ public class CheckUsername extends HttpServlet {
             } else {
                 response.getWriter().write("passed");
             }
-         
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,9 +73,8 @@ public class CheckUsername extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckEmail.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     /**
@@ -90,7 +91,7 @@ public class CheckUsername extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckEmail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

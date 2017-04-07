@@ -3,23 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package auth;
+package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author bellkung
  */
-@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
-public class Logout extends HttpServlet {
+@WebServlet(name = "CheckUsername", urlPatterns = {"/CheckUsername"})
+public class CheckUsername extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,14 +36,24 @@ public class Logout extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            session.invalidate();
-            response.sendRedirect("/Usami");
-        }
+            throws ServletException, IOException, SQLException {
+            response.setContentType("text/html;charset=UTF-8");
+       
+            ServletContext ctx = getServletContext();
+            Connection conn = (Connection) ctx.getAttribute("connection");
+            Statement stmt = conn.createStatement();
+            String username = request.getHeader("username");
+            ResultSet rs =  stmt.executeQuery("SELECT user_id FROM usami.User WHERE user_id = '"+username + "'");
+            
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            
+            if(rs.next()){
+                response.getWriter().write("error");
+            } else {
+                response.getWriter().write("passed");
+            }
+         
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,7 +68,12 @@ public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -67,7 +87,11 @@ public class Logout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

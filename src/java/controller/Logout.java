@@ -3,29 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package auth;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author bellkung
  */
-@WebServlet(name = "CheckEmail", urlPatterns = {"/CheckEmail"})
-public class CheckEmail extends HttpServlet {
+@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,24 +31,13 @@ public class CheckEmail extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ServletContext ctx = getServletContext();
-            Connection conn = (Connection) ctx.getAttribute("connection");
-            Statement stmt = conn.createStatement();
-            String email = request.getHeader("email");
-            ResultSet rs =  stmt.executeQuery("SELECT email FROM usami.User WHERE email = '"+email + "'");
-            
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            
-            if(rs.next()){
-                response.getWriter().write("error");
-            } else {
-                response.getWriter().write("passed");
-            }
+            HttpSession session = request.getSession();
+            session.invalidate();
+            response.sendRedirect("/Usami");
         }
     }
 
@@ -70,11 +53,7 @@ public class CheckEmail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CheckEmail.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -88,11 +67,7 @@ public class CheckEmail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CheckEmail.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

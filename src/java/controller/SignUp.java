@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package auth;
+package controller;
 
 import static model.Hash.hashPassword;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Profiles;
+import model.User;
 
 /**
  *
@@ -45,35 +47,31 @@ public class SignUp extends HttpServlet {
             String username = request.getParameter("username");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            String repassword = request.getParameter("re-password");
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
         
-            PreparedStatement pstmt;
             try {
-                pstmt = conn.prepareStatement("INSERT INTO usami.User VALUES(?,?,?,?,?,?)");
-                pstmt.setString(1, username);
-                pstmt.setString(2, hashPassword(password));
-                pstmt.setString(3, email);
-                pstmt.setInt(4, 0);
-                pstmt.setTimestamp(5, Timestamp.valueOf("2013-09-04 13:30:00"));
-                pstmt.setString(6, "STD");
-                pstmt.executeUpdate();
+                User user = new User(username);
+                user.setPassword(password);
+                user.setEmail(email);
+                user.setCoin(0);
+                user.setExp_date("2013-09-04 13:30:00");
+                user.setU_type("STD");
+                user.addNewUser(conn);
                 
-                pstmt = conn.prepareStatement("INSERT INTO usami.Profile(user_id, first_name, last_name, profile_image) VALUES(?,?,?,?)");
-                pstmt.setString(1, username);
-                pstmt.setString(2, firstname);
-                pstmt.setString(3, lastname);
-                pstmt.setString(4, "profile-placeholder.jpg");
-                pstmt.executeUpdate();
-
-//                RequestDispatcher obj = request.getRequestDispatcher("non-auth/auth.jsp");
+                Profiles profile = new Profiles();
+                profile.setUsername(username);
+                profile.setFirst_name(firstname);
+                profile.setLast_name(lastname);
+                profile.setUrl_image("profile-placeholder.jpg");
+                profile.addNewProfile(conn);
+                
                 response.sendRedirect("non-auth/auth.jsp");
+                return;
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-
         }
     }
 

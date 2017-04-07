@@ -8,6 +8,12 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import static model.Hash.hashPassword;
 import model.Profiles;
+import model.User;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.RequestContext;
@@ -46,35 +54,77 @@ public class EditProfile extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             HttpSession session = request.getSession();
-            Profiles profile = (Profiles) session.getAttribute("user");
+            Profiles profile = (Profiles) session.getAttribute("profile");
+            User user = (User) session.getAttribute("user");
             
             String fName = request.getParameter("firstname");
             String lName = request.getParameter("lastname");
-            String password = request.getParameter("password");
+            String email = request.getParameter("email");
+            String password = request.getParameter("old-password");
+            String newPassword = request.getParameter("new-password");
             String rePassword = request.getParameter("re-password");
+            
+            try {
+                ServletContext ctx = getServletContext();
+                Connection conn = (Connection) ctx.getAttribute("connection");
                 
-            String appPath = request.getServletContext().getRealPath("");
-            String savePath = appPath + "/asset/img/avatar-img";
+                if (user.confirmPass(conn, hashPassword(password))) {
+                    
+                    String appPath = request.getServletContext().getRealPath("");
+                    String savePath = appPath + "/asset/img/avatar-img";
 
-            File fileSaveDir = new File(savePath);
-            if (!fileSaveDir.exists()) {
-                fileSaveDir.mkdir();
+                    File fileSaveDir = new File(savePath);
+                    if (!fileSaveDir.exists()) {
+                        fileSaveDir.mkdir();
+                    }
+                    
+                    Part part = request.getPart("avatar");
+                    try {
+                        String fileName = profile.getUsername() + "_" + extractFileName(part);
+                        fileName = new File(fileName).getName();
+                        part.write(savePath + File.separator + fileName);
+
+                        Thumbnails.of(new File(savePath + File.separator + fileName))
+                        .size(512, 512)
+                        .toFile(new File(savePath + File.separator + profile.getUsername().hashCode() + ".jpg"));
+                        profile.setUrl_image(profile.getUsername().hashCode() + ".jpg");
+
+                    } catch (Exception e){}
+                    
+                    profile.setFirst_name(fName);
+                    profile.setLast_name(lName);
+                    user.setEmail(email);
+                    
+                    user.changeEmail(conn);
+                    profile.editProfile(conn);
+                    
+                    if (!newPassword.equals("")){
+                        if (hashPassword(newPassword).equals(hashPassword(rePassword))) {
+                            user.setPassword(hashPassword(newPassword));
+                            user.changePassword(conn);
+                            request.setAttribute("pass", "success");
+                        }
+                        else {
+                            request.setAttribute("pass", "incorrect");
+                        }
+                    }
+                    else {
+                        request.setAttribute("pass", "success");
+                    }
+                    
+                    session.setAttribute("user", user);
+                    session.setAttribute("profile", profile);
+                } else {
+                    request.setAttribute("pass", "notpass");
+                }
+                
+                
+                //update password
+                
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-
-            Part part = request.getPart("avatar");
-            String fileName = profile.username + "_" + extractFileName(part);
-            fileName = new File(fileName).getName();
-            part.write(savePath + File.separator + fileName);
-            
-            Thumbnails.of(new File(savePath + File.separator + fileName))
-            .size(512, 512)
-            .toFile(new File(savePath + File.separator + profile.username.hashCode() + ".jpg"));
-            
-            profile.setFirst_name(fName);
-            profile.setLast_name(lName);
-            profile.setUrl_image(profile.username.hashCode() + ".jpg");
-
-            //update password
             
             //call Profile update here
             
