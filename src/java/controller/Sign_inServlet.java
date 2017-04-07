@@ -61,6 +61,7 @@ public class Sign_inServlet extends HttpServlet {
                 
                 */
                 response.sendRedirect("/Usami");
+                return;
             }else{
 
                 //give a token*******************
@@ -73,6 +74,7 @@ public class Sign_inServlet extends HttpServlet {
                 session.setAttribute("user", user);
                 session.setAttribute("profile", profile);
                 response.sendRedirect("index.jsp");
+                return;
             }
         
     }
