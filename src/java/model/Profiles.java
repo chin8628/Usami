@@ -20,7 +20,6 @@ public class Profiles {
     private String last_name;
     private String birthdate;
     private String url_image;
-    private String email;
     private Connection conn;
 
     public Profiles(Connection conn, String username) throws SQLException {
@@ -35,19 +34,29 @@ public class Profiles {
             this.birthdate = rs.getString("birthdate");
             this.url_image = rs.getString("profile_image");
         }
-        
+    }
+    
+    public void addNewProfile(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.Profile(user_id, first_name, last_name, profile_image) VALUES(?,?,?,?)");
+        pstmt.setString(1, this.username);
+        pstmt.setString(2, this.first_name);
+        pstmt.setString(3, this.last_name);
+        pstmt.setString(4, this.url_image);
+        pstmt.executeUpdate();
+    }
+    
+    public void editProfile(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.Profile SET first_name = ?, last_name = ?, birthdate = ?, profile_image = ? WHERE user_id = ?");
+        pstmt.setString(1, this.first_name);
+        pstmt.setString(2, this.last_name);
+        pstmt.setString(3, this.birthdate);
+        pstmt.setString(4, this.url_image);
+        pstmt.setString(5, this.username);
+        pstmt.executeUpdate();
     }
     
     public Profiles() {
         
-    }
-    
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getUsername() {

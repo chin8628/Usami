@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Profiles;
+import model.User;
 
 /**
  *
@@ -68,8 +69,9 @@ public class Sign_inServlet extends HttpServlet {
                 */
                 
                 Profiles profile = new Profiles(conn, request.getParameter("username"));
-                profile.setEmail(rs.getString("email"));
-                session.setAttribute("user", profile);
+                User user = new User(conn, request.getParameter("username"));
+                session.setAttribute("user", user);
+                session.setAttribute("profile", profile);
                 response.sendRedirect("index.jsp");
             }
         
