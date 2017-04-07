@@ -66,7 +66,7 @@ public class Comment extends HttpServlet {
                 ArrayList<CommentModel> allComm = new ArrayList<>();
                 CommentModel comm;
                 
-                pstmt = conn.prepareStatement("SELECT p.user_id, i.image_id, p.first_name, p.last_name, c.comm_date, c.text "
+                pstmt = conn.prepareStatement("SELECT p.user_id, i.image_id, p.first_name, p.last_name, c.comm_date, c.text, p.profile_image "
                 + "FROM usami.Profile p JOIN usami.Comment c USING (user_id) JOIN usami.Image i USING (image_id) "
                 + "WHERE i.image_id ='"+"12345"+"' ORDER BY c.comm_date DESC;");
                 ResultSet rs = pstmt.executeQuery();
@@ -78,6 +78,7 @@ public class Comment extends HttpServlet {
                     comm.setLast_name(rs.getString("last_name"));
                     comm.setComm_date(rs.getString("comm_date"));
                     comm.setText(rs.getString("text"));
+                    comm.setUrl_image(rs.getString("profile_image"));
                     allComm.add(comm);
                 }
                 
