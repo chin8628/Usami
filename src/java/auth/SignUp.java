@@ -61,10 +61,11 @@ public class SignUp extends HttpServlet {
                 pstmt.setString(6, "STD");
                 pstmt.executeUpdate();
                 
-                pstmt = conn.prepareStatement("INSERT INTO usami.Profile(user_id, first_name, last_name) VALUES(?,?,?)");
+                pstmt = conn.prepareStatement("INSERT INTO usami.Profile(user_id, first_name, last_name, profile_image) VALUES(?,?,?,?)");
                 pstmt.setString(1, username);
                 pstmt.setString(2, firstname);
                 pstmt.setString(3, lastname);
+                pstmt.setString(4, "profile-placeholder.jpg");
                 pstmt.executeUpdate();
 
 //                RequestDispatcher obj = request.getRequestDispatcher("non-auth/auth.jsp");

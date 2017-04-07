@@ -11,7 +11,7 @@
                 <div class="form-group row">
                     <div class="col-sm-3">
                         <span class="thumbnail">
-                          <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-responsive">
+                          <img src="${SITE_URL}/${sessionScope.user.url_image}" class="img-responsive">
                         </span>
                     </div>
                     <div class="col-sm-9">
@@ -21,19 +21,19 @@
                 </div>
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username">
+                    <input type="text" class="form-control" id="username" name="username" disabled="disabled" value="${sessionScope.user.username}">
                 </div>
                 <div class="form-group">
                     <label for="firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstname" name="firstname">
+                    <input type="text" class="form-control" id="firstname" name="firstname" value="${sessionScope.user.first_name}">
                 </div>
                 <div class="form-group">
                     <label for="lastname">Last Name</label>
-                    <input type="text" class="form-control" id="lastname" name="lastname">
+                    <input type="text" class="form-control" id="lastname" name="lastname" value="${sessionScope.user.last_name}">
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
