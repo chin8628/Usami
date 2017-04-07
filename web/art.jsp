@@ -84,22 +84,18 @@
                             <% if (request.getAttribute("allComm") != null) { %>
                                 <% ArrayList<CommentModel> allComm = (ArrayList<CommentModel>) request.getAttribute("allComm"); 
                                 for (model.CommentModel comm: allComm) { %>
-                                <% System.out.println("-------------------"); %>
-                                <% System.out.println(comm.first_name); %>
-                                <% System.out.println(comm.last_name); %>
                                         <div class="media comment-reply">
                                             <div class="media-left">
                                                 <img class="media-object" src="${SITE_URL}/asset/img/avatar2.jpg">
                                             </div>
                                             <div class="media-body">
-                                                <p><a href="#"><%= comm.first_name %> <%= comm.last_name %></a> <small><%= comm.comm_date %></small></p>
-                                                <p><%= comm.text %></p>
+                                                <p><a href="#"><%= comm.getFirst_name() %> <%= comm.getLast_name() %></a> <small><%= comm.getComm_date() %></small></p>
+                                                <p><%= comm.getText() %></p>
                                             </div>
                                             <hr>
                                         </div>
                                 <% } %>
                             <% } %>
-                            <% System.out.println("-------------------"); %>
 
 <!--                            <div class="media comment-reply">
                                 <div class="media-left">

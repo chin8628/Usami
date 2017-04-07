@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package community;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -53,7 +53,7 @@ public class Comment extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             
             HttpSession session = request.getSession();
-            Profiles user = (Profiles) session.getAttribute("user");
+            Profiles user = (Profiles) session.getAttribute("profile");
             
             try {
                 PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.Comment VALUES(?,?,?,?)");

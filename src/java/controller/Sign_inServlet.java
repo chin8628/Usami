@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package auth;
+package controller;
 
 import static model.Hash.hashPassword;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -23,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Profiles;
+import model.User;
 
 /**
  *
@@ -43,7 +42,7 @@ public class Sign_inServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-            String sql_pstm = "SELECT user_id FROM user WHERE user_id = ? AND password = ?";
+            String sql_pstm = "SELECT user_id, email FROM user WHERE user_id = ? AND password = ?";
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
@@ -71,7 +70,9 @@ public class Sign_inServlet extends HttpServlet {
                 */
                 
                 Profiles profile = new Profiles(conn, request.getParameter("username"));
-                session.setAttribute("user", profile);
+                User user = new User(conn, request.getParameter("username"));
+                session.setAttribute("user", user);
+                session.setAttribute("profile", profile);
                 response.sendRedirect("index.jsp");
                 return;
             }

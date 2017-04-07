@@ -3,29 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package auth;
+package controller;
 
+import static model.Hash.hashPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.*;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Profiles;
+import model.User;
 
 /**
  *
  * @author bellkung
  */
-@WebServlet(name = "CheckEmail", urlPatterns = {"/CheckEmail"})
-public class CheckEmail extends HttpServlet {
+@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
+public class SignUp extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,24 +35,43 @@ public class CheckEmail extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            String[] fullname = request.getParameter("fullname").split("\\s+");
+            String firstname = fullname[0];
+            String lastname = "";
+            if (fullname.length == 2) {
+                lastname = fullname[1];
+            }
+            String username = request.getParameter("username");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
-            Statement stmt = conn.createStatement();
-            String email = request.getHeader("email");
-            ResultSet rs =  stmt.executeQuery("SELECT email FROM usami.User WHERE email = '"+email + "'");
-            
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            
-            if(rs.next()){
-                response.getWriter().write("error");
-            } else {
-                response.getWriter().write("passed");
-            }
+        
+            try {
+                User user = new User(username);
+                user.setPassword(password);
+                user.setEmail(email);
+                user.setCoin(0);
+                user.setExp_date("2013-09-04 13:30:00");
+                user.setU_type("STD");
+                user.addNewUser(conn);
+                
+                Profiles profile = new Profiles();
+                profile.setUsername(username);
+                profile.setFirst_name(firstname);
+                profile.setLast_name(lastname);
+                profile.setUrl_image("profile-placeholder.jpg");
+                profile.addNewProfile(conn);
+                
+                response.sendRedirect("non-auth/auth.jsp");
+                return;
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
         }
     }
 
@@ -70,11 +87,7 @@ public class CheckEmail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CheckEmail.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -88,11 +101,7 @@ public class CheckEmail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CheckEmail.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

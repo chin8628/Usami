@@ -5,10 +5,10 @@
     <div class="panel panel-default">
         <div class="panel-body text-center">
             <div class="thumbnail">
-                <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-responsive">
+                <img src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}" class="img-responsive">
             </div>
             <p><span class="label label-default">Standard User</span></p>
-            <p><strong>${sessionScope.user.first_name} ${sessionScope.user.last_name}</strong></p>
+            <p><strong>${sessionScope.profile.getFirst_name()} ${sessionScope.profile.getLast_name()}</strong></p>
             <a href="${SITE_URL}/follow.jsp">
                 <small>Follower</small>
                 <h4>21</h4>

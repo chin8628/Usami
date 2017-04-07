@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package auth;
+package controller;
 
-import static model.Hash.hashPassword;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author bellkung
  */
-@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
-public class SignUp extends HttpServlet {
+@WebServlet(name = "CheckUsername", urlPatterns = {"/CheckUsername"})
+public class CheckUsername extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,48 +36,24 @@ public class SignUp extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String[] fullname = request.getParameter("fullname").split("\\s+");
-            String firstname = fullname[0];
-            String lastname = "";
-            if (fullname.length == 2) {
-                lastname = fullname[1];
-            }
-            String username = request.getParameter("username");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String repassword = request.getParameter("re-password");
-            
+            throws ServletException, IOException, SQLException {
+            response.setContentType("text/html;charset=UTF-8");
+       
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
-        
-            PreparedStatement pstmt;
-            try {
-                pstmt = conn.prepareStatement("INSERT INTO usami.User VALUES(?,?,?,?,?,?)");
-                pstmt.setString(1, username);
-                pstmt.setString(2, hashPassword(password));
-                pstmt.setString(3, email);
-                pstmt.setInt(4, 0);
-                pstmt.setTimestamp(5, Timestamp.valueOf("2013-09-04 13:30:00"));
-                pstmt.setString(6, "STD");
-                pstmt.executeUpdate();
-                
-                pstmt = conn.prepareStatement("INSERT INTO usami.Profile(user_id, first_name, last_name) VALUES(?,?,?)");
-                pstmt.setString(1, username);
-                pstmt.setString(2, firstname);
-                pstmt.setString(3, lastname);
-                pstmt.executeUpdate();
-
-//                RequestDispatcher obj = request.getRequestDispatcher("non-auth/auth.jsp");
-                response.sendRedirect("non-auth/auth.jsp");
-                return;
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-
-        }
+            Statement stmt = conn.createStatement();
+            String username = request.getHeader("username");
+            ResultSet rs =  stmt.executeQuery("SELECT user_id FROM usami.User WHERE user_id = '"+username + "'");
+            
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            
+            if(rs.next()){
+                response.getWriter().write("error");
+            } else {
+                response.getWriter().write("passed");
+            }
+         
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -89,7 +68,12 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -103,7 +87,11 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(CheckUsername.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
