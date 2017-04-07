@@ -5,17 +5,9 @@
  */
 package controller;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.logging.Level;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -53,15 +45,14 @@ public class EditProfile extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            HttpSession se = request.getSession();
-            Profiles profile = (Profiles) se.getAttribute("user");
+            HttpSession session = request.getSession();
+            Profiles profile = (Profiles) session.getAttribute("user");
             
             String fName = request.getParameter("firstname");
             String lName = request.getParameter("lastname");
             String password = request.getParameter("password");
             String rePassword = request.getParameter("re-password");
                 
-            
             String appPath = request.getServletContext().getRealPath("");
             String savePath = appPath + "/asset/img/avatar-img";
 

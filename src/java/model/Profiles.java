@@ -20,6 +20,7 @@ public class Profiles {
     public String last_name;
     public String birthdate;
     public String url_image;
+    public String email;
     private Connection conn;
 
     public Profiles(Connection conn, String username) throws SQLException {
@@ -39,6 +40,14 @@ public class Profiles {
     
     public Profiles() {
         
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {

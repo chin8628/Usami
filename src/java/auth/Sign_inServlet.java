@@ -7,12 +7,10 @@ package auth;
 
 import static model.Hash.hashPassword;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -43,7 +41,7 @@ public class Sign_inServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-            String sql_pstm = "SELECT user_id FROM user WHERE user_id = ? AND password = ?";
+            String sql_pstm = "SELECT user_id, email FROM user WHERE user_id = ? AND password = ?";
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
@@ -71,6 +69,7 @@ public class Sign_inServlet extends HttpServlet {
                 */
                 
                 Profiles profile = new Profiles(conn, request.getParameter("username"));
+                profile.setEmail(rs.getString("email"));
                 session.setAttribute("user", profile);
                 response.sendRedirect("index.jsp");
                 return;
