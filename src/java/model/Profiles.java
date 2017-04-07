@@ -15,12 +15,12 @@ import java.sql.SQLException;
  * @author bellkung
  */
 public class Profiles {
-    public String username;
-    public String first_name;
-    public String last_name;
-    public String birthdate;
-    public String url_image;
-    public String email;
+    private String username;
+    private String first_name;
+    private String last_name;
+    private String birthdate;
+    private String url_image;
+    private String email;
     private Connection conn;
 
     public Profiles(Connection conn, String username) throws SQLException {

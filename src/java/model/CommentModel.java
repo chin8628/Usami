@@ -10,12 +10,12 @@ package model;
  * @author bellkung
  */
 public class CommentModel {
-    public String username;
-    public String image_id;
-    public String first_name;
-    public String last_name;
-    public String comm_date;
-    public String text;
+    private String username;
+    private String image_id;
+    private String first_name;
+    private String last_name;
+    private String comm_date;
+    private String text;
     
     public CommentModel() {
         
