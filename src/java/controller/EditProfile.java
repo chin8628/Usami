@@ -62,7 +62,8 @@ public class EditProfile extends HttpServlet {
                 
             
             String appPath = request.getServletContext().getRealPath("");
-            String savePath = appPath + "asset/img/user-avatar";
+            appPath = appPath.substring(0, appPath.length()-4);
+            String savePath = appPath + "img/user-avatar";
 
             File fileSaveDir = new File(savePath);
             if (!fileSaveDir.exists()) {
@@ -82,7 +83,7 @@ public class EditProfile extends HttpServlet {
             
             //call Profile update here
             
-            getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/setting/profile.jsp").forward(request, response);
             
         }
     }
