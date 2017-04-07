@@ -5,16 +5,20 @@
  */
 package controller;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.logging.Level;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -24,20 +28,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import static model.Hash.hashPassword;
 import model.Profiles;
 import net.coobird.thumbnailator.Thumbnails;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 /**
  *
  * @author frostnoxia
  */
-@WebServlet(name = "EditProfile", urlPatterns = {"/EditProfile"})
+@WebServlet(name = "ArtUpload", urlPatterns = {"/ArtUpload"})
 @MultipartConfig
-public class EditProfile extends HttpServlet {
+public class ArtUpload extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,48 +53,75 @@ public class EditProfile extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
+            /* TODO output your page here. You may use following sample code. */
+            
             HttpSession se = request.getSession();
             Profiles profile = (Profiles) se.getAttribute("user");
             
-            String fName = request.getParameter("firstname");
-            String lName = request.getParameter("lastname");
-            String password = request.getParameter("password");
-            String rePassword = request.getParameter("re-password");
-                
+            Calendar calendar = Calendar.getInstance();
+            
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
             
             String appPath = request.getServletContext().getRealPath("");
-            String savePath = appPath + "/asset/img/avatar-img";
+            String savePath = appPath + "/asset/img/art";
+            String artName = request.getParameter("title");
+            String artDesc = request.getParameter("desc");
+            String artId = (profile.getUsername() + artName + new Timestamp(calendar.getTime().getTime()).toString()).hashCode() + "";
 
             File fileSaveDir = new File(savePath);
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdir();
             }
 
-            Part part = request.getPart("avatar");
+            Part part = request.getPart("art");
             String fileName = profile.getUsername() + "_" + extractFileName(part);
             fileName = new File(fileName).getName();
             part.write(savePath + File.separator + fileName);
             
-            Thumbnails.of(new File(savePath + File.separator + fileName))
-            .size(512, 512)
-            .toFile(new File(savePath + File.separator + profile.username.hashCode() + ".jpg"));
+            BufferedImage bufferedImage;
             
-            profile.setFirst_name(fName);
-            profile.setLast_name(lName);
-            profile.setUrl_image(profile.getUsername().hashCode() + ".jpg");
+            bufferedImage = ImageIO.read(new File(savePath + File.separator + fileName));
 
+            // create a blank, RGB, same width and height, and a white background
+            BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(),
+			bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+            newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+
+            // write to jpeg file
+            ImageIO.write(newBufferedImage, "jpg", new File(savePath + File.separator + artId + ".jpg"));
+          
             File file = new File(savePath + File.separator + fileName);
             file.delete();
             
-            //update password
+            ServletContext ctx = getServletContext();
+            Connection conn = (Connection) ctx.getAttribute("connection");
+        
+            PreparedStatement pstmt;
+            try {
+                pstmt = conn.prepareStatement("INSERT INTO usami.Image VALUES(?,?,?,?,?,?)");
+                pstmt.setString(1, artId);
+                pstmt.setString(2, artId + ".jpg");
+                pstmt.setString(3, artName);
+                pstmt.setString(4, artDesc);
+                pstmt.setTimestamp(5, new Timestamp(calendar.getTime().getTime()));
+                pstmt.setString(6, profile.getUsername());
+                pstmt.executeUpdate();
+                response.sendRedirect("non-auth/auth.jsp");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             
-            //call Profile update here
             
-            getServletContext().getRequestDispatcher("/setting/profile.jsp").forward(request, response);
+            
+            
+            //Thumbnails.of(new File(savePath + File.separator + fileName))
+            //.size(512, 512)
+            //.toFile(new File(savePath + File.separator + "asd.jpg"));
             
         }
     }
+
     
     private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
@@ -105,7 +133,7 @@ public class EditProfile extends HttpServlet {
         }
         return "";
     }
-
+        
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
