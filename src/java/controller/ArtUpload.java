@@ -16,8 +16,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -60,9 +62,6 @@ public class ArtUpload extends HttpServlet {
             
             Calendar calendar = Calendar.getInstance();
             
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date date = new Date();
-            
             String appPath = request.getServletContext().getRealPath("");
             String savePath = appPath + "/asset/img/art";
             String artName = request.getParameter("title");
@@ -76,23 +75,45 @@ public class ArtUpload extends HttpServlet {
 
             Part part = request.getPart("art");
             String fileName = profile.getUsername() + "_" + extractFileName(part);
+            
+            ArrayList<String> acceptedFile = new ArrayList<String>();
+            acceptedFile.add(".jpg");
+            acceptedFile.add(".bmp");
+            acceptedFile.add(".png");
+            acceptedFile.add(".gif");
+            
+            
+            if(!acceptedFile.contains((fileName.substring(fileName.length()-4)).toLowerCase())) {
+                out.println((fileName.substring(fileName.length()-4)).toLowerCase());
+                response.sendRedirect("Error.jsp");
+                return;
+            }
+            
             fileName = new File(fileName).getName();
             part.write(savePath + File.separator + fileName);
             
-            BufferedImage bufferedImage;
             
-            bufferedImage = ImageIO.read(new File(savePath + File.separator + fileName));
+            try{
+                 BufferedImage bufferedImage;
 
-            // create a blank, RGB, same width and height, and a white background
-            BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(),
-			bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-            newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+                bufferedImage = ImageIO.read(new File(savePath + File.separator + fileName));
 
-            // write to jpeg file
-            ImageIO.write(newBufferedImage, "jpg", new File(savePath + File.separator + artId + ".jpg"));
-          
-            File file = new File(savePath + File.separator + fileName);
-            file.delete();
+                // create a blank, RGB, same width and height, and a white background
+                BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(),
+                            bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+                newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+
+                // write to jpeg file
+                ImageIO.write(newBufferedImage, "jpg", new File(savePath + File.separator + artId + ".jpg"));
+
+                File file = new File(savePath + File.separator + fileName);
+                file.delete();
+                
+            } catch (Exception e) {
+                response.sendRedirect("Error.jsp");
+                return;
+            }
+            
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
@@ -107,18 +128,14 @@ public class ArtUpload extends HttpServlet {
                 pstmt.setTimestamp(5, new Timestamp(calendar.getTime().getTime()));
                 pstmt.setString(6, profile.getUsername());
                 pstmt.executeUpdate();
-                response.sendRedirect("non-auth/auth.jsp");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
+                    response.sendRedirect("Error.jsp");
+                    return;
                 }
             
-            
-            
-            
-            //Thumbnails.of(new File(savePath + File.separator + fileName))
-            //.size(512, 512)
-            //.toFile(new File(savePath + File.separator + "asd.jpg"));
-            
+            response.sendRedirect("upload.jsp");
+            return;
         }
     }
 
