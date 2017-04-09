@@ -16,6 +16,7 @@ public class CommentModel {
     private String last_name;
     private String comm_date;
     private String text;
+    private String url_image;
     
     public CommentModel() {
         
@@ -68,5 +69,15 @@ public class CommentModel {
     public void setText(String text) {
         this.text = text;
     }
+
+    public String getUrl_image() {
+        return url_image;
+    }
+
+    public void setUrl_image(String url_image) {
+        this.url_image = url_image;
+    }
+    
+    
 
 }

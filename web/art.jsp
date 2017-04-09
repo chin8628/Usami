@@ -66,7 +66,7 @@
                         <div class="panel-body">
                             <div class="media">
                                 <div class="media-left">
-                                    <img class="media-object" src="${SITE_URL}/asset/img/avatar2.jpg">
+                                    <img class="media-object" src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}">
                                 </div>
                                 <div class="media-body">
                                     <!--Comment Box-->
@@ -86,7 +86,7 @@
                                 for (model.CommentModel comm: allComm) { %>
                                         <div class="media comment-reply">
                                             <div class="media-left">
-                                                <img class="media-object" src="${SITE_URL}/asset/img/avatar2.jpg">
+                                                <img class="media-object" src="${SITE_URL}/asset/img/avatar-img/<%=comm.getUrl_image()%>">
                                             </div>
                                             <div class="media-body">
                                                 <p><a href="#"><%= comm.getFirst_name() %> <%= comm.getLast_name() %></a> <small><%= comm.getComm_date() %></small></p>
