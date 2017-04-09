@@ -1,5 +1,8 @@
+<%@page import="model.Art"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="row">
     <div class="col-sm-12">
@@ -21,101 +24,36 @@
         </div>
     </div>
 
-    <div class="col-sm-9">
-        <div class="col-sm-4 image-product">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul class="nav nav-pills">
-                        <a href="${SITE_URL}/art.jsp">
-                            <p>
-                                <img src="${SITE_URL}/asset/img/art.jpg" class="
-                                img-responsive">
-                            </p>
-                            <div class="title">
-                                <p>
-                                    <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                                </p>
+    <div class="col-sm-9">             
+        <% ArrayList<Art> allArt = (ArrayList<Art>) request.getAttribute("allArt");
+           if(allArt != null){
+               for(Art art: allArt){ %>             
+                    <div class="col-sm-4 image-product">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ul class="nav nav-pills">
+                                    <a href="${SITE_URL}/view/<%=art.getId()%>">
+                                        <p>
+                                            <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="
+                                            img-responsive thumbnail">
+                                        </p>
+                                        <div class="title">
+                                            <p>
+                                                <strong><%=art.getTitle()%></strong>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <div class="price">
+                                        <p><%=art.getPrice()%></p>
+                                    </div>
+                                    <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
+                                </ul>
                             </div>
-                        </a>
-                        <div class="price">
-                            <p>$5.3</p>
                         </div>
-                        <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-4 image-product">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul class="nav nav-pills">
-                        <a href="${SITE_URL}/art.jsp">
-                            <p>
-                                <img src="${SITE_URL}/asset/img/art.jpg" class="
-                                img-responsive">
-                            </p>
-                            <div class="title">
-                                <p>
-                                    <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                                </p>
-                            </div>
-                        </a>
-                        <div class="price">
-                            <p>$5.3</p>
-                        </div>
-                        <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-4 image-product">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul class="nav nav-pills">
-                        <a href="${SITE_URL}/art.jsp">
-                            <p>
-                                <img src="${SITE_URL}/asset/img/art.jpg" class="
-                                img-responsive">
-                            </p>
-                            <div class="title">
-                                <p>
-                                    <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                                </p>
-                            </div>
-                        </a>
-                        <div class="price">
-                            <p>$5.3</p>
-                        </div>
-                        <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-4 image-product">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul class="nav nav-pills">
-                        <a href="${SITE_URL}/art.jsp">
-                            <p>
-                                <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                            </p>
-                            <div class="title">
-                                <p>
-                                    <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                                </p>
-                            </div>
-                        </a>
-                        <div class="price">
-                            <p>$5.3</p>
-                        </div>
-                        <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                    </div>
+               <%}
+           }
+        %>
 
     </div>
 </div>

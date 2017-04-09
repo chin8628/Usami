@@ -37,7 +37,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="${SITE_URL}/market.jsp">Market</a></li>
+                    <li><a href="${SITE_URL}/Market">Market</a></li>
                     <li><a href="${SITE_URL}/upload.jsp">Upload</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
