@@ -89,7 +89,9 @@ public class EditProfile extends HttpServlet {
                         .toFile(new File(savePath + File.separator + profile.getUsername().hashCode() + ".jpg"));
                         profile.setUrl_image(profile.getUsername().hashCode() + ".jpg");
 
-                    } catch (Exception e){}
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                     
                     profile.setFirst_name(fName);
                     profile.setLast_name(lName);

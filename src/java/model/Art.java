@@ -17,7 +17,20 @@ public class Art {
     private String id;
     private String userId;
     private String desc;
+    private String upload_date;
 
+    public Art() {
+        
+    }
+
+    public String getUpload_date() {
+        return upload_date;
+    }
+
+    public void setUpload_date(String upload_date) {
+        this.upload_date = upload_date;
+    }
+    
     public String getUserId() {
         return userId;
     }
@@ -33,11 +46,7 @@ public class Art {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    
-    
-    
-    
-    
+
     public String getId() {
         return id;
     }
@@ -46,8 +55,6 @@ public class Art {
         this.id = id;
     }
     
-    
-
     public String getUrl() {
         return url;
     }

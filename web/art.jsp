@@ -28,7 +28,8 @@
             <div class="panel-body">
                 <div class="col-sm-12">
                     <div class="page-header">
-                        <h2><%=art.getTitle()%></h2>
+                        <h2><%=art.getTitle()%> </h2>
+                        <h4><small> <%= art.getUpload_date() %> </small></h4>
                     </div>
                 </div>
 
@@ -60,9 +61,10 @@
                     <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="img-responsive">
                 </div>
 
+                <!--favorite button-->
                 <div class="col-sm-12">
                     <button type="submit" class="btn btn-success btn-xs" id="favorite-btn">
-                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 4732
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 0
                     </button>
                 </div>
 
