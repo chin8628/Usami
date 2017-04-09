@@ -11,9 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,16 +21,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import model.Art;
 import model.CommentModel;
-import model.Profiles;
 
 /**
  *
- * @author bellkung
+ * @author frostnoxia
  */
-@WebServlet(name = "Comment", urlPatterns = {"/Comment/"})
-public class Comment extends HttpServlet {
+@WebServlet(name = "Market", urlPatterns = {"/Market"})
+public class Market extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,61 +41,38 @@ public class Comment extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String text = request.getParameter("comment");
-            Calendar calendar = Calendar.getInstance();
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            HttpSession session = request.getSession();
-            Profiles user = (Profiles) session.getAttribute("profile");
+            PreparedStatement pstmt =  conn.prepareStatement(""
+                    + "SELECT * "
+                    + "FROM usami.Image "
+                    + "ORDER BY upload_date DESC;");
             
-            String imgId = request.getParameter("id");
+            ResultSet rs = pstmt.executeQuery();
             
-            try {
-                PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.Comment VALUES(?,?,?,?)");
-                pstmt.setString(1, (String) user.getUsername());
-                pstmt.setString(2, imgId);
-                pstmt.setString(3, text);
-                pstmt.setTimestamp(4, new Timestamp(calendar.getTime().getTime()));
-                pstmt.executeUpdate();
+            ArrayList<Art> allArt = new ArrayList<Art>();
+            
+            
+            while (rs.next()){
+                Art art = new Art();
+                art.setUrl(rs.getString("image_url"));
+                art.setTitle(rs.getString("image_name"));
+                art.setId(rs.getString("image_id"));
+                art.setPrice("free");
                 
+                allArt.add(art);
                 
-                /*
-                ArrayList<CommentModel> allComm = new ArrayList<>();
-                CommentModel comm;
-                
-                pstmt = conn.prepareStatement("SELECT p.user_id, i.image_id, p.first_name, p.last_name, c.comm_date, c.text, p.profile_image "
-                + "FROM usami.Profile p JOIN usami.Comment c USING (user_id) JOIN usami.Image i USING (image_id) "
-                + "WHERE i.image_id ='"+imgId+"' ORDER BY c.comm_date DESC;");
-                ResultSet rs = pstmt.executeQuery();
-                while (rs.next()){
-                    comm = new CommentModel();
-                    comm.setUsername(rs.getString("user_id"));
-                    comm.setImage_id(rs.getString("image_id"));
-                    comm.setFirst_name(rs.getString("first_name"));
-                    comm.setLast_name(rs.getString("last_name"));
-                    comm.setComm_date(rs.getString("comm_date"));
-                    comm.setText(rs.getString("text"));
-                    comm.setUrl_image(rs.getString("profile_image"));
-                    allComm.add(comm);
-                }*/
-                
-//                CommentModel comm = new CommentModel(conn, "12345"); // send db and image_id
-                
-                response.sendRedirect("/Usami/View/?id="+imgId);
-                //request.setAttribute("allComm", allComm);
-                //obj.forward(request, response);
-//                response.sendRedirect("art.jsp");
-                
-                
-            } catch (SQLException ex) {
-                ex.printStackTrace();
             }
+
+            request.setAttribute("allArt", allArt);
+            RequestDispatcher obj = request.getRequestDispatcher("market.jsp");
+            obj.forward(request, response);
             
             
         }
@@ -114,7 +90,11 @@ public class Comment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Market.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -128,7 +108,11 @@ public class Comment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Market.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
