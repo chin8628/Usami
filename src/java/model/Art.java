@@ -15,7 +15,29 @@ public class Art {
     private String price;
     private String title;
     private String id;
+    private String userId;
+    private String desc;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+    
+    
+    
+    
+    
     public String getId() {
         return id;
     }

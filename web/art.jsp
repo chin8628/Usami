@@ -1,17 +1,21 @@
+<%@page import="model.Profiles"%>
+<%@page import="model.Art"%>
 <%@page import="java.util.*"%>
 <%@page import="model.CommentModel"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<% Art art = (Art) request.getAttribute("art");%>
+<% Profiles owner = (Profiles) request.getAttribute("owner"); %>
 
 <div class="row">
     <div class="col-sm-3">
         <div class="panel panel-default">
             <div class="panel-body text-center">
                 <div class="thumbnail">
-                    <img src="${SITE_URL}/asset/img/avatar.jpg" class="img-responsive">
+                    <img src="${SITE_URL}/asset/img/avatar-img/<%=owner.getUrl_image()%>" class="img-responsive">
                 </div>
-                <p>御免なさい＠単行本発売中</p>
+                <p><%= owner.getFirst_name() + " " + owner.getLast_name() %></p>
                 <p><span class="label label-default">Standard User</span></p>
                 <p><button class="btn btn-success btn-sm" type="submit">Follow</button></p>
             </div>
@@ -22,12 +26,12 @@
             <div class="panel-body">
                 <div class="col-sm-12">
                     <div class="page-header">
-                        <h2>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</h2>
+                        <h2><%=art.getTitle()%></h2>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
-                    <p>やっぱりダメでした。ということで乗り遅れもなんのそのやっと艦これはじめました。乗り遅れていたのでいじけて「艦これなんて…ふん！」とか思ってたのですが、試しにやってみたら…初雪の可愛さに撃沈しました。初雪のキャラがすごくいい味出ていて、堪りませんが止まりません。そんな初雪はどうやら一部の層にだけ人気があるくらいで存在感がないご様子？なぜだ！あんなに可愛いのに！今のところ私のお気に入りの艦娘は初雪と望月です。どっちもダメっぽいけど頑張るときはちゃんと頑張るやればできる娘達だと思います。仕事に支障きたすレベルにハマらないよう注意しながら初雪に「やだ…触らないで」と言われながら望月の肩をモミモミして生きて逝きたいと思います。おのれDMMめ…おのれ角川め…</p>
+                    <p><%=art.getDesc()%></p>
                 </div>
 
                 <div class="col-sm-12">
@@ -51,7 +55,7 @@
                 </div>
 
                 <div class="col-sm-12">
-                    <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
+                    <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="img-responsive">
                 </div>
 
                 <div class="col-sm-12">

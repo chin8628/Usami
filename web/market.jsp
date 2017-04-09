@@ -32,7 +32,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <ul class="nav nav-pills">
-                                    <a href="${SITE_URL}/view/<%=art.getId()%>">
+                                    <a href="${SITE_URL}/View/?id=<%=art.getId()%>">
                                         <p>
                                             <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="
                                             img-responsive thumbnail">
