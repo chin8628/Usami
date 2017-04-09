@@ -1,3 +1,4 @@
+<%@page import="model.User"%>
 <%@page import="model.Profiles"%>
 <%@page import="model.Art"%>
 <%@page import="java.util.*"%>
@@ -7,6 +8,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% Art art = (Art) request.getAttribute("art");%>
 <% Profiles owner = (Profiles) request.getAttribute("owner"); %>
+<% User user = (User) session.getAttribute("user"); %>
 
 <div class="row">
     <div class="col-sm-3">
@@ -75,7 +77,7 @@
                                 <div class="media-body">
                                     <!--Comment Box-->
                                     <h4 class="media-heading">Comment</h4>
-                                    <form action="${SITE_URL}/Comment" method="POST">
+                                    <form action="${SITE_URL}/Comment/?&id=<%= art.getId() %>" method="POST">
                                         <textarea name="comment"></textarea>
                                         <button type="submit" class="btn btn-success btn-sm">Send</button>
                                     </form>

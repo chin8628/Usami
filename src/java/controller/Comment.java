@@ -29,7 +29,7 @@ import model.Profiles;
  *
  * @author bellkung
  */
-@WebServlet(name = "Comment", urlPatterns = {"/Comment"})
+@WebServlet(name = "Comment", urlPatterns = {"/Comment/"})
 public class Comment extends HttpServlet {
 
     /**
@@ -55,20 +55,24 @@ public class Comment extends HttpServlet {
             HttpSession session = request.getSession();
             Profiles user = (Profiles) session.getAttribute("profile");
             
+            String imgId = request.getParameter("id");
+            
             try {
                 PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.Comment VALUES(?,?,?,?)");
                 pstmt.setString(1, (String) user.getUsername());
-                pstmt.setString(2, "12345");
+                pstmt.setString(2, imgId);
                 pstmt.setString(3, text);
                 pstmt.setTimestamp(4, new Timestamp(calendar.getTime().getTime()));
                 pstmt.executeUpdate();
                 
+                
+                /*
                 ArrayList<CommentModel> allComm = new ArrayList<>();
                 CommentModel comm;
                 
                 pstmt = conn.prepareStatement("SELECT p.user_id, i.image_id, p.first_name, p.last_name, c.comm_date, c.text "
                 + "FROM usami.Profile p JOIN usami.Comment c USING (user_id) JOIN usami.Image i USING (image_id) "
-                + "WHERE i.image_id ='"+"12345"+"' ORDER BY c.comm_date DESC;");
+                + "WHERE i.image_id ='"+imgId+"' ORDER BY c.comm_date DESC;");
                 ResultSet rs = pstmt.executeQuery();
                 while (rs.next()){
                     comm = new CommentModel();
@@ -79,13 +83,13 @@ public class Comment extends HttpServlet {
                     comm.setComm_date(rs.getString("comm_date"));
                     comm.setText(rs.getString("text"));
                     allComm.add(comm);
-                }
+                }*/
                 
 //                CommentModel comm = new CommentModel(conn, "12345"); // send db and image_id
                 
-                request.setAttribute("allComm", allComm);
-                RequestDispatcher obj = request.getRequestDispatcher("art.jsp");
-                obj.forward(request, response);
+                response.sendRedirect("/Usami/View/?id="+imgId);
+                //request.setAttribute("allComm", allComm);
+                //obj.forward(request, response);
 //                response.sendRedirect("art.jsp");
                 
                 
