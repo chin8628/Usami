@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import static model.Hash.hashPassword;
 import model.Profiles;
+import model.User;
 import net.coobird.thumbnailator.Thumbnails;
 
 /**
@@ -58,7 +59,7 @@ public class ArtUpload extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             
             HttpSession se = request.getSession();
-            Profiles profile = (Profiles) se.getAttribute("user");
+            User profile = (User) se.getAttribute("user");
             
             Calendar calendar = Calendar.getInstance();
             
@@ -134,7 +135,7 @@ public class ArtUpload extends HttpServlet {
                     return;
                 }
             
-            response.sendRedirect("upload.jsp");
+            response.sendRedirect("/Usami/View/?id=" + artId);
             return;
         }
     }
