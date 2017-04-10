@@ -21,10 +21,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Art;
 import model.CommentModel;
 import model.Profiles;
-import sun.java2d.cmm.Profile;
+import model.User;
 
 /**
  *
@@ -50,6 +51,8 @@ public class View extends HttpServlet {
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
             
             PreparedStatement pstmt =  conn.prepareStatement(""
                     + "SELECT * "
@@ -63,7 +66,6 @@ public class View extends HttpServlet {
             Art art = new Art();
             Profiles profile = null;
             
-            
             if (rs.next()){
                 art.setUrl(rs.getString("image_url"));
                 art.setTitle(rs.getString("image_name"));
@@ -74,32 +76,47 @@ public class View extends HttpServlet {
                 art.setUpload_date(rs.getString("upload_date"));
                 
                 profile = new Profiles(conn, rs.getString("user_id"));
-                
-                
+ 
             }
 
             ArrayList<CommentModel> allComm = new ArrayList<>();
-                CommentModel comm;
+            CommentModel comm;
+
+            pstmt = conn.prepareStatement("SELECT p.user_id, i.image_id, p.first_name, p.last_name, c.comm_date, c.text, p.profile_image "
+            + "FROM usami.Profile p JOIN usami.Comment c USING (user_id) JOIN usami.Image i USING (image_id) "
+            + "WHERE i.image_id ='"+ request.getParameter("id")+"' ORDER BY c.comm_date DESC;");
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                comm = new CommentModel();
+                comm.setUsername(rs.getString("user_id"));
+                comm.setImage_id(rs.getString("image_id"));
+                comm.setFirst_name(rs.getString("first_name"));
+                comm.setLast_name(rs.getString("last_name"));
+                comm.setComm_date(rs.getString("comm_date"));
+                comm.setText(rs.getString("text"));
+                comm.setUrl_image(rs.getString("profile_image"));
+                allComm.add(comm);
+            }
+            
+            // Favorite Button
+            pstmt = conn.prepareStatement("SELECT COUNT(image_id) FROM usami.User_favorite WHERE image_id = ?");
+            pstmt.setString(1, request.getParameter("id"));
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                request.setAttribute("count", rs.getInt(1));
+            }
+            
+            pstmt = conn.prepareStatement("SELECT * FROM usami.User_favorite WHERE user_id = ? AND image_id = ?");
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, request.getParameter("id"));
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                request.setAttribute("btn-fav", "btn-success");
+            } else {
+                request.setAttribute("btn-fav", "btn-default");
+            }
                 
-                pstmt = conn.prepareStatement("SELECT p.user_id, i.image_id, p.first_name, p.last_name, c.comm_date, c.text, p.profile_image "
-                + "FROM usami.Profile p JOIN usami.Comment c USING (user_id) JOIN usami.Image i USING (image_id) "
-                + "WHERE i.image_id ='"+ request.getParameter("id")+"' ORDER BY c.comm_date DESC;");
-                rs = pstmt.executeQuery();
-                while (rs.next()){
-                    comm = new CommentModel();
-                    comm.setUsername(rs.getString("user_id"));
-                    comm.setImage_id(rs.getString("image_id"));
-                    comm.setFirst_name(rs.getString("first_name"));
-                    comm.setLast_name(rs.getString("last_name"));
-                    comm.setComm_date(rs.getString("comm_date"));
-                    comm.setText(rs.getString("text"));
-                    comm.setUrl_image(rs.getString("profile_image"));
-                    allComm.add(comm);
-                }
-                
-                
-                request.setAttribute("allComm", allComm);
-                
+            request.setAttribute("allComm", allComm);  
             request.setAttribute("art", art);
             request.setAttribute("owner", profile);
             RequestDispatcher obj = request.getRequestDispatcher("/art.jsp");
