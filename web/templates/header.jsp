@@ -50,7 +50,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="${SITE_URL}/profile.jsp">MyProfile</a></li>
-                            <li><a href="${SITE_URL}/storage.jsp">MyStorage</a></li>
+                            <li><a href="${SITE_URL}/Storage">MyStorage</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="${SITE_URL}/setting/profile.jsp">Edit profile</a></li>
                             <li><a href="${SITE_URL}/history.jsp">History</a></li>
