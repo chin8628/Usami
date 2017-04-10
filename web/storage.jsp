@@ -28,7 +28,7 @@
                             <div class="price">
                                 <p><%=art.getPrice()%></p>
                             </div>
-                            <button data-toggle="modal" data-target="#editModal" data-art-id="<%=art.getId()%>" data-art-title="<%=art.getTitle() %>" data-art-desc="<%=art.getDesc()%>" class="btn btn-success col-sm-12 btn-xs">EDIT</button>
+                            <button data-toggle="modal" data-target="#editModal" data-site-url="${SITE_URL}" data-art-id="<%=art.getId()%>" data-art-title="<%=art.getTitle() %>" data-art-desc="<%=art.getDesc()%>" class="btn btn-success col-sm-12 btn-xs">EDIT</button>
                         </ul>
                     </div>
                 </div>
@@ -65,9 +65,13 @@
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger">DELETE</button>
+                    <button type="submit" class="btn btn-danger" form="del-form">DELETE</button>
+                        
                     <button type="submit" class="btn btn-success">Save</button>
                 </div>
+            </form>
+            <form method="post" action="${SITE_URL}/DeleteArt" id="del-form">
+                        <input type="text" hidden="hidden" name="id" id="art-id2">
             </form>
             
         </div>
@@ -82,10 +86,13 @@ $('#editModal').on('show.bs.modal', function(e) {
     var title = $(e.relatedTarget).data('art-title');
     var desc = $(e.relatedTarget).data('art-desc');
     var id = $(e.relatedTarget).data('art-id');
+    var site = $(e.relatedTarget).data('site-url');
     
     $('#editModal').find('input#title').val(title);
     $('#editModal').find('textarea#desciption').val(desc);
     $('#editModal').find('input#art-id').val(id);
+    $('#editModal').find('input#art-id2').val(id);
+
 
 });
 </script>
