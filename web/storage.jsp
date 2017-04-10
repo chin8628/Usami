@@ -1,127 +1,42 @@
+<%@page import="model.Art"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
 
 <div class="col-sm-12">
     <div class="page-header">
-        <h1>MyStorage</h1>
+        <h1>My Storage</h1>
     </div>
-    <div class="col-sm-3 image-storage">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <ul class="nav nav-pills">
-                    <a href="${SITE_URL}/art.jsp">
-                        <p>
-                            <img src="${SITE_URL}/asset/img/art.jpg" class="
-                            img-responsive">
-                        </p>
-                        <div class="title">
-                            <p>
-                                <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                            </p>
-                        </div>
-                    </a>
-                    <div class="price">
-                        <p>$5.3</p>
+    <% ArrayList<Art> allArt = (ArrayList<Art>) request.getAttribute("allArt");
+   if(allArt != null){
+       for(Art art: allArt){ %>   
+            <div class="col-sm-3 image-storage">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <ul class="nav nav-pills">
+                            <a href="${SITE_URL}/View/?id=<%=art.getId()%>">
+                                <p>
+                                    <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="
+                                    img-responsive">
+                                </p>
+                                <div class="title">
+                                    <p>
+                                        <strong><%=art.getTitle()%></strong>
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="price">
+                                <p><%=art.getPrice()%></p>
+                            </div>
+                            <button data-toggle="modal" data-target="#editModal" class="btn btn-success col-sm-12 btn-xs">EDIT</button>
+                        </ul>
                     </div>
-                    <button data-toggle="modal" data-target="#editModal" class="btn btn-success col-sm-12 btn-xs">EDIT</button>
-                </ul>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="col-sm-3 image-storage">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <ul class="nav nav-pills">
-                    <a href="${SITE_URL}/art.jsp">
-                        <p>
-                            <img src="${SITE_URL}/asset/img/art.jpg" class="
-                            img-responsive">
-                        </p>
-                        <div class="title">
-                            <p>
-                                <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                            </p>
-                        </div>
-                    </a>
-                    <div class="price">
-                        <p>$5.3</p>
-                    </div>
-                    <button data-toggle="modal" data-target="#editModal" class="btn btn-success col-sm-12 btn-xs">EDIT</button>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-3 image-storage">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <ul class="nav nav-pills">
-                    <a href="${SITE_URL}/art.jsp">
-                        <p>
-                            <img src="${SITE_URL}/asset/img/art.jpg" class="
-                            img-responsive">
-                        </p>
-                        <div class="title">
-                            <p>
-                                <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                            </p>
-                        </div>
-                    </a>
-                    <div class="price">
-                        <p>NOT SELL</p>
-                    </div>
-                    <button data-toggle="modal" data-target="#editModal" class="btn btn-success col-sm-12 btn-xs">EDIT</button>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-3 image-storage">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <ul class="nav nav-pills">
-                    <a href="${SITE_URL}/art.jsp">
-                        <p>
-                            <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                        </p>
-                        <div class="title">
-                            <p>
-                                <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                            </p>
-                        </div>
-                    </a>
-                    <div class="price">
-                        <p>NOT SELL</p>
-                    </div>
-                    <button data-toggle="modal" data-target="#editModal" class="btn btn-success col-sm-12 btn-xs">EDIT</button>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-3 image-storage">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <ul class="nav nav-pills">
-                    <a href="${SITE_URL}/art.jsp">
-                        <p>
-                            <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                        </p>
-                        <div class="title">
-                            <p>
-                                <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                            </p>
-                        </div>
-                    </a>
-                    <div class="price">
-                        <p>NOT SELL</p>
-                    </div>
-                    <button data-toggle="modal" data-target="#editModal" class="btn btn-success col-sm-12 btn-xs">EDIT</button>
-                </ul>
-            </div>
-        </div>
-    </div>
+               <%}
+           }
+        %>
+    
 </div>
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
@@ -143,7 +58,7 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> Do you want to buy this art?
+                                <input type="checkbox"> Do you want to sell this art?
                             </label>
                         </div>
                     </form>
