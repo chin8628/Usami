@@ -69,6 +69,7 @@ public class Storage extends HttpServlet {
                 art.setUrl(rs.getString("image_url"));
                 art.setTitle(rs.getString("image_name"));
                 art.setId(rs.getString("image_id"));
+                art.setDesc(rs.getString("desc"));
                 art.setPrice("free");
                 
                 allArt.add(art);
