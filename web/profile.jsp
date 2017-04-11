@@ -23,11 +23,11 @@
             <h3><%= user.getUsername() %></h3>
             <p><%= profile.getFirst_name() %> <%= profile.getLast_name() %></p>
             <p><%= user.getEmail() %></p>
-            <a href="${SITE_URL}/follow.jsp">
+            <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
                 <h4>21</h4>
-                <small>Follower</small>
+                <small>Following</small>
             </a>
-            <a href="${SITE_URL}/follow.jsp">
+            <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
                 <h4>293</h4>
                 <small>Follower</small>
             </a>

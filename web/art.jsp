@@ -16,7 +16,7 @@
                 <div class="thumbnail">
                     <img src="${SITE_URL}/asset/img/avatar-img/<%=owner.getUrl_image()%>" class="img-responsive">
                 </div>
-                <p><%= owner.getFirst_name() + " " + owner.getLast_name() %></p>
+                    <p><a href="${SITE_URL}/ViewProfile/?id=<%= owner.getUsername() %>"><%= owner.getFirst_name() + " " + owner.getLast_name() %></a></p>
                 <p><span class="label label-default">Standard User</span></p>
                 <p><form action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>" method="POST">
                     <button class="btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %>" type="submit"><%= request.getAttribute("btn-follow-text") %></button>
