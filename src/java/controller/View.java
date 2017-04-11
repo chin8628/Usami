@@ -63,6 +63,7 @@ public class View extends HttpServlet {
             
             ResultSet rs = pstmt.executeQuery();
 
+            // View Arts
             Art art = new Art();
             Profiles profile = null;
             
@@ -79,6 +80,7 @@ public class View extends HttpServlet {
  
             }
 
+            //View Comments
             ArrayList<CommentModel> allComm = new ArrayList<>();
             CommentModel comm;
 
@@ -115,7 +117,28 @@ public class View extends HttpServlet {
             } else {
                 request.setAttribute("btn-fav", "btn-default");
             }
-                
+            
+            // Follow Button
+            
+            if (art.getUserId().equals(user.getUsername())) {
+                request.setAttribute("btn-show", "hidden");
+            } else {
+                pstmt = conn.prepareStatement("SELECT * FROM usami.User_follow WHERE user_id = ? AND follower_id = ?");
+                pstmt.setString(1, art.getUserId());
+                pstmt.setString(2, user.getUsername());
+
+                rs = pstmt.executeQuery();
+
+                if (rs.next()) {
+                    request.setAttribute("btn-follow", "btn-danger");
+                    request.setAttribute("btn-follow-text", "Unfollow");
+                } else {
+                    request.setAttribute("btn-follow", "btn-success");
+                    request.setAttribute("btn-follow-text", "Follow");
+                }
+                request.setAttribute("btn-show", "");
+            }
+ 
             request.setAttribute("allComm", allComm);  
             request.setAttribute("art", art);
             request.setAttribute("owner", profile);

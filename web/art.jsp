@@ -18,7 +18,9 @@
                 </div>
                 <p><%= owner.getFirst_name() + " " + owner.getLast_name() %></p>
                 <p><span class="label label-default">Standard User</span></p>
-                <p><button class="btn btn-success btn-sm" type="submit">Follow</button></p>
+                <p><form action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>" method="POST">
+                    <button class="btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %>" type="submit"><%= request.getAttribute("btn-follow-text") %></button>
+                </form></p>
             </div>
         </div>
     </div>
@@ -98,24 +100,13 @@
                                                 <img class="media-object" src="${SITE_URL}/asset/img/avatar-img/<%=comm.getUrl_image()%>">
                                             </div>
                                             <div class="media-body">
-                                                <p><a href="#"><%= comm.getFirst_name() %> <%= comm.getLast_name() %></a> <small><%= comm.getComm_date() %></small></p>
+                                                <p><a href="${SITE_URL}/ViewProfile/?id=<%= comm.getUsername() %>"><%= comm.getFirst_name() %> <%= comm.getLast_name() %></a> <small><%= comm.getComm_date() %></small></p>
                                                 <p><%= comm.getText() %></p>
                                             </div>
                                             <hr>
                                         </div>
                                 <% } %>
                             <% } %>
-
-<!--                            <div class="media comment-reply">
-                                <div class="media-left">
-                                    <img class="media-object" src="${SITE_URL}/asset/img/avatar.jpg">
-                                </div>
-                                <div class="media-body">
-                                    <p><a href="#">御免なさい＠単行本発売中</a> <small>12/25/2015 20:28</small></p>
-                                    <p>おのれDMMですか・・・。 ただ、まさかのそのDMMで先生の本 買えるようになったのはビビリました・・。</p>
-                                </div>
-                                <hr>
-                            </div>-->
                         </div>
                     </div>
                 </div>
