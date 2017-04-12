@@ -51,9 +51,7 @@ public class Index extends HttpServlet {
             ResultSet rs;
             
             pstmt =  conn.prepareStatement(""
-                    + "SELECT * "
-                    + "FROM usami.Image "
-                    + "ORDER BY upload_date DESC;");
+                    + "SELECT * FROM User_watch JOIN Image USING (image_id) GROUP BY (image_id) ORDER BY count(image_id) DESC LIMIT 8");
             
             rs = pstmt.executeQuery();
             

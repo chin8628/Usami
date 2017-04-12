@@ -31,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="${SITE_URL}/index.jsp">Usami</a>
+                <a class="navbar-brand" href="${SITE_URL}/Index">Usami</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
