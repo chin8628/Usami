@@ -21,7 +21,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Art;
+import model.Profiles;
+import model.User;
 
 /**
  *
@@ -44,7 +47,8 @@ public class Index extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
+            HttpSession session = request.getSession();
+            Profiles user = (Profiles) session.getAttribute("profile");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             PreparedStatement pstmt;
@@ -70,10 +74,7 @@ public class Index extends HttpServlet {
             }
             request.setAttribute("popArt", popArt);
             
-            pstmt =  conn.prepareStatement(""
-                    + "SELECT * "
-                    + "FROM usami.Image "
-                    + "ORDER BY upload_date DESC;");
+            pstmt =  conn.prepareStatement("SELECT * FROM User_follow JOIN Image USING (user_id) WHERE follower_id = '"+user.getUsername()+"' LIMIT 8");
             
             rs = pstmt.executeQuery();
             
