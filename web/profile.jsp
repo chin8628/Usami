@@ -1,5 +1,9 @@
+<%@page import="model.Profiles"%>
+<%@page import="model.User"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
+<% User user = (User) request.getAttribute("user"); 
+   Profiles profile = (Profiles) request.getAttribute("profile"); %>
 
 <div class="page-header">
     <h1>MyProfile</h1>
@@ -7,20 +11,23 @@
 
 <div class="panel panel-default">
     <div class="panel-body row" id="profile">
-        <div class="col-sm-3">
+        <div class="col-sm-3 text-center">
             <span class="thumbnail">
-                <img src="${SITE_URL}/asset/img/avatar2.jpg" class="img-responsive">
+                <img src="${SITE_URL}/asset/img/avatar-img/<%= profile.getUrl_image() %>" class="img-responsive">
             </span>
+            <p><form action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= user.getUsername() %>" method="POST">
+                <button class="btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %>" type="submit"><%= request.getAttribute("btn-follow-text") %></button>
+                </form></p>
         </div>
         <div class="col-sm-9" id="description">
-            <h3>chin8628</h3>
-            <p>Boonyarith Piriyothinkul</p>
-            <p>Email: 58070077@kmitl.ac.th</p>
-            <a href="${SITE_URL}/follow.jsp">
+            <h3><%= user.getUsername() %></h3>
+            <p><%= profile.getFirst_name() %> <%= profile.getLast_name() %></p>
+            <p><%= user.getEmail() %></p>
+            <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
                 <h4>21</h4>
-                <small>Follower</small>
+                <small>Following</small>
             </a>
-            <a href="${SITE_URL}/follow.jsp">
+            <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
                 <h4>293</h4>
                 <small>Follower</small>
             </a>

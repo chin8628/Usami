@@ -49,7 +49,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="${SITE_URL}/profile.jsp">MyProfile</a></li>
+                            <li><a href="${SITE_URL}/ViewProfile/?id=${sessionScope.user.getUsername()}">MyProfile</a></li>
                             <li><a href="${SITE_URL}/Storage">MyStorage</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="${SITE_URL}/setting/profile.jsp">Edit profile</a></li>
