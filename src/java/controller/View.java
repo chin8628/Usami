@@ -53,8 +53,18 @@ public class View extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
+            PreparedStatement pstmt;
             
-            PreparedStatement pstmt =  conn.prepareStatement(""
+            try{
+                pstmt = conn.prepareStatement("INSERT INTO usami.User_watch VALUES(?,?)");
+                pstmt.setString(1, user.getUsername());
+                pstmt.setString(2, request.getParameter("id"));
+                pstmt.executeUpdate();
+            } catch (Exception e){
+                
+            }
+            
+            pstmt =  conn.prepareStatement(""
                     + "SELECT * "
                     + "FROM usami.Image i "
                     + "JOIN usami.Profile p "
