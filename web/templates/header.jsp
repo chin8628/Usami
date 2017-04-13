@@ -7,6 +7,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="shortcut icon" href="${SITE_URL}/asset/img/favicon.ico">
     <link rel="stylesheet" href="${SITE_URL}/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="${SITE_URL}/asset/css/dataTables.bootstrap.min.css">
@@ -31,7 +34,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="${SITE_URL}/index.jsp">Usami</a>
+                <a class="navbar-brand" href="${SITE_URL}/Index">Usami</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

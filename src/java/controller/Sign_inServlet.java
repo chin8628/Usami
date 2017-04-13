@@ -73,7 +73,7 @@ public class Sign_inServlet extends HttpServlet {
                 User user = new User(conn, request.getParameter("username"));
                 session.setAttribute("user", user);
                 session.setAttribute("profile", profile);
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("/Usami/Index");
                 return;
             }
         
