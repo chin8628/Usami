@@ -57,12 +57,12 @@ public class ArtUpload extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
+
             HttpSession se = request.getSession();
             User profile = (User) se.getAttribute("user");
-            
+
             Calendar calendar = Calendar.getInstance();
-            
+
             String appPath = request.getServletContext().getRealPath("");
             String savePath = appPath + "/asset/img/art";
             String artName = request.getParameter("title");
@@ -76,32 +76,30 @@ public class ArtUpload extends HttpServlet {
 
             Part part = request.getPart("art");
             String fileName = profile.getUsername() + "_" + extractFileName(part);
-            
+
             ArrayList<String> acceptedFile = new ArrayList<String>();
             acceptedFile.add(".jpg");
             acceptedFile.add(".bmp");
             acceptedFile.add(".png");
             acceptedFile.add(".gif");
-            
-            
-            if(!acceptedFile.contains((fileName.substring(fileName.length()-4)).toLowerCase())) {
-                out.println((fileName.substring(fileName.length()-4)).toLowerCase());
+
+            if (!acceptedFile.contains((fileName.substring(fileName.length() - 4)).toLowerCase())) {
+                out.println((fileName.substring(fileName.length() - 4)).toLowerCase());
                 response.sendRedirect("Error.jsp");
                 return;
             }
-            
+
             fileName = new File(fileName).getName();
             part.write(savePath + File.separator + fileName);
-            
-            
-            try{
-                 BufferedImage bufferedImage;
+
+            try {
+                BufferedImage bufferedImage;
 
                 bufferedImage = ImageIO.read(new File(savePath + File.separator + fileName));
 
                 // create a blank, RGB, same width and height, and a white background
                 BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(),
-                            bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+                        bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
                 newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
 
                 // write to jpeg file
@@ -109,19 +107,19 @@ public class ArtUpload extends HttpServlet {
 
                 File file = new File(savePath + File.separator + fileName);
                 file.delete();
-                
-            } catch (Exception e) {
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
                 response.sendRedirect("Error.jsp");
                 return;
             }
-            
-            
+
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
-        
+
             PreparedStatement pstmt;
             try {
-                pstmt = conn.prepareStatement("INSERT INTO usami.Image VALUES(?,?,?,?,?,?)");
+                pstmt = conn.prepareStatement("INSERT INTO usami.image VALUES(?,?,?,?,?,?)");
                 pstmt.setString(1, artId);
                 pstmt.setString(2, artId + ".jpg");
                 pstmt.setString(3, artName);
@@ -129,29 +127,28 @@ public class ArtUpload extends HttpServlet {
                 pstmt.setTimestamp(5, new Timestamp(calendar.getTime().getTime()));
                 pstmt.setString(6, profile.getUsername());
                 pstmt.executeUpdate();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    response.sendRedirect("Error.jsp");
-                    return;
-                }
-            
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                response.sendRedirect("Error.jsp");
+                return;
+            }
+
             response.sendRedirect("/Usami/View/?id=" + artId);
             return;
         }
     }
 
-    
     private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
         for (String s : items) {
             if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length()-1);
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
             }
         }
         return "";
     }
-        
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
