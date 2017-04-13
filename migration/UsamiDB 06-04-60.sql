@@ -149,16 +149,6 @@ CREATE TABLE `Profile` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Profile`
---
-
-LOCK TABLES `Profile` WRITE;
-/*!40000 ALTER TABLE `Profile` DISABLE KEYS */;
-INSERT INTO `Profile` VALUES ('admin','Wirunpong','Jaingamlertwong',NULL,NULL),('bbellkungziiza','bbellkungziiza','',NULL,NULL),('eieiei','eiei','eiei',NULL,NULL),('feemkung','Feem','KunG',NULL,NULL);
-/*!40000 ALTER TABLE `Profile` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `Profile_focus`
 --
 
@@ -251,16 +241,6 @@ CREATE TABLE `User` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `User`
---
-
-LOCK TABLES `User` WRITE;
-/*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES ('admin','4C7E3DEA653CEEA8AA36CACB658BEB8FCB6CF9D90A289E6A1886AD5ACE63604E','admin@admin.com',0,'2013-09-04 13:30:00','STD'),('bbellkungziiza','4C7E3DEA653CEEA8AA36CACB658BEB8FCB6CF9D90A289E6A1886AD5ACE63604E','bbellkungziiza@hotmail.com',0,'2013-09-04 13:30:00','STD'),('eieiei','A741FBBDE4CF9FFE12B15913CD3E09459D775AC64DADEA3608AD8D98C905820B','eiei@hotmail.com',0,'2013-09-04 13:30:00','STD'),('feemkung','4C7E3DEA653CEEA8AA36CACB658BEB8FCB6CF9D90A289E6A1886AD5ACE63604E','feemkung@mmm.com',0,'2013-09-04 13:30:00','STD');
-/*!40000 ALTER TABLE `User` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `User_buy`

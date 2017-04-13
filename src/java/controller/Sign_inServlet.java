@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ public class Sign_inServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-            String sql_pstm = "SELECT user_id, email FROM user WHERE user_id = ? AND password = ?";
+            String sql_pstm = "SELECT user_id, email FROM user WHERE user_id = ? AND password = ?";      
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
@@ -61,20 +62,33 @@ public class Sign_inServlet extends HttpServlet {
                 
                 */
                 response.sendRedirect("/Usami");
-                return;
-            }else{
 
-                //give a token*******************
-                /*
+            }else{
+                Cookie user_coki;
                 
-                */
+                String uid = rs.getString("user_id");
+                String email = rs.getString("email");
+                
+                user_coki = new Cookie("user_id", uid);
+                user_coki.setMaxAge(60*5);
+                response.addCookie(user_coki);
+                
+                user_coki = new Cookie("email", email);
+                user_coki.setMaxAge(60*5);
+                response.addCookie(user_coki);
+                
+                user_coki = new Cookie("sign", hashPassword(uid+email));
+                user_coki.setMaxAge(60*5);
+                response.addCookie(user_coki);
+                
+
                 
                 Profiles profile = new Profiles(conn, request.getParameter("username"));
                 User user = new User(conn, request.getParameter("username"));
                 session.setAttribute("user", user);
                 session.setAttribute("profile", profile);
-                response.sendRedirect("index.jsp");
-                return;
+                response.sendRedirect("testcookie.jsp");
+
             }
         
     }
