@@ -29,7 +29,7 @@ import model.User;
  * @author Chiib_000
  */
 @WebServlet(name = "Sign_inServlet", urlPatterns = {"/Sign_inServlet"})
-public class Sign_inServlet extends HttpServlet {
+public class SignIn extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,54 +43,56 @@ public class Sign_inServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-            String sql_pstm = "SELECT user_id, email FROM user WHERE user_id = ? AND password = ?";      
-            
-            ServletContext ctx = getServletContext();
-            Connection conn = (Connection) ctx.getAttribute("connection");
-            PreparedStatement pstm = conn.prepareStatement(sql_pstm);
-            
-            pstm.setString(1, request.getParameter("username"));
-            pstm.setString(2, hashPassword(request.getParameter("password")));
-
-            ResultSet rs = pstm.executeQuery();
-            
-            HttpSession session = request.getSession();
-            
-            if(!rs.next()){
-                //add warning text when incorrect ************************
-                /*
-                
-                */
-                response.sendRedirect("/Usami");
-
-            }else{
-                Cookie user_coki;
-                
-                String uid = rs.getString("user_id");
-                String email = rs.getString("email");
-                
-                user_coki = new Cookie("user_id", uid);
-                user_coki.setMaxAge(60*5);
-                response.addCookie(user_coki);
-                
-                user_coki = new Cookie("email", email);
-                user_coki.setMaxAge(60*5);
-                response.addCookie(user_coki);
-                
-                user_coki = new Cookie("sign", hashPassword(uid+email));
-                user_coki.setMaxAge(60*5);
-                response.addCookie(user_coki);
-                
-
-                
-                Profiles profile = new Profiles(conn, request.getParameter("username"));
-                User user = new User(conn, request.getParameter("username"));
-                session.setAttribute("user", user);
-                session.setAttribute("profile", profile);
-                response.sendRedirect("testcookie.jsp");
-
-            }
         
+        String sql_pstm = "SELECT user_id, email FROM user WHERE user_id = ? AND password = ?";
+
+        ServletContext ctx = getServletContext();
+        Connection conn = (Connection) ctx.getAttribute("connection");
+        PreparedStatement pstm = conn.prepareStatement(sql_pstm);
+
+        pstm.setString(1, request.getParameter("username"));
+        pstm.setString(2, hashPassword(request.getParameter("password")));
+
+        ResultSet rs = pstm.executeQuery();
+
+        HttpSession session = request.getSession();
+
+        if (!rs.next()) {
+            //add warning text when incorrect ************************
+            /*
+            
+             */
+            response.sendRedirect("/Usami");
+
+        } else {
+            Cookie user_coki;
+
+            String uid = rs.getString("user_id");
+            String email = rs.getString("email");
+
+            user_coki = new Cookie("user_id", uid);
+            user_coki.setMaxAge(60 * 5);
+            user_coki.setSecure(true);
+            response.addCookie(user_coki);
+
+            user_coki = new Cookie("email", email);
+            user_coki.setMaxAge(60 * 5);
+            user_coki.setSecure(true);
+            response.addCookie(user_coki);
+
+            user_coki = new Cookie("sign", hashPassword(uid + email));
+            user_coki.setMaxAge(60 * 5);
+            user_coki.setSecure(true);
+            response.addCookie(user_coki);
+
+            Profiles profile = new Profiles(conn, request.getParameter("username"));
+            User user = new User(conn, request.getParameter("username"));
+            session.setAttribute("user", user);
+            session.setAttribute("profile", profile);
+            response.sendRedirect("index.jsp");
+
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -108,7 +110,7 @@ public class Sign_inServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Sign_inServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -126,7 +128,7 @@ public class Sign_inServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Sign_inServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
