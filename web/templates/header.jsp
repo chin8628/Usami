@@ -12,6 +12,7 @@
     <link rel="shortcut icon" href="${SITE_URL}/asset/img/favicon.ico">
     <link rel="stylesheet" href="${SITE_URL}/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="${SITE_URL}/asset/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="${SITE_URL}/asset/css/jquery.tagsinput.min.css">
     <link rel="stylesheet" href="${SITE_URL}/asset/css/style.css">
 
     <script src="${SITE_URL}/asset/js/jquery-3.2.0.min.js"></script>
@@ -19,6 +20,7 @@
     <script src="${SITE_URL}/asset/js/jquery.dataTables.min.js"></script>
     <script src="${SITE_URL}/asset/js/dataTables.bootstrap.min.js"></script>
     <script src="${SITE_URL}/asset/js/Chart.min.js"></script>
+    <script src="${SITE_URL}/asset/js/jquery.tagsinput.min.js"></script>
 
     <title>Usami | Marketplace of Creative</title>
 </head>
