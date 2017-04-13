@@ -54,17 +54,19 @@ public class ViewProfile extends HttpServlet {
             
             User userInPage = new User(conn, id);
             Profiles profileInPage = new Profiles(conn, id);
+            PreparedStatement pstmt;
+            ResultSet rs;
             
             if (user.getUsername().equals(id)) {
                 request.setAttribute("btn-show", "hidden");
                 
             } else {
                 // Check follow
-                PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM usami.User_follow WHERE user_id = ? AND follower_id = ?");
+                pstmt = conn.prepareStatement("SELECT * FROM usami.User_follow WHERE user_id = ? AND follower_id = ?");
                 pstmt.setString(1, id);
                 pstmt.setString(2, user.getUsername());
 
-                ResultSet rs = pstmt.executeQuery();
+                rs = pstmt.executeQuery();
 
                 if (rs.next()) {
                     request.setAttribute("btn-follow", "btn-danger");
@@ -76,7 +78,22 @@ public class ViewProfile extends HttpServlet {
                 request.setAttribute("btn-show", "");
             }
             
+            // Count Follower
+            pstmt = conn.prepareStatement("SELECT COUNT(follower_id) FROM usami.User_follow WHERE user_id = ?");
+            pstmt.setString(1, id);
             
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                request.setAttribute("countFollower", rs.getInt(1));
+            }
+            
+            pstmt = conn.prepareStatement("SELECT COUNT(user_id) FROM usami.User_follow WHERE follower_id = ?");
+            pstmt.setString(1, id);
+            
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                request.setAttribute("countFollowing", rs.getInt(1));
+            }
             
             request.setAttribute("user", userInPage);
             request.setAttribute("profile", profileInPage);

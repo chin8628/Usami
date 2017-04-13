@@ -24,11 +24,11 @@
             <p><%= profile.getFirst_name() %> <%= profile.getLast_name() %></p>
             <p><%= user.getEmail() %></p>
             <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
-                <h4>21</h4>
+                <h4><%= request.getAttribute("countFollowing") %></h4>
                 <small>Following</small>
             </a>
             <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
-                <h4>293</h4>
+                <h4><%= request.getAttribute("countFollower") %></h4>
                 <small>Follower</small>
             </a>
         </div>
