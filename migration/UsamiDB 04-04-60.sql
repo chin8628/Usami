@@ -257,7 +257,6 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES ('bbellkungziiza','04723','bbellkungziiza@hotmail.com',0,'2013-09-04 13:30:00','STD'),('eiei','ei','eiei@hotmail.com',0,'2013-09-04 13:30:00','STD'),('sweetbellza','04723','sweetbellza@hotmail.com',0,'2013-09-04 13:30:00','STD'),('test','1234','vampirefeem@gmail.com',0,'2013-09-04 13:30:00','STD');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
