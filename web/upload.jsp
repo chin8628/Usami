@@ -24,8 +24,15 @@
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="sell"> Do you want to sell this art?
+                    <input type="checkbox" id="sell" name="sell"> Do you want to sell this art?
                 </label>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    <input type="number" class="form-control" id="price" name="price" aria-label="Amount (to the nearest dollar)" disabled>
+                </div>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
@@ -33,11 +40,19 @@
 </div>
 
 <script>
-    $('#tags').tagsInput({
-        'width': "auto",
-        'height': "auto",
-        'delimiter': [',']
-    });
+$('#tags').tagsInput({
+    'width': "auto",
+    'height': "auto",
+    'delimiter': [',']
+});
+
+$('#sell').click(function(event) {
+    if ($(this).is(':checked') == true) {
+        $('#price').prop( "disabled", false );
+    } else {
+        $('#price').prop( "disabled", true ).val(null);
+    }
+});
 </script>
 
 <jsp:include page="templates/footer.jsp" />
