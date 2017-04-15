@@ -18,6 +18,10 @@
                 <label for="desciption">Description</label>
                 <textarea class="form-control" id="desciption" name="desc" placeholder="Please tell us about your brilliant art!"></textarea>
             </div>
+            <div class="form-group">
+                <label for="tags">Tags (Seperate each tag by comma)</label>
+                <input type="tags" class="form-control" id="tags" name="tags">
+            </div>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" name="sell"> Do you want to sell this art?
@@ -27,5 +31,13 @@
         </form>
     </div>
 </div>
+
+<script>
+    $('#tags').tagsInput({
+        'width': "auto",
+        'height': "auto",
+        'delimiter': [',']
+    });
+</script>
 
 <jsp:include page="templates/footer.jsp" />
