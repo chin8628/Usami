@@ -122,3 +122,9 @@ footer {
     resize:vertical;
     height: 30vh;
 }
+
+
+/* TAGS PAGE */
+.tag {
+    display: inline-block;
+}
