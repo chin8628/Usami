@@ -53,15 +53,16 @@ public class View extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
-            PreparedStatement pstmt;
             
+            PreparedStatement pstmt, pstmt2;
+            ResultSet rs, rs2;
             try{
                 pstmt = conn.prepareStatement("INSERT INTO usami.User_watch VALUES(?,?)");
                 pstmt.setString(1, user.getUsername());
                 pstmt.setString(2, request.getParameter("id"));
                 pstmt.executeUpdate();
             } catch (Exception e){
-                
+                e.printStackTrace();
             }
             
             pstmt =  conn.prepareStatement(""
@@ -71,7 +72,7 @@ public class View extends HttpServlet {
                     + "USING (user_id) "
                     + "WHERE image_id = '" + request.getParameter("id") +"';");
             
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
 
             // View Arts
             Art art = new Art();
@@ -148,7 +149,24 @@ public class View extends HttpServlet {
                 }
                 request.setAttribute("btn-show", "");
             }
- 
+            
+            //Show Tag
+            pstmt = conn.prepareStatement("SELECT * FROM usami.Tag_has WHERE image_id = ?;");
+            pstmt.setString(1, request.getParameter("id"));
+            
+            ArrayList<String> allTag = new ArrayList<>();
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                pstmt2 = conn.prepareStatement("SELECT tag_name FROM usami.Tag WHERE tag_id = ?;");
+                pstmt2.setInt(1, rs.getInt("tag_id"));
+                
+                rs2 = pstmt2.executeQuery();
+                if (rs2.next()) {
+                    allTag.add(rs2.getString("tag_name"));
+                }
+            }
+            
+            request.setAttribute("allTag", allTag);
             request.setAttribute("allComm", allComm);  
             request.setAttribute("art", art);
             request.setAttribute("owner", profile);
