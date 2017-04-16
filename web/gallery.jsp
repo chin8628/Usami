@@ -1,49 +1,33 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="templates/header.jsp" />
 
 <div class="col-sm-12">
     <div class="page-header">
-        <h1>Tag name</h1>
+        <h1>#${requestScope.tag_name}</h1>
     </div>
-    <div class="col-sm-3 image-storage">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <ul class="nav nav-pills">
-                    <a href="${SITE_URL}/View/?id=${art.getId()}">
-                        <p><img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive"></p>
-                    </a>
-                    <div class="title">
+    
+    <c:forEach var="art" items="${requestScope.arts}">
+        <div class="col-sm-3 image-storage">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <ul class="nav nav-pills">
                         <a href="${SITE_URL}/View/?id=${art.getId()}">
-                            <p><strong>Art's name</strong></p>
+                            <p><img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive"></p>
                         </a>
-                        <a href="${SITE_URL}/ViewProfile/?id=admin">
-                            <p>Artist's name</p>
-                        </a>
-                    </div>
-                </ul>
+                        <div class="title">
+                            <a href="${SITE_URL}/View/?id=${art.getId()}">
+                                <p><strong>${art.getTitle()}</strong></p>
+                            </a>
+                            <a href="${SITE_URL}/ViewProfile/?id=admin">
+                                <p>Artist's name</p>
+                            </a>
+                        </div>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-3 image-storage">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <ul class="nav nav-pills">
-                    <a href="${SITE_URL}/View/?id=${art.getId()}">
-                        <p><img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive"></p>
-                    </a>
-                    <div class="title">
-                        <a href="${SITE_URL}/View/?id=${art.getId()}">
-                            <p><strong>Art's name</strong></p>
-                        </a>
-                        <a href="${SITE_URL}/ViewProfile/?id=admin">
-                            <p>Artist's name</p>
-                        </a>
-                    </div>
-                </ul>
-            </div>
-        </div>
-    </div>
+    </c:forEach>
 </div>
 
 <jsp:include page="templates/footer.jsp" />
