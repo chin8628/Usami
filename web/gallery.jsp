@@ -11,24 +11,16 @@
             <div class="panel-body">
                 <ul class="nav nav-pills">
                     <a href="${SITE_URL}/View/?id=${art.getId()}">
-                        <p><img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive"></p>
-                        <div class="title">
-                            <p><strong>${art.getTitle()}</strong></p>
-                        </div>
+                        <p><img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive"></p>
                     </a>
-                    <div class="price">
-                        <p>${art.getPrice()}</p>
+                    <div class="title">
+                        <a href="${SITE_URL}/View/?id=${art.getId()}">
+                            <p><strong>Art's name</strong></p>
+                        </a>
+                        <a href="${SITE_URL}/ViewProfile/?id=admin">
+                            <p>Artist's name</p>
+                        </a>
                     </div>
-                    <button
-                        data-toggle="modal"
-                        data-target="#${art.getId()}-modal"
-                        data-site-url="${SITE_URL}"
-                        data-art-id="${art.getId()}"
-                        data-art-title="${art.getTitle()}"
-                        data-art-desc="${art.getDesc()}"
-                        class="btn btn-success col-sm-12 btn-xs">
-                        EDIT
-                    </button>
                 </ul>
             </div>
         </div>
@@ -38,24 +30,16 @@
             <div class="panel-body">
                 <ul class="nav nav-pills">
                     <a href="${SITE_URL}/View/?id=${art.getId()}">
-                        <p><img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive"></p>
-                        <div class="title">
-                            <p><strong>${art.getTitle()}</strong></p>
-                        </div>
+                        <p><img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive"></p>
                     </a>
-                    <div class="price">
-                        <p>${art.getPrice()}</p>
+                    <div class="title">
+                        <a href="${SITE_URL}/View/?id=${art.getId()}">
+                            <p><strong>Art's name</strong></p>
+                        </a>
+                        <a href="${SITE_URL}/ViewProfile/?id=admin">
+                            <p>Artist's name</p>
+                        </a>
                     </div>
-                    <button
-                        data-toggle="modal"
-                        data-target="#${art.getId()}-modal"
-                        data-site-url="${SITE_URL}"
-                        data-art-id="${art.getId()}"
-                        data-art-title="${art.getTitle()}"
-                        data-art-desc="${art.getDesc()}"
-                        class="btn btn-success col-sm-12 btn-xs">
-                        EDIT
-                    </button>
                 </ul>
             </div>
         </div>
