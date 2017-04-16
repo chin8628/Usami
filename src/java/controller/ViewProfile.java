@@ -87,6 +87,8 @@ public class ViewProfile extends HttpServlet {
                 request.setAttribute("countFollower", rs.getInt(1));
             }
             
+            
+            // Count Following
             pstmt = conn.prepareStatement("SELECT COUNT(user_id) FROM usami.User_follow WHERE follower_id = ?");
             pstmt.setString(1, id);
             
