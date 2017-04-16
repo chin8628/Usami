@@ -38,26 +38,20 @@
                     <p><%=art.getDesc()%></p>
                 </div>
 
+                <!--Set Tag-->
                 <div class="col-sm-12">
                     <div id="tag-group">
-                        <a href="#">
-                            <span class="label label-info tag">
-                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> KanColle
-                            </span>
-                        </a>
-                        <a href="#">
-                            <span class="label label-info tag">
-                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Kantai Collection
-                            </span>
-                        </a>
-                        <a href="#">
-                            <span class="label label-info tag">
-                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Girl Sad
-                            </span>
-                        </a>
+                        <c:forEach var="tag" items="${requestScope.allTag}">
+                            <a href="#">
+                                <span class="label label-info tag">
+                                    <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> ${tag}
+                                </span>
+                            </a>
+                        </c:forEach>
                     </div>
                 </div>
 
+                <!--View Arts-->
                 <div class="col-sm-12">
                     <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="img-responsive">
                 </div>

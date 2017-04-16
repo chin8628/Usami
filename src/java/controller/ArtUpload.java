@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -117,7 +118,8 @@ public class ArtUpload extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
 
-            PreparedStatement pstmt;
+            PreparedStatement pstmt, pstmt2;
+            ResultSet rs, rs2;
             try {
                 pstmt = conn.prepareStatement("INSERT INTO usami.image VALUES(?,?,?,?,?,?)");
                 pstmt.setString(1, artId);
@@ -127,6 +129,38 @@ public class ArtUpload extends HttpServlet {
                 pstmt.setTimestamp(5, new Timestamp(calendar.getTime().getTime()));
                 pstmt.setString(6, profile.getUsername());
                 pstmt.executeUpdate();
+                
+                // Set Tag
+                String[] tags = request.getParameter("tags").split(",");
+                for (String tag: tags) {
+                    pstmt = conn.prepareStatement("SELECT * FROM usami.Tag WHERE tag_name = ?;");
+                    pstmt.setString(1, tag);
+                    
+                    rs = pstmt.executeQuery();
+                    int tag_id = 0;
+                    if (!rs.next()) {
+                        pstmt2 = conn.prepareStatement("INSERT INTO usami.Tag(tag_name) VALUES(?);");
+                        pstmt2.setString(1, tag);
+                        pstmt2.executeUpdate();
+                        
+                        pstmt2 = conn.prepareStatement("SELECT * FROM usami.Tag WHERE tag_name = ?;");
+                        pstmt2.setString(1, tag);
+                        rs2 = pstmt.executeQuery();
+                        if (rs2.next()) {
+                            tag_id = rs2.getInt("tag_id");
+                        }
+                        
+                    } else {
+                        tag_id = rs.getInt("tag_id");
+                    }
+                    
+                    pstmt = conn.prepareStatement("INSERT INTO usami.Tag_has VALUES(?,?);");
+                    pstmt.setInt(1, tag_id);
+                    pstmt.setString(2, artId);
+                    pstmt.executeUpdate();
+                    
+                }
+                
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 response.sendRedirect("Error.jsp");
