@@ -49,7 +49,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign In</div>
             <div class="panel-body">
-                <form action="${SITE_URL}/Sign_inServlet" method="POST" >
+                <form action="${SITE_URL}/SignIn" method="POST" >
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" name="username">
