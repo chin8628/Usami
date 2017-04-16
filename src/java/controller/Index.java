@@ -93,6 +93,25 @@ public class Index extends HttpServlet {
             }
             request.setAttribute("folArt", folArt);
             
+            // Count Follower
+            pstmt = conn.prepareStatement("SELECT COUNT(follower_id) FROM usami.User_follow WHERE user_id = ?");
+            pstmt.setString(1, user.getUsername());
+            
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                request.setAttribute("countFollower", rs.getInt(1));
+            }
+            
+            
+            // Count Following
+            pstmt = conn.prepareStatement("SELECT COUNT(user_id) FROM usami.User_follow WHERE follower_id = ?");
+            pstmt.setString(1, user.getUsername());
+            
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                request.setAttribute("countFollowing", rs.getInt(1));
+            }
+            
             RequestDispatcher obj = request.getRequestDispatcher("index.jsp");
             obj.forward(request, response);
             

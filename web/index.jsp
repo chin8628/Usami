@@ -13,11 +13,11 @@
             </div>
             <p><span class="label label-default">Standard User</span></p>
             <p><strong>${sessionScope.profile.getFirst_name()} ${sessionScope.profile.getLast_name()}</strong></p>
-            <a href="${SITE_URL}/follow.jsp">
+            <a href="${SITE_URL}/ViewFollow/?id=${sessionScope.user.getUsername()}">
                 <small>Follower</small>
-                <h4>21</h4>
+                <h4>${requestScope.countFollower}</h4>
                 <small>Following</small>
-                <h4>203</h4>
+                <h4>${requestScope.countFollowing}</h4>
             </a>
         </div>
     </div>
