@@ -56,11 +56,11 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="text" class="form-control" name="title" placeholder="Art's name" value="進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」">
+                                <input type="text" class="form-control" name="title" placeholder="Art's name" value="${art.getTitle()}">
                             </div>
                             <div class="form-group">
                                 <label for="desciption">Description</label>
-                                <textarea class="form-control" name="desc" placeholder="Please tell us about your brilliant art!">やっぱりダメでした。ということで乗り遅れもなんのそのやっと艦これはじめました。乗り遅れていたのでいじけて「艦これなんて…ふん！」とか思ってたのですが、試しにやってみたら…初雪の可愛さに撃沈しました。初雪のキャラがすごくいい味出ていて、堪りませんが止まりません。そんな初雪はどうやら一部の層にだけ人気があるくらいで存在感がないご様子？なぜだ！あんなに可愛いのに！今のところ私のお気に入りの艦娘は初雪と望月です。どっちもダメっぽいけど頑張るときはちゃんと頑張るやればできる娘達だと思います。仕事に支障きたすレベルにハマらないよう注意しながら初雪に「やだ…触らないで」と言われながら望月の肩をモミモミして生きて逝きたいと思います。おのれDMMめ…おのれ角川め…</textarea>
+                                <textarea class="form-control" name="desc" placeholder="Please tell us about your brilliant art!">${art.getDesc()}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="tags">Tags (Seperate each tag by comma)</label>
@@ -84,7 +84,7 @@
                             <button type="submit" class="btn btn-success">Save</button>
                         </div>
                     </form>
-                    <form method="post" action="${SITE_URL}/DeleteArt" id="del-form">
+                    <form method="post" action="${SITE_URL}/DeleteArt/?id=${art.getId()}" id="del-form">
                         <input type="text" hidden="hidden" name="id" id="art-id2">
                     </form>
                 </div>

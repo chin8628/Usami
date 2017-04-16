@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author frostnoxia
  */
-@WebServlet(name = "DeleteArt", urlPatterns = {"/DeleteArt"})
+@WebServlet(name = "DeleteArt", urlPatterns = {"/DeleteArt/"})
 public class DeleteArt extends HttpServlet {
 
     /**
