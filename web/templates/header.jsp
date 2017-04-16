@@ -44,6 +44,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="${SITE_URL}/Market">Market</a></li>
                     <li><a href="${SITE_URL}/upload.jsp">Upload</a></li>
+                    <li><a href="${SITE_URL}/tags.jsp">Tags</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="${SITE_URL}/administrator/index.jsp">Admin</a></li>
