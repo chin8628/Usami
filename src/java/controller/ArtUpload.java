@@ -98,26 +98,28 @@ public class ArtUpload extends HttpServlet {
 
                 Thumbnails.of(new File(savePath + File.separator + fileName))
                         .scale(1.0)
-                        .toFile(new File(savePath + File.separator + artId + ".original" + ".jpg"));
+                        .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".original" + ".jpg"));
                 
-                BufferedImage bimg = ImageIO.read(new File(savePath + File.separator + artId + ".original" + ".jpg"));
+                BufferedImage bimg = ImageIO.read(new File(savePath + File.separator + "protected" + File.separator + artId + ".original" + ".jpg"));
                 int width = bimg.getWidth();
                 int height = bimg.getHeight();
                 
+                File oriArt = new File(savePath + File.separator + fileName);
+                
                 if(width > height) {
                         if(width >= 1920) {
-                            Thumbnails.of(new File(savePath + File.separator + fileName))
+                            Thumbnails.of(oriArt)
                                 .size(1920, 1080)
-                                .toFile(new File(savePath + File.separator + artId + ".resized" + ".jpg"));
-                            Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".resized" + ".jpg"));
+                            Thumbnails.of(oriArt)
                                 .size(1920, 1080)
                                 .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
                                 .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
                         } else {
-                            Thumbnails.of(new File(savePath + File.separator + fileName))
+                            Thumbnails.of(oriArt)
                                 .scale(1.0)
-                                .toFile(new File(savePath + File.separator + artId + ".resized" + ".jpg"));
-                            Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".resized" + ".jpg"));
+                            Thumbnails.of(oriArt)
                                 .scale(1.0)
                                 .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
                                 .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
@@ -125,18 +127,18 @@ public class ArtUpload extends HttpServlet {
                     
                 } else {
                     if(height >= 1920) {
-                        Thumbnails.of(new File(savePath + File.separator + fileName))
+                        Thumbnails.of(oriArt)
                                 .size(1080, 1920)
-                                .toFile(new File(savePath + File.separator + artId + ".resized" + ".jpg"));
-                        Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".resized" + ".jpg"));
+                        Thumbnails.of(oriArt)
                                 .size(1080, 1920)
                                 .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
                                 .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
                     } else {
-                        Thumbnails.of(new File(savePath + File.separator + fileName))
+                        Thumbnails.of(oriArt)
                                 .scale(1.0)
-                                .toFile(new File(savePath + File.separator + artId + ".resized" + ".jpg"));
-                        Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".resized" + ".jpg"));
+                        Thumbnails.of(oriArt)
                                 .scale(1.0)
                                 .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
                                 .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
