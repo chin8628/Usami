@@ -15,12 +15,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -31,10 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import static model.Hash.hashPassword;
-import model.Profiles;
+import model.ArtTag;
 import model.User;
-import net.coobird.thumbnailator.Thumbnails;
 
 /**
  *
@@ -118,8 +112,7 @@ public class ArtUpload extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
 
-            PreparedStatement pstmt, pstmt2;
-            ResultSet rs, rs2;
+            PreparedStatement pstmt;
             try {
                 pstmt = conn.prepareStatement("INSERT INTO usami.image VALUES(?,?,?,?,?,?)");
                 pstmt.setString(1, artId);
@@ -133,31 +126,11 @@ public class ArtUpload extends HttpServlet {
                 // Set Tag
                 String[] tags = request.getParameter("tags").split(",");
                 for (String tag: tags) {
-                    pstmt = conn.prepareStatement("SELECT * FROM usami.Tag WHERE tag_name = ?;");
-                    pstmt.setString(1, tag);
-                    
-                    rs = pstmt.executeQuery();
-                    int tag_id = 0;
-                    if (!rs.next()) {
-                        pstmt2 = conn.prepareStatement("INSERT INTO usami.Tag(tag_name) VALUES(?);");
-                        pstmt2.setString(1, tag);
-                        pstmt2.executeUpdate();
-                        
-                        pstmt2 = conn.prepareStatement("SELECT * FROM usami.Tag WHERE tag_name = ?;");
-                        pstmt2.setString(1, tag);
-                        rs2 = pstmt.executeQuery();
-                        if (rs2.next()) {
-                            tag_id = rs2.getInt("tag_id");
-                        }
-                        
-                    } else {
-                        tag_id = rs.getInt("tag_id");
+                    ArtTag artTag = new ArtTag(conn, tag);
+                    if (artTag.getTag_id() == 0) {
+                        artTag.insertTag();
                     }
-                    
-                    pstmt = conn.prepareStatement("INSERT INTO usami.Tag_has VALUES(?,?);");
-                    pstmt.setInt(1, tag_id);
-                    pstmt.setString(2, artId);
-                    pstmt.executeUpdate();
+                    artTag.insertTag_has(artId);
                     
                 }
                 

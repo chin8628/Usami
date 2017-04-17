@@ -36,19 +36,26 @@ public class DeleteArt extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            String id = request.getParameter("id");
+            String id = request.getParameter("id2");
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM usami.Image WHERE image_id = ?;");
-            pstmt.setString(1, id);
-            pstmt.executeUpdate();
+            PreparedStatement pstmt;
+            try {
+                pstmt = conn.prepareStatement("DELETE FROM usami.Image WHERE image_id = ?;");
+                pstmt.setString(1, id);
+                pstmt.executeUpdate();
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
             
             response.sendRedirect("/Usami/Storage");
             
@@ -71,7 +78,7 @@ public class DeleteArt extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(DeleteArt.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -89,7 +96,7 @@ public class DeleteArt extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(DeleteArt.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

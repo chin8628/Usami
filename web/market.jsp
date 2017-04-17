@@ -24,36 +24,38 @@
         </div>
     </div>
 
-    <div class="col-sm-9">             
-        <% ArrayList<Art> allArt = (ArrayList<Art>) request.getAttribute("allArt");
-           if(allArt != null){
-               for(Art art: allArt){ %>             
+    <div class="col-sm-9">
+        
+           <c:if test="${requestScope.allArt != null}">
+                <c:forEach var="art" items="${requestScope.allArt}">         
                     <div class="col-sm-4 image-product">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <ul class="nav nav-pills">
-                                    <a href="${SITE_URL}/View/?id=<%=art.getId()%>">
+                                    <a href="${SITE_URL}/View/?id=${art.getId()}">
                                         <p>
-                                            <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="
+                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="
                                             img-responsive thumbnail">
                                         </p>
                                         <div class="title">
                                             <p>
-                                                <strong><%=art.getTitle()%></strong>
+                                                <strong>${art.getTitle()}</strong>
                                             </p>
                                         </div>
                                     </a>
+                                    <a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">
+                                        <p>${art.getFullname()}</p>
+                                    </a>
                                     <div class="price">
-                                        <p><%=art.getPrice()%></p>
+                                        <p>${art.getPrice()}</p>
                                     </div>
                                     <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
                                 </ul>
                             </div>
                         </div>
                     </div>
-               <%}
-           }
-        %>
+                </c:forEach>
+           </c:if>
 
     </div>
 </div>

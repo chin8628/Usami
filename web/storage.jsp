@@ -64,7 +64,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="tags">Tags (Seperate each tag by comma)</label>
-                                <input type="tags" class="form-control" id="${art.getId()}-tags" name="tags">
+                                <input type="tags" class="form-control" id="${art.getId()}-tags" name="tags" value="${art.getAllTag()}">
                             </div>
                             <div class="checkbox">
                                 <label>
@@ -80,12 +80,11 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger" form="del-form">DELETE</button>
+                            <button type="submit" class="btn btn-danger" form="del-form" name="id2" value="${art.getId()}">DELETE</button>
                             <button type="submit" class="btn btn-success">Save</button>
                         </div>
                     </form>
-                    <form method="post" action="${SITE_URL}/DeleteArt/?id=${art.getId()}" id="del-form">
-                        <input type="text" hidden="hidden" name="id" id="art-id2">
+                    <form method="post" action="${SITE_URL}/DeleteArt/" id="del-form">
                     </form>
                 </div>
             </div>

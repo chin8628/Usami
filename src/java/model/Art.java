@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.sql.*;
+
 /**
  *
  * @author frostnoxia
@@ -18,9 +20,61 @@ public class Art {
     private String userId;
     private String desc;
     private String upload_date;
+    private String fullname;
+    private String allTag;
+    private Connection conn;
 
-    public Art() {
+    public Art(Connection conn, String image_id) {
         
+        try {
+            
+            this.conn = conn;
+            
+            PreparedStatement pstmt;
+            ResultSet rs;
+            
+            pstmt = this.conn.prepareStatement("SELECT * FROM usami.Image WHERE image_id = ?");
+            pstmt.setString(1, image_id);
+            
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                this.id = image_id;
+                this.title = rs.getString("image_name");
+                this.url = rs.getString("image_url");
+                this.desc = rs.getString("desc");
+                this.upload_date = rs.getString("upload_date");
+                this.userId = rs.getString("user_id");
+            }
+            
+            pstmt = this.conn.prepareStatement("SELECT * FROM usami.Profile WHERE user_id = ?");
+            pstmt.setString(1, this.userId);
+            
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                this.fullname = rs.getString("first_name") + " " + rs.getString("last_name");
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void updateArts(String image_id) {
+        try {
+            PreparedStatement pstmt = this.conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?");
+            pstmt.setString(1, this.title);
+            pstmt.setString(2, this.desc);
+            pstmt.setString(3, image_id);
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void getCurrentTags() {
+        ArtTag artTag = new ArtTag(this.conn, id, true);
+        this.allTag = artTag.getAllTag();
     }
 
     public String getUpload_date() {
@@ -77,6 +131,22 @@ public class Art {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getAllTag() {
+        return allTag;
+    }
+
+    public void setAllTag(String allTag) {
+        this.allTag = allTag;
     }
     
     

@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
+import model.ArtTag;
 import model.CommentModel;
 import model.Profiles;
 import model.User;
@@ -54,8 +55,8 @@ public class View extends HttpServlet {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
             
-            PreparedStatement pstmt, pstmt2;
-            ResultSet rs, rs2;
+            PreparedStatement pstmt;
+            ResultSet rs;
             try{
                 pstmt = conn.prepareStatement("INSERT INTO usami.User_watch VALUES(?,?)");
                 pstmt.setString(1, user.getUsername());
@@ -75,17 +76,12 @@ public class View extends HttpServlet {
             rs = pstmt.executeQuery();
 
             // View Arts
-            Art art = new Art();
             Profiles profile = null;
+            Art art = null;
             
             if (rs.next()){
-                art.setUrl(rs.getString("image_url"));
-                art.setTitle(rs.getString("image_name"));
-                art.setId(rs.getString("image_id"));
+                art = new Art(conn, rs.getString("image_id"));
                 art.setPrice("free");
-                art.setUserId(rs.getString("user_id"));
-                art.setDesc(rs.getString("desc"));
-                art.setUpload_date(rs.getString("upload_date"));
                 
                 profile = new Profiles(conn, rs.getString("user_id"));
  
@@ -157,13 +153,10 @@ public class View extends HttpServlet {
             ArrayList<String> allTag = new ArrayList<>();
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                pstmt2 = conn.prepareStatement("SELECT tag_name FROM usami.Tag WHERE tag_id = ?;");
-                pstmt2.setInt(1, rs.getInt("tag_id"));
                 
-                rs2 = pstmt2.executeQuery();
-                if (rs2.next()) {
-                    allTag.add(rs2.getString("tag_name"));
-                }
+                ArtTag tag = new ArtTag(conn, rs.getInt("tag_id"));
+                allTag.add(tag.getTag_name());
+                
             }
             
             request.setAttribute("allTag", allTag);

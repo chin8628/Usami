@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.ArtTag;
 
 /**
  *
@@ -49,13 +50,17 @@ public class Tag extends HttpServlet {
             ArrayList<String> allTag = new ArrayList<>();
             
             try {
+                
                 pstmt = conn.prepareStatement("SELECT * FROM usami.Tag");
                 rs = pstmt.executeQuery();
-                
                 while (rs.next()) {
-                    allTag.add(rs.getString("tag_name"));
+                    ArtTag artTag = new ArtTag(conn, rs.getString("tag_name"));
+                    if (artTag.checkCountTag()) {
+                        allTag.add(artTag.getTag_name());
+                    } else {
+                        artTag.deleteTag();
+                    }
                 }
-                
                 request.setAttribute("allTag", allTag);
             } catch (SQLException ex) {
                 ex.printStackTrace();

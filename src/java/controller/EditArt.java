@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.ArtTag;
 import model.Profiles;
 
 /**
@@ -38,7 +39,7 @@ public class EditArt extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
@@ -48,15 +49,36 @@ public class EditArt extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            String id = request.getParameter("id");
+            String artId = request.getParameter("id");
             String title = request.getParameter("title");
             String desc = request.getParameter("desc");
+            String[] allTag = request.getParameter("tags").split(",");
             
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?;");
-            pstmt.setString(1, title);
-            pstmt.setString(2, desc);
-            pstmt.setString(3, id);
-            pstmt.executeUpdate();
+            PreparedStatement pstmt;
+            try {
+                pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?;");
+                pstmt.setString(1, title);
+                pstmt.setString(2, desc);
+                pstmt.setString(3, artId);
+                pstmt.executeUpdate();
+                
+                // Delete all tag
+                pstmt = conn.prepareStatement("DELETE FROM usami.Tag_has WHERE image_id = ?");
+                pstmt.setString(1, artId);
+                pstmt.executeUpdate();
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+            // Edit Tag
+            for (String tag: allTag) {
+                ArtTag artTag = new ArtTag(conn, tag);
+                if (artTag.getTag_id() == 0) {
+                    artTag.insertTag();
+                }
+                artTag.insertTag_has(artId);
+            }
             
             response.sendRedirect("/Usami/Storage");
             
@@ -78,7 +100,7 @@ public class EditArt extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(EditArt.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -96,7 +118,7 @@ public class EditArt extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(EditArt.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
