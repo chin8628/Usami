@@ -25,7 +25,7 @@ public class Product {
     public Product(Connection conn, String id) {
         
         this.conn = conn;
-        product_id = id;
+        image_id = id;
         
         try {
             PreparedStatement pstmt;
@@ -38,7 +38,7 @@ public class Product {
             if (rs.next()) {
                 this.price = rs.getFloat("price");
                 this.pgroup_id = rs.getString("pgroup_id");
-                this.image_id = rs.getString("image_id");
+                this.product_id = rs.getString("product_id");
                 this.user_id = rs.getString("user_id");
             }
             
@@ -51,7 +51,6 @@ public class Product {
         
         try {
             PreparedStatement pstmt;
-            ResultSet rs;
             
             pstmt = conn.prepareStatement("UPDATE usami.Product SET price=? WHERE product_id = ?");
             pstmt.setFloat(1, price);

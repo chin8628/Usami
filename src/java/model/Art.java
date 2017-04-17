@@ -22,11 +22,13 @@ public class Art {
     private String upload_date;
     private String fullname;
     private Product product;
-
+    private Connection conn;
+    
     public Art(Connection conn, String image_id) {
         
         try {
             
+            this.conn = conn;
             PreparedStatement pstmt;
             ResultSet rs;
             
@@ -59,12 +61,12 @@ public class Art {
         }
     }
     
-    public void updateArts(Connection conn, String image_id) {
+    public void updateArts() {
         try {
             PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?");
             pstmt.setString(1, this.title);
             pstmt.setString(2, this.desc);
-            pstmt.setString(3, image_id);
+            pstmt.setString(3, this.id);
             pstmt.executeUpdate();
             
             product.update();

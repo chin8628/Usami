@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Art;
 import model.Profiles;
 
 /**
@@ -51,14 +52,32 @@ public class EditArt extends HttpServlet {
             String id = request.getParameter("id");
             String title = request.getParameter("title");
             String desc = request.getParameter("desc");
+            String tempPrice = request.getParameter("price");
+            if(tempPrice == null) {
+                tempPrice = "0";
+            }
+            Float price = Float.parseFloat(tempPrice);
             
+            Art art = new Art(conn, id);
+            art.setTitle(title);
+            art.setDesc(desc);
+            art.getProduct().setPrice(price);
+            
+            out.println(art.getProduct());
+            out.println(art.getProduct().getProduct_id());
+            
+            
+            art.updateArts();
+            
+            /*
             PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?;");
             pstmt.setString(1, title);
             pstmt.setString(2, desc);
             pstmt.setString(3, id);
             pstmt.executeUpdate();
+            */
             
-            response.sendRedirect("/Usami/Storage");
+            //response.sendRedirect("/Usami/Storage");
             
             
         }
