@@ -64,7 +64,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="tags">Tags (Seperate each tag by comma)</label>
-                                <input type="tags" class="form-control" id="${art.getId()}-tags" name="tags">
+                                <input type="tags" class="form-control" id="${art.getId()}-tags" name="tags" value="${art.getAllTag()}">
                             </div>
                             <div class="checkbox">
                                 <label>

@@ -8,9 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -20,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Art;
+import model.ArtTag;
 
 /**
  *
@@ -47,45 +45,21 @@ public class Gallery extends HttpServlet {
             
             String tag_name = request.getParameter("tag");
             
-            PreparedStatement pstmt, pstmt2;
-            ResultSet rs, rs2;
-            
             ArrayList<Art> arts = new ArrayList<>();
+            ArtTag tag = new ArtTag(conn, tag_name);
+            tag.getImageID();
             
-            try {
-                pstmt = conn.prepareStatement("SELECT * FROM usami.Tag WHERE tag_name = ?");
-                pstmt.setString(1, tag_name);
-                
-                rs = pstmt.executeQuery();
-                int tag_id = 0;
-                if (rs.next()) {
-                    tag_id = rs.getInt("tag_id");
-                }
-                
-                pstmt = conn.prepareStatement("SELECT * FROM usami.Tag_has WHERE tag_id = ?");
-                pstmt.setInt(1, tag_id);
-                
-                rs = pstmt.executeQuery();
-                while (rs.next()) {
-                    pstmt2 = conn.prepareStatement("SELECT * FROM usami.Image WHERE image_id = ?");
-                    pstmt2.setString(1, rs.getString("image_id"));
-                    rs2 = pstmt2.executeQuery();
-                    
-                    if (rs2.next()) {
-                        Art art = new Art(conn, rs.getString("image_id"));
-                        arts.add(art);
-                    }
-                }
-                
-                request.setAttribute("arts", arts);
-                request.setAttribute("tag_name", request.getParameter("tag"));
-                
-                RequestDispatcher obj = request.getRequestDispatcher("/gallery.jsp");
-                obj.forward(request, response);
-                
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            for (String img_id: tag.getAllImgID()) {
+                Art art = new Art(conn, img_id);
+                arts.add(art);
             }
+                
+            request.setAttribute("arts", arts);
+            request.setAttribute("tag_name", request.getParameter("tag"));
+                
+            RequestDispatcher obj = request.getRequestDispatcher("/gallery.jsp");
+            obj.forward(request, response);
+                
         }
     }
 

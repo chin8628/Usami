@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
+import model.ArtTag;
 import model.Profiles;
 
 /**
@@ -63,11 +64,10 @@ public class Storage extends HttpServlet {
             
             ArrayList<Art> allArt = new ArrayList<Art>();
             
-            
             while (rs.next()){
                 Art art = new Art(conn, rs.getString("image_id"));
                 art.setPrice("free");
-                
+                art.getCurrentTags();
                 allArt.add(art);
                 
             }

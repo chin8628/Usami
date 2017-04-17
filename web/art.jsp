@@ -42,7 +42,7 @@
                 <div class="col-sm-12">
                     <div id="tag-group">
                         <c:forEach var="tag" items="${requestScope.allTag}">
-                            <a href="#">
+                            <a href="${SITE_URL}/Gallery/?tag=${tag}">
                                 <span class="label label-info tag">
                                     <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> ${tag}
                                 </span>

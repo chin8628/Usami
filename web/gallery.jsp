@@ -19,8 +19,8 @@
                             <a href="${SITE_URL}/View/?id=${art.getId()}">
                                 <p><strong>${art.getTitle()}</strong></p>
                             </a>
-                            <a href="${SITE_URL}/ViewProfile/?id=admin">
-                                <p>Artist's name</p>
+                            <a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">
+                                <p>${art.getFullname()}</p>
                             </a>
                         </div>
                     </ul>
