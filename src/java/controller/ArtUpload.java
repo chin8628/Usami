@@ -35,6 +35,7 @@ import static model.Hash.hashPassword;
 import model.Profiles;
 import model.User;
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 
 /**
  *
@@ -94,20 +95,58 @@ public class ArtUpload extends HttpServlet {
             part.write(savePath + File.separator + fileName);
 
             try {
-                BufferedImage bufferedImage;
 
-                bufferedImage = ImageIO.read(new File(savePath + File.separator + fileName));
-
-                // create a blank, RGB, same width and height, and a white background
-                BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(),
-                        bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-                newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
-
-                // write to jpeg file
-                ImageIO.write(newBufferedImage, "jpg", new File(savePath + File.separator + artId + ".jpg"));
+                Thumbnails.of(new File(savePath + File.separator + fileName))
+                        .scale(1.0)
+                        .toFile(new File(savePath + File.separator + artId + ".original" + ".jpg"));
+                
+                BufferedImage bimg = ImageIO.read(new File(savePath + File.separator + artId + ".original" + ".jpg"));
+                int width = bimg.getWidth();
+                int height = bimg.getHeight();
+                
+                if(width > height) {
+                        if(width >= 1920) {
+                            Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .size(1920, 1080)
+                                .toFile(new File(savePath + File.separator + artId + ".resized" + ".jpg"));
+                            Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .size(1920, 1080)
+                                .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
+                                .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
+                        } else {
+                            Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .scale(1.0)
+                                .toFile(new File(savePath + File.separator + artId + ".resized" + ".jpg"));
+                            Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .scale(1.0)
+                                .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
+                                .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
+                        }
+                    
+                } else {
+                    if(height >= 1920) {
+                        Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .size(1080, 1920)
+                                .toFile(new File(savePath + File.separator + artId + ".resized" + ".jpg"));
+                        Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .size(1080, 1920)
+                                .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
+                                .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
+                    } else {
+                        Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .scale(1.0)
+                                .toFile(new File(savePath + File.separator + artId + ".resized" + ".jpg"));
+                        Thumbnails.of(new File(savePath + File.separator + fileName))
+                                .scale(1.0)
+                                .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
+                                .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
+                    }
+                }
+               
 
                 File file = new File(savePath + File.separator + fileName);
                 file.delete();
+                
 
             } catch (Exception ex) {
                 ex.printStackTrace();
