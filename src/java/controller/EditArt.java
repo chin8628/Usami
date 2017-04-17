@@ -60,7 +60,7 @@ public class EditArt extends HttpServlet {
             Float price = Float.parseFloat(tempPrice);
             String[] allTag = request.getParameter("tags").split(",");
             
-            Art art = new Art(conn, id);
+            Art art = new Art(conn, artId);
             art.setTitle(title);
             art.setDesc(desc);
             art.getProduct().setPrice(price);

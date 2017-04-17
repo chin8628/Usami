@@ -25,7 +25,6 @@ public class Art {
     private Connection conn;
 
     private Product product;
-    private Connection conn;
     
     public Art(Connection conn, String image_id) {
         
