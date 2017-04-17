@@ -1,5 +1,12 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Art"%>
+<%@page import="model.Art"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="templates/header.jsp" />
+<% ArrayList<Art> cart = (ArrayList<Art>) request.getSession().getAttribute("cart"); %>
+<% Float total = (Float) request.getSession().getAttribute("total"); %>
+<% if(cart == null) {cart = new ArrayList<Art>();} %>
 
 <div class="panel panel-default">
     <div class="panel-heading"><h2>Cart</h2></div>
@@ -15,26 +22,21 @@
                 </tr>
             </thead>
             <tbody>
+                <% for(Art art: cart) { %>
                 <tr>
-                    <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                    <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                    <td>御免なさい＠単行本発売中</td>
-                    <td>$3.14</td>
-                    <td><a href="#"><span class="glyphicon glyphicon-trash"></span></a></td>
+                    <td><img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" alt="" class="img-responsive"></td>
+                    <td><%= art.getTitle() %></td>
+                    <td><%= art.getFullname() %></td>
+                    <td><%= art.getProduct().getPrice() %></td>
+                    <td><a href="${SITE_URL}/RemoveFromCart/?id=<%= art.getId() %>"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
-                <tr>
-                    <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                    <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                    <td>御免なさい＠単行本発売中</td>
-                    <td>$3.14</td>
-                    <td><a href="#"><span class="glyphicon glyphicon-trash"></span></a></td>
-                </tr>
+                <% } %>
             </tbody>
         </table>
     </div>
     <div class="panel-body">
         <div class="col-sm-12 text-right">
-            <p>Total: $6.28</p>
+            <p><%= total %></p>
             <p><button class="btn btn-success btn-sm">Buy</button></p>
         </div>
     </div>
