@@ -69,15 +69,7 @@ public class EditArt extends HttpServlet {
             
             art.updateArts();
             
-            /*
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?;");
-            pstmt.setString(1, title);
-            pstmt.setString(2, desc);
-            pstmt.setString(3, id);
-            pstmt.executeUpdate();
-            */
-            
-            //response.sendRedirect("/Usami/Storage");
+            response.sendRedirect("/Usami/Storage");
             
             
         }

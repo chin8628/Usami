@@ -44,7 +44,7 @@
                                         </div>
                                     </a>
                                     <div class="price">
-                                        <p><%=art.getPrice()%></p>
+                                        <p><%=art.getProduct().getPrice()%></p>
                                     </div>
                                     <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
                                 </ul>
