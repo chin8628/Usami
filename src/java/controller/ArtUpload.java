@@ -70,6 +70,17 @@ public class ArtUpload extends HttpServlet {
             String artName = request.getParameter("title");
             String artDesc = request.getParameter("desc");
             String artId = (profile.getUsername() + artName + new Timestamp(calendar.getTime().getTime()).toString()).hashCode() + "";
+            
+            Float price;
+            String tempPrice = request.getParameter("price");
+            if(tempPrice == null) {
+                price = 0f;
+            } else {
+                price = Float.parseFloat(tempPrice);
+                if(price <= 0f) {
+                    price = 0f;
+                }
+            }
 
             File fileSaveDir = new File(savePath);
             if (!fileSaveDir.exists()) {
@@ -171,6 +182,16 @@ public class ArtUpload extends HttpServlet {
                 pstmt.setString(6, profile.getUsername());
                 pstmt.executeUpdate();
                 
+                pstmt = conn.prepareStatement("INSERT INTO usami.product VALUES(?,?,?,?,?)");
+                Timestamp temp = new Timestamp(calendar.getTime().getTime());
+                pstmt.setString(1, (artId + temp.toString()).hashCode() + "");
+                pstmt.setFloat(2, price);
+                pstmt.setString(3, "usr");
+                pstmt.setString(4, artId);
+                pstmt.setString(5, profile.getUsername());
+                
+                pstmt.executeUpdate();
+                
                 // Set Tag
                 String[] tags = request.getParameter("tags").split(",");
                 for (String tag: tags) {
@@ -201,6 +222,8 @@ public class ArtUpload extends HttpServlet {
                     pstmt.executeUpdate();
                     
                 }
+                
+                
                 
             } catch (SQLException ex) {
                 ex.printStackTrace();

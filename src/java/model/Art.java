@@ -21,6 +21,7 @@ public class Art {
     private String desc;
     private String upload_date;
     private String fullname;
+    private Product product;
 
     public Art(Connection conn, String image_id) {
         
@@ -50,6 +51,9 @@ public class Art {
                 this.fullname = rs.getString("first_name") + " " + rs.getString("last_name");
             }
             
+            product = new Product(conn, this.id);
+            
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -63,10 +67,17 @@ public class Art {
             pstmt.setString(3, image_id);
             pstmt.executeUpdate();
             
+            product.update();
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+
+    public Product getProduct() {
+        return product;
+    }
+    
 
     public String getUpload_date() {
         return upload_date;
