@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.sql.*;
+
 /**
  *
  * @author frostnoxia
@@ -19,8 +21,25 @@ public class Art {
     private String desc;
     private String upload_date;
 
-    public Art() {
-        
+    public Art(Connection conn, String image_id) {
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM usami.Image WHERE image_id = ?");
+            pstmt.setString(1, image_id);
+            
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                this.id = image_id;
+                this.title = rs.getString("image_name");
+                this.url = rs.getString("image_url");
+                this.desc = rs.getString("desc");
+                this.upload_date = rs.getString("upload_date");
+                this.userId = rs.getString("user_id");
+            }
+            
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public String getUpload_date() {

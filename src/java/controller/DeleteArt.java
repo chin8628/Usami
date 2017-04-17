@@ -41,7 +41,7 @@ public class DeleteArt extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            String id = request.getParameter("id");
+            String id = request.getParameter("id2");
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");

@@ -65,11 +65,7 @@ public class Storage extends HttpServlet {
             
             
             while (rs.next()){
-                Art art = new Art();
-                art.setUrl(rs.getString("image_url"));
-                art.setTitle(rs.getString("image_name"));
-                art.setId(rs.getString("image_id"));
-                art.setDesc(rs.getString("desc"));
+                Art art = new Art(conn, rs.getString("image_id"));
                 art.setPrice("free");
                 
                 allArt.add(art);

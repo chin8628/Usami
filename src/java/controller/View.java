@@ -75,17 +75,12 @@ public class View extends HttpServlet {
             rs = pstmt.executeQuery();
 
             // View Arts
-            Art art = new Art();
             Profiles profile = null;
+            Art art = null;
             
             if (rs.next()){
-                art.setUrl(rs.getString("image_url"));
-                art.setTitle(rs.getString("image_name"));
-                art.setId(rs.getString("image_id"));
+                art = new Art(conn, rs.getString("image_id"));
                 art.setPrice("free");
-                art.setUserId(rs.getString("user_id"));
-                art.setDesc(rs.getString("desc"));
-                art.setUpload_date(rs.getString("upload_date"));
                 
                 profile = new Profiles(conn, rs.getString("user_id"));
  

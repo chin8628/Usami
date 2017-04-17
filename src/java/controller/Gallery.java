@@ -72,10 +72,7 @@ public class Gallery extends HttpServlet {
                     rs2 = pstmt2.executeQuery();
                     
                     if (rs2.next()) {
-                        Art art = new Art();
-                        art.setId(rs2.getString("image_id"));
-                        art.setUrl(rs2.getString("image_url"));
-                        art.setTitle(rs2.getString("image_name"));
+                        Art art = new Art(conn, rs.getString("image_id"));
                         arts.add(art);
                     }
                 }
