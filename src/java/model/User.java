@@ -55,6 +55,13 @@ public class User {
         pstmt.executeUpdate();
     }
     
+    public void ChangeCoin(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.User SET coin = ? WHERE user_id = ?");
+        pstmt.setFloat(1, coin);
+        pstmt.setString(2, username);
+        pstmt.executeUpdate();
+    }
+    
     public void changeEmail(Connection conn) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.User SET email = ? WHERE user_id = ?");
         pstmt.setString(1, email);

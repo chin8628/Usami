@@ -37,7 +37,9 @@
     <div class="panel-body">
         <div class="col-sm-12 text-right">
             <p><%= total %></p>
-            <p><button class="btn btn-success btn-sm">Buy</button></p>
+            <form action="${SITE_URL}/Buy" method="POST">
+                <p><button class="btn btn-success btn-sm">Buy</button></p>
+            </form>
         </div>
     </div>
 </div>

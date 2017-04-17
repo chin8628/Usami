@@ -9,8 +9,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,14 +23,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
-import model.Profiles;
+import model.User;
 
 /**
  *
  * @author frostnoxia
  */
-@WebServlet(name = "AddToCart", urlPatterns = {"/AddToCart/"})
-public class AddToCart extends HttpServlet {
+@WebServlet(name = "Buy", urlPatterns = {"/Buy"})
+public class Buy extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,55 +42,61 @@ public class AddToCart extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
             HttpSession session = request.getSession();
+            ArrayList<Art> cart = (ArrayList<Art>) session.getAttribute("cart");
+            User user = (User)session.getAttribute("user");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
-            String backUrl = request.getParameter("origin");
             
-            ArrayList<Art> cart = (ArrayList<Art>) session.getAttribute("cart");
-            if(cart == null) {
-                cart = new ArrayList<Art>();
-            }
-            
-            Float total = (Float) session.getAttribute("total");
-            if(total == null) {
-                total = 0f;
-            }
-            
-            Art art = new Art(conn, request.getParameter("id"));
-            
-            
-            
-            boolean isDuplicate = false;
-            
-             
-            for(Art inCart: cart) {
-                if(art.getId().equals(inCart.getId())) {
-                    isDuplicate = true;
-                    break;
-                }
-            }
-            
-            if(!isDuplicate) {
-                cart.add(art);
-            }
-
-            total = 0f;
+            Float total = 0f;
             
             for(Art inCart: cart) {
                 total += inCart.getProduct().getPrice();
             }
-                        
-            session.setAttribute("cart", cart);
-            session.setAttribute("total", total);
-            request.setAttribute("status", isDuplicate + "");
             
-            response.sendRedirect(backUrl);
+            if(total <= 0f) {
+                //error code
+                out.println("No item in cart");
+                request.setAttribute("code", "item");
+                response.sendRedirect("/Usami/cart.jsp");
+                return;
+            } else if(user.getCoin() < total) {
+                //insufficient coin
+                request.setAttribute("code", "coin");
+                response.sendRedirect("/Usami/cart.jsp");
+               out.println("Insufficient coin");
+            } else {
+                user.setCoin((int) (user.getCoin() - total));
+                user.ChangeCoin(conn);
+                for(Art art: cart) {
+                    PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.User_buy VALUES (?,?,?,?)");
+                    pstmt.setString(1, user.getUsername());
+                    pstmt.setString(2, art.getProduct().getProduct_id());
+                    pstmt.setTimestamp(3, new Timestamp(Calendar.getInstance().getTime().getTime()));
+                    pstmt.setFloat(4, art.getProduct().getPrice());
+                    
+                    pstmt.executeUpdate();
+                }
+                
+                cart = new ArrayList<Art>();
+                total = 0f;
+                
+                session.setAttribute("cart", cart);
+                session.setAttribute("total", total);
+                
+                out.println("Buy complete");
+                request.setAttribute("code", "passed");
+                response.sendRedirect("/Usami/cart.jsp");
+                
+            }
+            
+            
+            
+            
             
             
         }
@@ -104,7 +114,11 @@ public class AddToCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Buy.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -118,7 +132,11 @@ public class AddToCart extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try  {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Buy.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
