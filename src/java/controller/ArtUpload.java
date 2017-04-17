@@ -29,6 +29,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.ArtTag;
 import model.User;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 
 /**
  *
@@ -63,6 +65,17 @@ public class ArtUpload extends HttpServlet {
             String artName = request.getParameter("title");
             String artDesc = request.getParameter("desc");
             String artId = (profile.getUsername() + artName + new Timestamp(calendar.getTime().getTime()).toString()).hashCode() + "";
+            
+            Float price;
+            String tempPrice = request.getParameter("price");
+            if(tempPrice == null) {
+                price = 0f;
+            } else {
+                price = Float.parseFloat(tempPrice);
+                if(price <= 0f) {
+                    price = 0f;
+                }
+            }
 
             File fileSaveDir = new File(savePath);
             if (!fileSaveDir.exists()) {
@@ -88,20 +101,60 @@ public class ArtUpload extends HttpServlet {
             part.write(savePath + File.separator + fileName);
 
             try {
-                BufferedImage bufferedImage;
 
-                bufferedImage = ImageIO.read(new File(savePath + File.separator + fileName));
-
-                // create a blank, RGB, same width and height, and a white background
-                BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(),
-                        bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-                newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
-
-                // write to jpeg file
-                ImageIO.write(newBufferedImage, "jpg", new File(savePath + File.separator + artId + ".jpg"));
+                Thumbnails.of(new File(savePath + File.separator + fileName))
+                        .scale(1.0)
+                        .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".original" + ".jpg"));
+                
+                BufferedImage bimg = ImageIO.read(new File(savePath + File.separator + "protected" + File.separator + artId + ".original" + ".jpg"));
+                int width = bimg.getWidth();
+                int height = bimg.getHeight();
+                
+                File oriArt = new File(savePath + File.separator + fileName);
+                
+                if(width > height) {
+                        if(width >= 1920) {
+                            Thumbnails.of(oriArt)
+                                .size(1920, 1080)
+                                .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".resized" + ".jpg"));
+                            Thumbnails.of(oriArt)
+                                .size(1920, 1080)
+                                .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
+                                .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
+                        } else {
+                            Thumbnails.of(oriArt)
+                                .scale(1.0)
+                                .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".resized" + ".jpg"));
+                            Thumbnails.of(oriArt)
+                                .scale(1.0)
+                                .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
+                                .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
+                        }
+                    
+                } else {
+                    if(height >= 1920) {
+                        Thumbnails.of(oriArt)
+                                .size(1080, 1920)
+                                .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".resized" + ".jpg"));
+                        Thumbnails.of(oriArt)
+                                .size(1080, 1920)
+                                .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
+                                .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
+                    } else {
+                        Thumbnails.of(oriArt)
+                                .scale(1.0)
+                                .toFile(new File(savePath + File.separator + "protected" + File.separator + artId + ".resized" + ".jpg"));
+                        Thumbnails.of(oriArt)
+                                .scale(1.0)
+                                .watermark(Positions.CENTER, ImageIO.read(new File(savePath + File.separator + "watermark.png")), 0.5f)
+                                .toFile(new File(savePath + File.separator + artId + "" + ".jpg"));
+                    }
+                }
+               
 
                 File file = new File(savePath + File.separator + fileName);
                 file.delete();
+                
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -123,6 +176,16 @@ public class ArtUpload extends HttpServlet {
                 pstmt.setString(6, profile.getUsername());
                 pstmt.executeUpdate();
                 
+                pstmt = conn.prepareStatement("INSERT INTO usami.product VALUES(?,?,?,?,?)");
+                Timestamp temp = new Timestamp(calendar.getTime().getTime());
+                pstmt.setString(1, (artId + temp.toString()).hashCode() + "");
+                pstmt.setFloat(2, price);
+                pstmt.setString(3, "usr");
+                pstmt.setString(4, artId);
+                pstmt.setString(5, profile.getUsername());
+                
+                pstmt.executeUpdate();
+                
                 // Set Tag
                 String[] tags = request.getParameter("tags").split(",");
                 for (String tag: tags) {
@@ -133,6 +196,8 @@ public class ArtUpload extends HttpServlet {
                     artTag.insertTag_has(artId);
                     
                 }
+                
+                
                 
             } catch (SQLException ex) {
                 ex.printStackTrace();

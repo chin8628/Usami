@@ -47,9 +47,11 @@
                                         <p>${art.getFullname()}</p>
                                     </a>
                                     <div class="price">
-                                        <p>${art.getPrice()}</p>
+                                        <p><%=art.getProduct().getPrice()%></p>
                                     </div>
-                                    <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
+                                    <form action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/Market" method="POST" >
+                                        <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
+                                    </form>
                                 </ul>
                             </div>
                         </div>

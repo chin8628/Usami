@@ -24,12 +24,14 @@ public class Art {
     private String allTag;
     private Connection conn;
 
+    private Product product;
+    private Connection conn;
+    
     public Art(Connection conn, String image_id) {
         
         try {
             
             this.conn = conn;
-            
             PreparedStatement pstmt;
             ResultSet rs;
             
@@ -54,18 +56,23 @@ public class Art {
                 this.fullname = rs.getString("first_name") + " " + rs.getString("last_name");
             }
             
+            product = new Product(conn, this.id);
+            
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
     
-    public void updateArts(String image_id) {
+    public void updateArts() {
         try {
             PreparedStatement pstmt = this.conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?");
             pstmt.setString(1, this.title);
             pstmt.setString(2, this.desc);
-            pstmt.setString(3, image_id);
+            pstmt.setString(3, this.id);
             pstmt.executeUpdate();
+            
+            product.update();
             
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -76,6 +83,11 @@ public class Art {
         ArtTag artTag = new ArtTag(this.conn, id, true);
         this.allTag = artTag.getAllTag();
     }
+
+    public Product getProduct() {
+        return product;
+    }
+    
 
     public String getUpload_date() {
         return upload_date;

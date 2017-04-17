@@ -63,6 +63,9 @@
                             <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <%= request.getAttribute("count") %>
                         </button>
                     </form>
+                                                            <form action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>" method="POST" >
+                                        <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
+                                    </form>
                 </div>
 
 

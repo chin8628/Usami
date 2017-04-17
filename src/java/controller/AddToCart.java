@@ -9,9 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,15 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
-import model.ArtTag;
 import model.Profiles;
 
 /**
  *
  * @author frostnoxia
  */
-@WebServlet(name = "EditArt", urlPatterns = {"/EditArt"})
-public class EditArt extends HttpServlet {
+@WebServlet(name = "AddToCart", urlPatterns = {"/AddToCart/"})
+public class AddToCart extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,60 +41,52 @@ public class EditArt extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            HttpSession session = request.getSession();
-            Profiles user = (Profiles) session.getAttribute("profile");
+            /* TODO output your page here. You may use following sample code. */
             
+            HttpSession session = request.getSession();
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
+            String backUrl = request.getParameter("origin");
             
-            String artId = request.getParameter("id");
-            String title = request.getParameter("title");
-            String desc = request.getParameter("desc");
-            String tempPrice = request.getParameter("price");
-            if(tempPrice == null) {
-                tempPrice = "0";
-            }
-            Float price = Float.parseFloat(tempPrice);
-            String[] allTag = request.getParameter("tags").split(",");
-            
-            Art art = new Art(conn, id);
-            art.setTitle(title);
-            art.setDesc(desc);
-            art.getProduct().setPrice(price);
-            PreparedStatement pstmt;
-            try {
-                pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?;");
-                pstmt.setString(1, title);
-                pstmt.setString(2, desc);
-                pstmt.setString(3, artId);
-                pstmt.executeUpdate();
-                
-                // Delete all tag
-                pstmt = conn.prepareStatement("DELETE FROM usami.Tag_has WHERE image_id = ?");
-                pstmt.setString(1, artId);
-                pstmt.executeUpdate();
-                
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            ArrayList<Art> cart = (ArrayList<Art>) session.getAttribute("cart");
+            if(cart == null) {
+                cart = new ArrayList<Art>();
             }
             
-            out.println(art.getProduct());
-            out.println(art.getProduct().getProduct_id());
+            Float total = (Float) session.getAttribute("total");
+            if(total == null) {
+                total = 0f;
+            }
+            
+            Art art = new Art(conn, request.getParameter("id"));
             
             
-            art.updateArts();
             
-            // Edit Tag
-            for (String tag: allTag) {
-                ArtTag artTag = new ArtTag(conn, tag);
-                if (artTag.getTag_id() == 0) {
-                    artTag.insertTag();
+            boolean isDuplicate = false;
+            
+             
+            for(Art inCart: cart) {
+                if(art.getId().equals(inCart.getId())) {
+                    isDuplicate = true;
+                    break;
                 }
-                artTag.insertTag_has(artId);
             }
             
-            response.sendRedirect("/Usami/Storage");
+            if(!isDuplicate) {
+                cart.add(art);
+            }
+
+            total = 0f;
+            
+            for(Art inCart: cart) {
+                total += inCart.getProduct().getPrice();
+            }
+                        
+            session.setAttribute("cart", cart);
+            session.setAttribute("total", total);
+            request.setAttribute("status", isDuplicate + "");
+            
+            response.sendRedirect(backUrl);
             
             
         }
@@ -114,11 +104,7 @@ public class EditArt extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(EditArt.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -132,11 +118,7 @@ public class EditArt extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(EditArt.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
