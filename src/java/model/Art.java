@@ -20,13 +20,19 @@ public class Art {
     private String userId;
     private String desc;
     private String upload_date;
+    private String fullname;
 
     public Art(Connection conn, String image_id) {
+        
         try {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM usami.Image WHERE image_id = ?");
+            
+            PreparedStatement pstmt;
+            ResultSet rs;
+            
+            pstmt = conn.prepareStatement("SELECT * FROM usami.Image WHERE image_id = ?");
             pstmt.setString(1, image_id);
             
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
             if (rs.next()) {
                 this.id = image_id;
                 this.title = rs.getString("image_name");
@@ -36,8 +42,28 @@ public class Art {
                 this.userId = rs.getString("user_id");
             }
             
+            pstmt = conn.prepareStatement("SELECT * FROM usami.Profile WHERE user_id = ?");
+            pstmt.setString(1, this.userId);
+            
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                this.fullname = rs.getString("first_name") + " " + rs.getString("last_name");
+            }
             
         } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void updateArts(Connection conn, String image_id) {
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?");
+            pstmt.setString(1, this.title);
+            pstmt.setString(2, this.desc);
+            pstmt.setString(3, image_id);
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -96,6 +122,14 @@ public class Art {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
     
     
