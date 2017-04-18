@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
 /**
  *
  * @author bellkung
@@ -53,6 +53,25 @@ public class Profiles {
         pstmt.setString(4, this.url_image);
         pstmt.setString(5, this.username);
         pstmt.executeUpdate();
+    }
+    
+    public ArrayList<Art> getAllArt() {
+        ArrayList<Art> allArt = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM usami.Image WHERE user_id = ? ORDER BY upload_date DESC");
+            pstmt.setString(1, this.username);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Art art = new Art(this.conn, rs.getString("image_id"));
+                allArt.add(art);
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return allArt;
     }
     
     public Profiles() {

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="page-header">
     <h1>Your History</h1>
@@ -86,6 +87,8 @@
                     </table>
                 </div>
             </div>
+                                
+            <!--            ArtUpload                   -->
             <div role="tabpanel" class="tab-pane" id="history-upload">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="upload-table">
@@ -97,20 +100,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                                <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                                <td>31/03/2017</td>
-                            </tr>
-                            <tr>
-                                <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                                <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                                <td>31/03/2017</td>
-                            </tr>
+                            <c:forEach var="art" items="${requestScope.artUpload}">
+                                <tr>
+                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">
+                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" alt="" class="img-responsive">
+                                    </a></td>
+                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
+                                    <td>${art.getUpload_date()}</td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
             </div>
+                                
+            <!--            My Comment                    -->
             <div role="tabpanel" class="tab-pane" id="history-comment">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="comment-table">
@@ -124,20 +128,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                                <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                                <td>御免なさい＠単行本発売中</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-                                <td>31/03/2017</td>
-                            </tr>
-                            <tr>
-                                <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                                <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                                <td>御免なさい＠単行本発売中</td>
-                                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, officia.</td>
-                                <td>31/03/2017</td>
-                            </tr>
+                            <c:forEach var="comm" items="${requestScope.myComm}">
+                                <tr>
+                                    <td><a href="${SITE_URL}/View/?id=${comm.getImage_id()}">
+                                            <img src="${SITE_URL}/asset/img/art/${comm.getUrl_image()}" alt="" class="img-responsive">
+                                        </a></td>
+                                    <td><a href="${SITE_URL}/View/?id=${comm.getImage_id()}">${comm.getTitle()}</a></td>
+                                    <td><a href="${SITE_URL}/ViewProfile/?id=${comm.getUsername()}">
+                                        ${comm.getFirst_name()} ${comm.getLast_name()}
+                                        </a></td>
+                                    <td>${comm.getText()}</td>
+                                    <td>${comm.getComm_date()}</td>
+                                </tr>
+                            </c:forEach>
+                            
                         </tbody>
                     </table>
                 </div>
