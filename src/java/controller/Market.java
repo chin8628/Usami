@@ -21,7 +21,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Art;
+import model.User;
 import model.CommentModel;
 
 /**
@@ -48,6 +50,8 @@ public class Market extends HttpServlet {
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
             
             PreparedStatement pstmt =  conn.prepareStatement(""
                     + "SELECT * "
@@ -68,6 +72,7 @@ public class Market extends HttpServlet {
             }
 
             request.setAttribute("allArt", allArt);
+            request.setAttribute("user", user);
             RequestDispatcher obj = request.getRequestDispatcher("market.jsp");
             obj.forward(request, response);
             

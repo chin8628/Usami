@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +28,7 @@ import model.User;
  *
  * @author Chiib_000
  */
-@WebServlet(name = "Sign_inServlet", urlPatterns = {"/SignIn"})
+@WebServlet(name = "SignIn", urlPatterns = {"/SignIn"})
 public class SignIn extends HttpServlet {
 
     /**
@@ -42,41 +43,44 @@ public class SignIn extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-            String sql_pstm = "SELECT user_id, email FROM user WHERE user_id = ? AND password = ?";
-            
-            ServletContext ctx = getServletContext();
-            Connection conn = (Connection) ctx.getAttribute("connection");
-            PreparedStatement pstm = conn.prepareStatement(sql_pstm);
-            
-            pstm.setString(1, request.getParameter("username"));
-            pstm.setString(2, hashPassword(request.getParameter("password")));
 
-            ResultSet rs = pstm.executeQuery();
-            
-            HttpSession session = request.getSession();
-            
-            if(!rs.next()){
-                //add warning text when incorrect ************************
-                /*
-                
-                */
-                response.sendRedirect("/Usami");
-                return;
-            }else{
+        String sql_pstm = "SELECT user_id, email FROM user WHERE user_id = ? AND password = ?";
+        HttpSession session = request.getSession();
 
-                //give a token*******************
-                /*
-                
-                */
-                
-                Profiles profile = new Profiles(conn, request.getParameter("username"));
-                User user = new User(conn, request.getParameter("username"));
-                session.setAttribute("user", user);
-                session.setAttribute("profile", profile);
+        ServletContext ctx = getServletContext();
+        Connection conn = (Connection) ctx.getAttribute("connection");
+        PreparedStatement pstm = conn.prepareStatement(sql_pstm);
+
+        pstm.setString(1, request.getParameter("username"));
+        pstm.setString(2, hashPassword(request.getParameter("password")));
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (!rs.next()) {
+            //add warning text when incorrect ************************
+            /*
+            
+             */
+            response.sendRedirect("/Usami");
+
+        } else {
+
+            Profiles profile = new Profiles(conn, request.getParameter("username"));
+            User user = new User(conn, request.getParameter("username"));
+            session.setAttribute("user", user);
+            session.setAttribute("profile", profile);
+            if (true) { // set chech remember me box
+                Cookie user_coki;
+                String uid = rs.getString("user_id");
+                user_coki = new Cookie("user", uid);
+                user_coki.setMaxAge(60 * 60 * 24 * 7); // Exp 7 Day
+                //user_coki.setSecure(true);
+                response.addCookie(user_coki);
+
                 response.sendRedirect("/Usami/Index");
-                return;
             }
-        
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

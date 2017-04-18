@@ -8,6 +8,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% Art art = (Art) request.getAttribute("art");%>
 <% Profiles owner = (Profiles) request.getAttribute("owner"); %>
+<% User user = (User)request.getAttribute("user"); %>
 
 <div class="row">
     <div class="col-sm-3">
@@ -23,20 +24,31 @@
                         </a>
                     </p>
                     <p><span class="label label-default">Standard User</span></p>
+                    <form
+                        action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>"
+                        method="POST">
+                        <button
+                            class='btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %> col-sm-12'
+                            type="submit">
+                            <%= request.getAttribute("btn-follow-text") %>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <form
-                action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>"
-                method="POST">
-                <button
-                    class='btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %> col-sm-12'
-                    type="submit">
-                    <%= request.getAttribute("btn-follow-text") %>
-                </button>
-            </form>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <h3>50.03 Coin</h3><br>
+                    <form
+                        action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>"
+                        method="POST">
+                        <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
+                    </form>
+                </div>
+            </div>
         </div>
+        <% if(!art.getUserId().equals(user.getUsername())) { %>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
             <form
                 action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>"
@@ -44,6 +56,7 @@
                 <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
             </form>
         </div>
+        <% } %>
     </div>
     <div class="col-sm-9">
         <div class="panel panel-default">
