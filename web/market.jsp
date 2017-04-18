@@ -34,8 +34,7 @@
                                 <ul class="nav nav-pills">
                                     <a href="${SITE_URL}/View/?id=${art.getId()}">
                                         <p>
-                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="
-                                            img-responsive thumbnail">
+                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive thumbnail">
                                         </p>
                                         <div class="title">
                                             <p>
@@ -49,9 +48,12 @@
                                     <div class="price">
                                         <p>${art.getPrice()}</p>
                                     </div>
-                                    <form action="${SITE_URL}/AddToCart/?id=${art.getId()}&origin=${SITE_URL}/Market" method="POST" >
-                                        <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
-                                    </form>
+                                        <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
+                                            <form action="${SITE_URL}/AddToCart/?id=${art.getId()}&origin=${SITE_URL}/Market" method="POST" >
+                                                <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
+                                            </form>
+                                        </c:if>
+
                                 </ul>
                             </div>
                         </div>
