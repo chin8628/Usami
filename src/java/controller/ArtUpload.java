@@ -167,13 +167,14 @@ public class ArtUpload extends HttpServlet {
 
             PreparedStatement pstmt;
             try {
-                pstmt = conn.prepareStatement("INSERT INTO usami.image VALUES(?,?,?,?,?,?)");
+                pstmt = conn.prepareStatement("INSERT INTO usami.image VALUES(?,?,?,?,?,?,?)");
                 pstmt.setString(1, artId);
                 pstmt.setString(2, artId + ".jpg");
                 pstmt.setString(3, artName);
                 pstmt.setString(4, artDesc);
                 pstmt.setTimestamp(5, new Timestamp(calendar.getTime().getTime()));
                 pstmt.setString(6, profile.getUsername());
+                pstmt.setInt(7, 1);
                 pstmt.executeUpdate();
                 
                 pstmt = conn.prepareStatement("INSERT INTO usami.product VALUES(?,?,?,?,?)");

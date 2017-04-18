@@ -58,7 +58,7 @@ public class Buy extends HttpServlet {
                 total += inCart.getProduct().getPrice();
             }
             
-            if(total <= 0f) {
+            if(cart.size() == 0) {
                 //error code
                 out.println("No item in cart");
                 request.setAttribute("code", "item");
@@ -68,7 +68,8 @@ public class Buy extends HttpServlet {
                 //insufficient coin
                 request.setAttribute("code", "coin");
                 response.sendRedirect("/Usami/cart.jsp");
-               out.println("Insufficient coin");
+                out.println("Insufficient coin");
+                return;
             } else {
                 user.setCoin((int) (user.getCoin() - total));
                 user.ChangeCoin(conn);

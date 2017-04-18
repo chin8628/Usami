@@ -11,6 +11,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading"><h2>Cart</h2></div>
+    <% if(cart.size() > 0) { %>
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead>
@@ -28,7 +29,7 @@
                     <td><img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" alt="" class="img-responsive"></td>
                     <td><%= art.getTitle() %></td>
                     <td><%= art.getFullname() %></td>
-                    <td><%= art.getProduct().getPrice() %></td>
+                    <td><%= (art.getProduct().getPrice()==0) ? "free":art.getProduct().getPrice() %></td>
                     <td><a href="${SITE_URL}/RemoveFromCart/?id=<%= art.getId() %>"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 <% } %>
@@ -43,6 +44,11 @@
             </form>
         </div>
     </div>
+                <% } else { %>
+            
+                <h3 class="text-center"><small> There is nothing here. Let's add something. </small></h3><br>
+            
+            <%}%>
 </div>
 
 <jsp:include page="templates/footer.jsp" />
