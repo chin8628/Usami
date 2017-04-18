@@ -22,7 +22,7 @@
                                 </div>
                             </a>
                             <div class="price">
-                                <p>${art.getProduct().getPrice()}</p>
+                                <p>${art.getPrice()}</p>
                             </div>
                             <button
                                 data-toggle="modal"

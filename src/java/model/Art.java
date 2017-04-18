@@ -148,7 +148,12 @@ public class Art {
     }
 
     public String getPrice() {
-        return price;
+        float p = getProduct().getPrice();
+        if(p > 0) {
+            return p + "";
+        } else {
+            return "free";
+        }
     }
 
     public void setPrice(String price) {
