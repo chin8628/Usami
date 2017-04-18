@@ -27,8 +27,8 @@ import model.User;
  *
  * @author Chiib_000
  */
-@WebServlet(name = "Sign_inServlet", urlPatterns = {"/Sign_inServlet"})
-public class Sign_inServlet extends HttpServlet {
+@WebServlet(name = "Sign_inServlet", urlPatterns = {"/signin"})
+public class SignIn extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -94,7 +94,7 @@ public class Sign_inServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Sign_inServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -112,7 +112,7 @@ public class Sign_inServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Sign_inServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
