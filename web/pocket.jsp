@@ -93,11 +93,11 @@
 </div>
 
 <script>
-$('#payment #baht').change(function(event) {
+$('#payment #baht').on('input', function() {
     $('#payment #coin').val($(this).val() * EXCHANGE);
 });
 
-$('#deposit #coin').change(function(event) {
+$('#deposit #coin').on('input', function() {
     $('#deposit #baht').val($(this).val() / EXCHANGE);
 });
 </script>
