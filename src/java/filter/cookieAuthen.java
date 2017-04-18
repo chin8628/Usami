@@ -6,9 +6,11 @@
 package filter;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -19,7 +21,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.ServletContext;
 import static model.Hash.hashPassword;
+import model.Profiles;
+import model.User;
 
 /**
  *
@@ -27,43 +32,69 @@ import static model.Hash.hashPassword;
  */
 public class cookieAuthen implements Filter {
 
+    private FilterConfig config;
+
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         String path = ((HttpServletRequest) request).getRequestURI();
         System.out.println(path);
-        if (path.equals("/Usami/") || path.equals("/Usami/SignIn")) {
+        if (path.equals("/Usami/") || path.equals("/Usami/SignIn") || path.startsWith("/Usami/asset")) {
             chain.doFilter(request, response);
-
         } else {
 
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse res = (HttpServletResponse) response;
+
             HttpSession session = req.getSession();
-            System.out.println(session);
             Cookie[] cookies = req.getCookies();
 
             if (session != null) {
-                chain.doFilter(request, response);
+                System.out.println("Have session ID : " + session.getId());
 
-            }
-            if (cookies != null && cookies.length > 1) {
-                String hcookie = hashPassword(cookies[1].getValue() + cookies[2].getValue());
-
-                if (hcookie.equals(cookies[3].getValue())) {
-                    
-                    //Profiles profile = new Profiles(conn, cookies[1].getValue());
-                    //User user = new User(conn, cookies[1].getValue());
-                    //session.setAttribute("user", user);
-                    //session.setAttribute("profile", profile);
-
+                if (session.getAttribute("user") != null
+                        && session.getAttribute("profile") != null) {
+                    chain.doFilter(request, response);
+                    return;
                 } else {
+                    if (cookies != null && cookies.length == 3) {
+                        System.out.println("Have Cookie !!");
 
+                        String hcookie = hashPassword(cookies[0].getValue() + cookies[1].getValue());
+
+                        if (hcookie.equals(cookies[2].getValue())) {
+                            System.out.println("Hash Pass !!");
+
+                            ServletContext ctx = this.config.getServletContext();
+                            Connection conn = (Connection) ctx.getAttribute("connection");
+
+                            try {
+                                System.out.println("Session setAtt !!");
+                                Profiles profile = new Profiles(conn, cookies[1].getValue());
+                                User user = new User(conn, cookies[1].getValue());
+                                session.setAttribute("user", user);
+                                session.setAttribute("profile", profile);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(cookieAuthen.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            chain.doFilter(request, response);
+
+                        } else {
+                            System.out.println("Fake Cookie !!");
+                            cookies[1].setMaxAge(0);
+                            cookies[2].setMaxAge(0);
+                            cookies[3].setMaxAge(0);
+                            res.sendRedirect("/Usami");
+                        }
+
+                    } else {
+                        System.out.println("Null Cookie !!");
+                        res.sendRedirect("/Usami");
+                    }
                 }
-
             } else {
-
+                res.sendRedirect("/Usami");
             }
-
         }
     }
 
@@ -71,11 +102,10 @@ public class cookieAuthen implements Filter {
     public void destroy() {
 
     }
-    private String pathToBeIgnored;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        pathToBeIgnored = filterConfig.getInitParameter("/auth.jsp");
+        this.config = filterConfig;
     }
 
 }

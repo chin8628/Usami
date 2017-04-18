@@ -43,7 +43,7 @@ public class SignIn extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        
+
         String sql_pstm = "SELECT user_id, email FROM user WHERE user_id = ? AND password = ?";
         HttpSession session = request.getSession();
 
@@ -65,30 +65,31 @@ public class SignIn extends HttpServlet {
 
         } else {
             Cookie user_coki;
-
+            
             Profiles profile = new Profiles(conn, request.getParameter("username"));
             User user = new User(conn, request.getParameter("username"));
             session.setAttribute("user", user);
             session.setAttribute("profile", profile);
- 
             
             String uid = rs.getString("user_id");
             String email = rs.getString("email");
 
             user_coki = new Cookie("user_id", uid);
             user_coki.setMaxAge(60 * 60 * 5);
+            //user_coki.setSecure(true);
             response.addCookie(user_coki);
 
             user_coki = new Cookie("email", email);
             user_coki.setMaxAge(60 * 60 * 5);
-            response.addCookie(user_coki);
-            
-            user_coki = new Cookie("sign", hashPassword(uid + email));
-            user_coki.setMaxAge(60 * 60 * 5);
+            //user_coki.setSecure(true);
             response.addCookie(user_coki);
 
-            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-            
+            user_coki = new Cookie("sign", hashPassword(uid + email));
+            user_coki.setMaxAge(60 * 60 * 5);
+            //user_coki.setSecure(true);
+            response.addCookie(user_coki);
+
+            response.sendRedirect("index.jsp");
 
         }
 
