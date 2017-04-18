@@ -22,9 +22,26 @@ public class Art {
     private String upload_date;
     private String fullname;
     private String allTag;
+    private int view;
     private Connection conn;
 
     private Product product;
+
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
     
     public Art(Connection conn, String image_id) {
         
@@ -45,6 +62,7 @@ public class Art {
                 this.desc = rs.getString("desc");
                 this.upload_date = rs.getString("upload_date");
                 this.userId = rs.getString("user_id");
+                this.view = rs.getInt("view");
             }
             
             pstmt = this.conn.prepareStatement("SELECT * FROM usami.Profile WHERE user_id = ?");
@@ -65,10 +83,11 @@ public class Art {
     
     public void updateArts() {
         try {
-            PreparedStatement pstmt = this.conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?");
+            PreparedStatement pstmt = this.conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ?, view = ? WHERE image_id = ?");
             pstmt.setString(1, this.title);
             pstmt.setString(2, this.desc);
-            pstmt.setString(3, this.id);
+            pstmt.setInt(3, this.view);
+            pstmt.setString(4, this.id);
             pstmt.executeUpdate();
             
             product.update();

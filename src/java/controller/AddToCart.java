@@ -10,7 +10,10 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
 import model.Profiles;
+import model.User;
 
 /**
  *
@@ -47,6 +51,7 @@ public class AddToCart extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             String backUrl = request.getParameter("origin");
+            User profile = (User) session.getAttribute("user");
             
             ArrayList<Art> cart = (ArrayList<Art>) session.getAttribute("cart");
             if(cart == null) {
@@ -59,6 +64,25 @@ public class AddToCart extends HttpServlet {
             }
             
             Art art = new Art(conn, request.getParameter("id"));
+            
+            PreparedStatement pstmt;
+            try {
+                pstmt = conn.prepareStatement("SELECT product_id FROM User_buy WHERE user_id = ?");
+                pstmt.setString(1, profile.getUsername());
+                ResultSet rs = pstmt.executeQuery();
+                
+                while(rs.next()) {
+                    if(art.getProduct().getProduct_id().equals(rs.getString("product_id"))) {
+                        
+                        request.setAttribute("status", "bought");
+                        response.sendRedirect(backUrl);
+                        return;
+                    }
+                }
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             
             

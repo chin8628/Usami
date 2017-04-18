@@ -57,14 +57,11 @@ public class View extends HttpServlet {
             
             PreparedStatement pstmt;
             ResultSet rs;
-            try{
-                pstmt = conn.prepareStatement("INSERT INTO usami.User_watch VALUES(?,?)");
-                pstmt.setString(1, user.getUsername());
-                pstmt.setString(2, request.getParameter("id"));
-                pstmt.executeUpdate();
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+            
+            Art art = new Art(conn, request.getParameter("id"));
+            art.setView(art.getView()+1);
+            
+            art.updateArts();
             
             pstmt =  conn.prepareStatement(""
                     + "SELECT * "
@@ -77,7 +74,6 @@ public class View extends HttpServlet {
 
             // View Arts
             Profiles profile = null;
-            Art art = null;
             
             if (rs.next()){
                 art = new Art(conn, rs.getString("image_id"));

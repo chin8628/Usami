@@ -5,8 +5,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="templates/header.jsp" />
 <% ArrayList<Art> cart = (ArrayList<Art>) request.getSession().getAttribute("cart"); %>
-<% Float total = (Float) request.getSession().getAttribute("total"); %>
 <% if(cart == null) {cart = new ArrayList<Art>();} %>
+<%  Float total = 0f; for(Art art:cart) {total += art.getProduct().getPrice();} %>
+
 
 <div class="panel panel-default">
     <div class="panel-heading"><h2>Cart</h2></div>
