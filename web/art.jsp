@@ -11,17 +11,38 @@
 
 <div class="row">
     <div class="col-sm-3">
-        <div class="panel panel-default">
-            <div class="panel-body text-center">
-                <div class="thumbnail">
-                    <img src="${SITE_URL}/asset/img/avatar-img/<%=owner.getUrl_image()%>" class="img-responsive">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <div class="thumbnail">
+                        <img src="${SITE_URL}/asset/img/avatar-img/<%=owner.getUrl_image()%>" class="img-responsive">
+                    </div>
+                    <p>
+                        <a href="${SITE_URL}/ViewProfile/?id=<%= owner.getUsername() %>">
+                            <%= owner.getFirst_name() + " " + owner.getLast_name() %>
+                        </a>
+                    </p>
+                    <p><span class="label label-default">Standard User</span></p>
                 </div>
-                    <p><a href="${SITE_URL}/ViewProfile/?id=<%= owner.getUsername() %>"><%= owner.getFirst_name() + " " + owner.getLast_name() %></a></p>
-                <p><span class="label label-default">Standard User</span></p>
-                <p><form action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>" method="POST">
-                    <button class="btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %>" type="submit"><%= request.getAttribute("btn-follow-text") %></button>
-                </form></p>
             </div>
+        </div>
+        <div class="row" style="margin-top:5px; margin-bottom:5px;">
+            <form
+                action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>"
+                method="POST">
+                <button
+                    class='btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %> col-sm-12'
+                    type="submit">
+                    <%= request.getAttribute("btn-follow-text") %>
+                </button>
+            </form>
+        </div>
+        <div class="row" style="margin-top:5px; margin-bottom:5px;">
+            <form
+                action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>"
+                method="POST">
+                <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
+            </form>
         </div>
     </div>
     <div class="col-sm-9">
@@ -63,9 +84,6 @@
                             <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <%= request.getAttribute("count") %>
                         </button>
                     </form>
-                                                            <form action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>" method="POST" >
-                                        <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
-                                    </form>
                 </div>
 
 
@@ -88,9 +106,9 @@
                             </div>
 
                             <!--All Comment-->
-                            
+
                             <% if (request.getAttribute("allComm") != null) { %>
-                                <% ArrayList<CommentModel> allComm = (ArrayList<CommentModel>) request.getAttribute("allComm"); 
+                                <% ArrayList<CommentModel> allComm = (ArrayList<CommentModel>) request.getAttribute("allComm");
                                 for (model.CommentModel comm: allComm) { %>
                                         <div class="media comment-reply">
                                             <div class="media-left">
