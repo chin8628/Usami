@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" href="${SITE_URL}/asset/img/favicon.ico">
+    <link rel="stylesheet" href="${SITE_URL}/asset/css/normalize.css">
     <link rel="stylesheet" href="${SITE_URL}/asset/css/bootstrap.min.css">
     <link rel="stylesheet" href="${SITE_URL}/asset/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="${SITE_URL}/asset/css/jquery.tagsinput.min.css">
