@@ -23,6 +23,7 @@
     <script src="${SITE_URL}/asset/js/dataTables.bootstrap.min.js"></script>
     <script src="${SITE_URL}/asset/js/Chart.min.js"></script>
     <script src="${SITE_URL}/asset/js/jquery.tagsinput.min.js"></script>
+    <script src="${SITE_URL}/asset/js/script.js"></script>
 
     <title>Usami | Marketplace of Creative</title>
 </head>
