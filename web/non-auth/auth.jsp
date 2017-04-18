@@ -14,7 +14,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
-                <form action="${SITE_URL}/signup" method="POST">
+                <form action="${SITE_URL}/SignUp" method="POST">
                     <div class="form-group has-feedback" id="fNameInDiv">
                         <label class="control-label" for="fullname">Full Name</label>
                         <input type="text" class="form-control" name="fullname" id="fNameIn" placeholder="John Doe">
@@ -49,7 +49,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign In</div>
             <div class="panel-body">
-                <form action="${SITE_URL}/signin" method="POST" >
+                <form action="${SITE_URL}/SignIn" method="POST" >
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" name="username">

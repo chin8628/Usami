@@ -27,7 +27,7 @@ import model.User;
  *
  * @author Chiib_000
  */
-@WebServlet(name = "Sign_inServlet", urlPatterns = {"/signin"})
+@WebServlet(name = "Sign_inServlet", urlPatterns = {"/SignIn"})
 public class SignIn extends HttpServlet {
 
     /**
