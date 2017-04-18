@@ -159,6 +159,7 @@ public class View extends HttpServlet {
             request.setAttribute("allComm", allComm);  
             request.setAttribute("art", art);
             request.setAttribute("owner", profile);
+            request.setAttribute("user", user);
             RequestDispatcher obj = request.getRequestDispatcher("/art.jsp");
             obj.forward(request, response);
             
