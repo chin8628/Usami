@@ -23,26 +23,29 @@
                         </a>
                     </p>
                     <p><span class="label label-default">Standard User</span></p>
+                    <form
+                        action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>"
+                        method="POST">
+                        <button
+                            class='btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %> col-sm-12'
+                            type="submit">
+                            <%= request.getAttribute("btn-follow-text") %>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <form
-                action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>"
-                method="POST">
-                <button
-                    class='btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %> col-sm-12'
-                    type="submit">
-                    <%= request.getAttribute("btn-follow-text") %>
-                </button>
-            </form>
-        </div>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <form
-                action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>"
-                method="POST">
-                <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
-            </form>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <h3>50.03 Coin</h3><br>
+                    <form
+                        action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>"
+                        method="POST">
+                        <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-9">
