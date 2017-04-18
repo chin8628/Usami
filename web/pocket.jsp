@@ -11,7 +11,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Balance</div>
                 <div class="panel-body">
-                    <h2>352 Coin</h2>
+                    <h2>352 <small>Coin</small></h2>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Income (Last 30 days)</div>
                 <div class="panel-body">
-                    <h2>352 Coin</h2>
+                    <h2>352 <small>Coin</small></h2>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Outcome (Last 30 days)</div>
                 <div class="panel-body">
-                    <h2>352 Coin</h2>
+                    <h2>352 <small>Coin</small></h2>
                 </div>
             </div>
         </div>
