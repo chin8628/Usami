@@ -13,19 +13,19 @@
                     <img src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}" class="img-responsive thumbnail">
                 </div>
                 <div class="col-sm-12 col-xs-7">
-                    <p><span class="label label-default">Standard User</span></p>
                     <p><strong>${sessionScope.profile.getFirst_name()} ${sessionScope.profile.getLast_name()}</strong></p>
+                    <p><span class="label label-default">Standard User</span></p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="col-xs-6">
+                    <div class="col-sm-12 col-xs-6">
                         <a href="${SITE_URL}/ViewFollow/?id=${sessionScope.user.getUsername()}">
                             <small>Follower</small>
                             <h4>${requestScope.countFollower}</h4>
                         </a>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-sm-12 col-xs-6">
                         <a href="${SITE_URL}/ViewFollow/?id=${sessionScope.user.getUsername()}">
                             <small>Following</small>
                             <h4>${requestScope.countFollowing}</h4>
