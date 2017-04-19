@@ -47,33 +47,27 @@ public class CookieAuthen implements Filter {
             HttpSession session = req.getSession();
             Cookie[] cookies = req.getCookies();
 
-            if (session != null) {
-                if (session.getAttribute("user") != null
-                        && session.getAttribute("profile") != null) {
-                    chain.doFilter(request, response);
-                    return;
-                } else {
-                    if (cookies != null) {
-                        for (Cookie ck : cookies) {
-                            if (ck.getName().equals("user")) {
-                                ServletContext ctx = this.config.getServletContext();
-                                Connection conn = (Connection) ctx.getAttribute("connection");
-                                try {
-                                    Profiles profile = new Profiles(conn, ck.getValue());
-                                    User user = new User(conn, ck.getValue());
-                                    session.setAttribute("user", user);
-                                    session.setAttribute("profile", profile);
-                                } catch (SQLException ex) {
-                                    Logger.getLogger(CookieAuthen.class.getName()).log(Level.SEVERE, null, ex);
-                                }
+            if (session.getAttribute("user") != null && session.getAttribute("profile") != null) {
+                chain.doFilter(request, response);
+            } else {
+                if (cookies != null) {
+                    for (Cookie ck : cookies) {
+                        if (ck.getName().equals("user")) {
+                            ServletContext ctx = this.config.getServletContext();
+                            Connection conn = (Connection) ctx.getAttribute("connection");
+                            try {
+                                Profiles profile = new Profiles(conn, ck.getValue());
+                                User user = new User(conn, ck.getValue());
+                                session.setAttribute("user", user);
+                                session.setAttribute("profile", profile);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(CookieAuthen.class.getName()).log(Level.SEVERE, null, ex);
                             }
+                            chain.doFilter(request, response);
+                            return;
                         }
-                        chain.doFilter(request, response);
-                    } else {
-                        res.sendRedirect("/Usami");
                     }
                 }
-            } else {
                 res.sendRedirect("/Usami");
             }
         }

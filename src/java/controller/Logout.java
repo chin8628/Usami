@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,9 +37,15 @@ public class Logout extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
+            Cookie[] cookies = request.getCookies();
+            for (Cookie ck : cookies) {
+                if (ck.getName().equals("user")) {
+                    ck.setMaxAge(0);
+                    response.addCookie(ck);
+                }
+            }
             session.invalidate();
             response.sendRedirect("/Usami");
-            return;
         }
     }
 
