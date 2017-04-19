@@ -50,7 +50,7 @@ public class dwCoin extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            Float amount = Float.parseFloat(request.getParameter("amount"));
+            int amount = (int)Float.parseFloat(request.getParameter("amount"));
             int mode = Integer.parseInt(request.getParameter("mode"));
             
             if(mode == 0) {
