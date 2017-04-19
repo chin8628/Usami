@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -46,11 +47,22 @@ public class DeleteArt extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
+            String appPath = request.getServletContext().getRealPath("");
+            String savePath = appPath + "/asset/img/art";
+            
             PreparedStatement pstmt;
             try {
                 pstmt = conn.prepareStatement("DELETE FROM usami.Image WHERE image_id = ?;");
                 pstmt.setString(1, id);
                 pstmt.executeUpdate();
+                
+                File file = new File(savePath + File.separator + id + ".jpg");
+                file.delete();
+                file = new File(savePath + File.separator + "protected" + File.separator + id + ".original.jpg");
+                file.delete();
+                file = new File(savePath + File.separator + "protected" + File.separator + id + ".resized.jpg");
+                file.delete();
+                
                 
             } catch (SQLException ex) {
                 ex.printStackTrace();
