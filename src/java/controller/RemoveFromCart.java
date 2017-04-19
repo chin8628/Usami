@@ -40,6 +40,7 @@ public class RemoveFromCart extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             ArrayList<Art> cart = (ArrayList<Art>) session.getAttribute("cart");
+            String origin = request.getParameter("origin");
             
             String toRemove = request.getParameter("id");
             
@@ -66,7 +67,7 @@ public class RemoveFromCart extends HttpServlet {
             session.setAttribute("cart", cart);
             session.setAttribute("total", total);
             
-            response.sendRedirect("/Usami/cart.jsp");
+            response.sendRedirect(origin);
         }
     }
 
