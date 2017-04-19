@@ -2,13 +2,12 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <filter>
         <filter-name>cookieFilter</filter-name>
-        <filter-class>filter.cookieAuthen</filter-class>
+        <filter-class>filter.CookieAuthen</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>cookieFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
     <listener>
         <description>ServletContextListener</description>
         <listener-class>listener.UsamiListener</listener-class>
