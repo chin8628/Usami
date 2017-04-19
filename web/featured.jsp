@@ -4,10 +4,7 @@
 
 <div class="col-sm-12">
     <div class="page-header">
-        <h1 style="display: inline-block">
-            #${requestScope.tag_name}WOW
-            <a class="btn btn-success btn-sm" href="#">Follow</a>
-        </h1>
+        <h1>Recommend</h1>
     </div>
     
     <c:forEach var="art" items="${requestScope.arts}">

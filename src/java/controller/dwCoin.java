@@ -8,8 +8,8 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -20,15 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
-import model.ArtTag;
-import model.Profiles;
+import model.User;
 
 /**
  *
  * @author frostnoxia
  */
-@WebServlet(name = "EditArt", urlPatterns = {"/EditArt"})
-public class EditArt extends HttpServlet {
+@WebServlet(name = "dwCoin", urlPatterns = {"/dwCoin"})
+public class dwCoin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,62 +39,32 @@ public class EditArt extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            HttpSession session = request.getSession();
-            Profiles user = (Profiles) session.getAttribute("profile");
+            /* TODO output your page here. You may use following sample code. */
             
+            
+            HttpSession session = request.getSession();
+            User user = (User)session.getAttribute("user");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            String artId = request.getParameter("id");
-            String title = request.getParameter("title");
-            String desc = request.getParameter("desc");
-            String tempPrice = request.getParameter("price");
-            if(tempPrice == null) {
-                tempPrice = "0";
-            }
-            int price = Integer.parseInt(tempPrice);
-            String[] allTag = request.getParameter("tags").split(",");
+            int amount = (int)Float.parseFloat(request.getParameter("amount"));
+            int mode = Integer.parseInt(request.getParameter("mode"));
             
-            Art art = new Art(conn, artId);
-            PreparedStatement pstmt;
-            try {
-                pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?;");
-                pstmt.setString(1, title);
-                pstmt.setString(2, desc);
-                pstmt.setString(3, artId);
-                pstmt.executeUpdate();
-                
-                // Delete all tag
-                pstmt = conn.prepareStatement("DELETE FROM usami.Tag_has WHERE image_id = ?");
-                pstmt.setString(1, artId);
-                pstmt.executeUpdate();
-                
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            if(mode == 0) {
+                //deposit
+                amount *= 5;
+                user.setCoin((int) (user.getCoin() + amount));
+                user.ChangeCoin(conn);
+            } else if (mode == 1) {
+                //withdraw
+                user.setCoin((int) (user.getCoin() - amount));
+                user.ChangeCoin(conn);
             }
             
-            out.println(art.getProduct());
-            out.println(art.getProduct().getProduct_id());
-            
-            
-            art.updateArts();
-            
-            // Edit Tag
-            for (String tag: allTag) {
-                ArtTag artTag = new ArtTag(conn, tag);
-                if (artTag.getTag_id() == 0) {
-                    artTag.insertTag();
-                }
-                artTag.insertTag_has(artId);
-            }
-            
-            response.sendRedirect("/Usami/Storage");
-            
-            
+            response.sendRedirect("/Usami/Pocket");
         }
     }
 
@@ -113,8 +82,8 @@ public class EditArt extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(EditArt.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(dwCoin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -131,8 +100,8 @@ public class EditArt extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(EditArt.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(dwCoin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -42,35 +42,36 @@
                     <a class="navbar-brand" href="${SITE_URL}/Index">Usami</a>
                 </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="${SITE_URL}/Market">Market</a></li>
-                        <li><a href="${SITE_URL}/upload.jsp">Upload</a></li>
-                        <li><a href="${SITE_URL}/Tag">Tags</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="${SITE_URL}/administrator/index.jsp">Admin</a></li>
-                        <li><a href="${SITE_URL}/cart.jsp">Cart</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                ${sessionScope.user.username}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="${SITE_URL}/ViewProfile/?id=${sessionScope.user.getUsername()}">MyProfile</a></li>
-                                <li><a href="${SITE_URL}/Storage">MyStorage</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="${SITE_URL}/setting/profile.jsp">Edit profile</a></li>
-                                <li><a href="${SITE_URL}/pocket.jsp">Pocket</a></li>
-                                <li><a href="${SITE_URL}/History">History</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="${SITE_URL}/Logout">Sign Out</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="${SITE_URL}/Market">Market</a></li>
+                    <li><a href="${SITE_URL}/upload.jsp">Upload</a></li>
+                    <li><a href="${SITE_URL}/Tag">Tags</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="${SITE_URL}/administrator/index.jsp">Admin</a></li>
+                    <li><a href="${SITE_URL}/cart.jsp">Cart</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            ${sessionScope.user.username}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${SITE_URL}/ViewProfile/?id=${sessionScope.user.getUsername()}">MyProfile</a></li>
+                            <li><a href="${SITE_URL}/Storage">MyStorage</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="${SITE_URL}/setting/profile.jsp">Edit profile</a></li>
+                            <li><a href="${SITE_URL}/Pocket">Pocket</a></li>
+                            <li><a href="${SITE_URL}/history.jsp">History</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="${SITE_URL}/Logout">Sign Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container col-sm-8 col-sm-offset-2">
 
         <div class="container col-sm-8 col-sm-offset-2">
