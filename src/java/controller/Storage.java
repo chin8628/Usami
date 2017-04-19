@@ -66,7 +66,6 @@ public class Storage extends HttpServlet {
             
             while (rs.next()){
                 Art art = new Art(conn, rs.getString("image_id"));
-                art.setPrice("free");
                 art.getCurrentTags();
                 allArt.add(art);
                 
