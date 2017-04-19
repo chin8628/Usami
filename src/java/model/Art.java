@@ -152,10 +152,14 @@ public class Art {
     }
 
     public String getPrice() {
-        float p = getProduct().getPrice();
-        if(p > 0) {
-            return p + "";
-        } else {
+        try{
+            float p = getProduct().getPrice();
+            if(p > 0) {
+                return p + "";
+            } else {
+                return "free";
+            }
+        } catch (Exception e){
             return "free";
         }
     }

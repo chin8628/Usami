@@ -9,9 +9,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,15 +25,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
-import model.ArtTag;
-import model.Profiles;
+import model.User;
 
 /**
  *
  * @author frostnoxia
  */
-@WebServlet(name = "EditArt", urlPatterns = {"/EditArt"})
-public class EditArt extends HttpServlet {
+@WebServlet(name = "Pocket", urlPatterns = {"/Pocket"})
+public class Pocket extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,58 +47,64 @@ public class EditArt extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            HttpSession session = request.getSession();
-            Profiles user = (Profiles) session.getAttribute("profile");
+            /* TODO output your page here. You may use following sample code. */
             
+            HttpSession session = request.getSession();
+            User user = (User)session.getAttribute("user");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            String artId = request.getParameter("id");
-            String title = request.getParameter("title");
-            String desc = request.getParameter("desc");
-            String tempPrice = request.getParameter("price");
-            if(tempPrice == null) {
-                tempPrice = "0";
-            }
-            int price = Integer.parseInt(tempPrice);
-            String[] allTag = request.getParameter("tags").split(",");
+            String cur_coin = user.getCoin() + "";
             
-            Art art = new Art(conn, artId);
-            PreparedStatement pstmt;
+            int in_coin = 0;
+            int out_coin = 0;
+            
             try {
-                pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?;");
-                pstmt.setString(1, title);
-                pstmt.setString(2, desc);
-                pstmt.setString(3, artId);
-                pstmt.executeUpdate();
+                PreparedStatement pstmt = conn.prepareStatement("SELECT sum(buy_price) " +
+                        "FROM User_buy u " +
+                        "JOIN Product p " +
+                        "USING (product_id) " +
+                        "WHERE buy_date >= ? " +
+                        "AND p.user_id = ?");
                 
-                // Delete all tag
-                pstmt = conn.prepareStatement("DELETE FROM usami.Tag_has WHERE image_id = ?");
-                pstmt.setString(1, artId);
-                pstmt.executeUpdate();
+                Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
+                time.setTime(time.getTime() - 2592000);
+                
+                pstmt.setTimestamp(1, time);
+                pstmt.setString(2, user.getUsername());
+                
+                ResultSet rs = pstmt.executeQuery();
+                if(rs.next()) {
+                    in_coin = rs.getInt(1);
+                }
+                
+                pstmt = conn.prepareStatement("SELECT sum(buy_price) " +
+                        "FROM User_buy " +
+                        "WHERE buy_date >= ? " +
+                        "AND user_id = ?");
+                
+                time = new Timestamp(Calendar.getInstance().getTime().getTime());
+                time.setTime(time.getTime() - 2592000);
+                
+                pstmt.setTimestamp(1, time);
+                pstmt.setString(2, user.getUsername());
+                
+                rs = pstmt.executeQuery();
+                if(rs.next()) {
+                    out_coin = rs.getInt(1);
+                }
+                
                 
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                Logger.getLogger(Pocket.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            out.println(art.getProduct());
-            out.println(art.getProduct().getProduct_id());
+            request.setAttribute("cur_coin", cur_coin);
+            request.setAttribute("in_coin", in_coin);
+            request.setAttribute("out_coin", out_coin);
             
-            
-            art.updateArts();
-            
-            // Edit Tag
-            for (String tag: allTag) {
-                ArtTag artTag = new ArtTag(conn, tag);
-                if (artTag.getTag_id() == 0) {
-                    artTag.insertTag();
-                }
-                artTag.insertTag_has(artId);
-            }
-            
-            response.sendRedirect("/Usami/Storage");
-            
+            RequestDispatcher obj = request.getRequestDispatcher("/pocket.jsp");
+            obj.forward(request, response);
             
         }
     }
@@ -111,11 +121,7 @@ public class EditArt extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(EditArt.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -129,11 +135,7 @@ public class EditArt extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(EditArt.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

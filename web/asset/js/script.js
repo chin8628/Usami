@@ -1,1 +1,1 @@
-var EXCHANGE = 1.02;
+var EXCHANGE = 5;

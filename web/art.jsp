@@ -36,11 +36,11 @@
                 </div>
             </div>
         </div>
+        <% if(!art.getUserId().equals(user.getUsername())) { %>
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <h3>50.03 Coin</h3><br>
-                    <% if(!art.getUserId().equals(user.getUsername())) { %>
+                    <h3><%= art.getPrice() %></h3><br>
                     <form
                         action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>"
                         method="POST">
@@ -50,6 +50,8 @@
                 </div>
             </div>
         </div>
+        <% } %>
+        
     </div>
     <div class="col-sm-9">
         <div class="panel panel-default">

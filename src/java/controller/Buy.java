@@ -73,15 +73,21 @@ public class Buy extends HttpServlet {
             } else {
                 user.setCoin((int) (user.getCoin() - total));
                 user.ChangeCoin(conn);
+                PreparedStatement pstmt;
                 for(Art art: cart) {
-                    PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.User_buy VALUES (?,?,?,?)");
+                    pstmt = conn.prepareStatement("INSERT INTO usami.User_buy VALUES (?,?,?,?)");
                     pstmt.setString(1, user.getUsername());
                     pstmt.setString(2, art.getProduct().getProduct_id());
                     pstmt.setTimestamp(3, new Timestamp(Calendar.getInstance().getTime().getTime()));
                     pstmt.setFloat(4, art.getProduct().getPrice());
                     
                     pstmt.executeUpdate();
+                    
+                    User creator = new User(conn, art.getUserId());
+                    creator.setCoin((int) (creator.getCoin() + art.getProduct().getPrice()));
+                    creator.ChangeCoin(conn);
                 }
+                
                 
                 cart = new ArrayList<Art>();
                 total = 0f;
