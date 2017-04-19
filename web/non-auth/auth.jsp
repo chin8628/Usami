@@ -58,6 +58,11 @@
                         <label for="password">Password</label>
                         <input type="password" class="form-control" name="password">
                     </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="remember"> Remember Me
+                        </label>
+                    </div>
                     <button type="submit" class="btn btn-default">Sign In</button>
                 </form>
             </div>
@@ -66,5 +71,5 @@
 </div>
 
 <script src="${SITE_URL}/asset/js/Authenticate.js"></script>
-                
+
 <jsp:include page="../templates/footer.jsp" />
