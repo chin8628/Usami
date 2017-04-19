@@ -61,7 +61,7 @@
                             <li><a href="${SITE_URL}/Storage">MyStorage</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="${SITE_URL}/setting/profile.jsp">Edit profile</a></li>
-                            <li><a href="${SITE_URL}/pocket.jsp">Pocket</a></li>
+                            <li><a href="${SITE_URL}/Pocket">Pocket</a></li>
                             <li><a href="${SITE_URL}/history.jsp">History</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="${SITE_URL}/Logout">Sign Out</a></li>
