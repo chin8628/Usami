@@ -198,6 +198,28 @@ public class ArtTag {
         }
     }
     
+    public void followTag(String user_id) {
+        try {
+            PreparedStatement pstmt = this.conn.prepareStatement("INSERT INTO usami.Profile_focus VALUES(?, ?)");
+            pstmt.setString(1, user_id);
+            pstmt.setInt(2, this.tag_id);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void unfollowTag(String user_id) {
+        try {
+            PreparedStatement pstmt = this.conn.prepareStatement("DELETE FROM usami.Profile_focus WHERE tag_id = ? AND user_id = ?");
+            pstmt.setInt(1, this.tag_id);
+            pstmt.setString(2, user_id);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public int getTag_id() {
         return tag_id;
     }

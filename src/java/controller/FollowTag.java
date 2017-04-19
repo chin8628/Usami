@@ -11,8 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Art;
 import model.ArtTag;
 import model.User;
 
@@ -28,8 +25,8 @@ import model.User;
  *
  * @author bellkung
  */
-@WebServlet(name = "Gallery", urlPatterns = {"/Gallery/"})
-public class Gallery extends HttpServlet {
+@WebServlet(name = "FollowTag", urlPatterns = {"/FollowTag/"})
+public class FollowTag extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -53,19 +50,12 @@ public class Gallery extends HttpServlet {
             
             String tag_name = request.getParameter("tag");
             
-            ArrayList<Art> arts = new ArrayList<>();
-            ArtTag tag = new ArtTag(conn, tag_name);
-            tag.getImageID();
-            
-            for (String img_id: tag.getAllImgID()) {
-                Art art = new Art(conn, img_id);
-                arts.add(art);
-            }
-            
             // Follow Tag
             PreparedStatement pstmt;
             ResultSet rs;
             try {
+                
+                ArtTag tag = new ArtTag(conn, tag_name);
                 
                 pstmt = conn.prepareStatement("SELECT * FROM usami.Profile_focus p "
                         + "JOIN usami.Tag t USING (tag_id) WHERE t.tag_name = ? AND p.user_id = ?");
@@ -74,24 +64,16 @@ public class Gallery extends HttpServlet {
                 
                 rs = pstmt.executeQuery();
                 if (rs.next()) {
-                    request.setAttribute("btnFollow", "btn-danger");
-                    request.setAttribute("btnFollowText", "Unfollow");
+                    tag.unfollowTag(user.getUsername());
                 } else {
-                    request.setAttribute("btnFollow", "btn-success");
-                    request.setAttribute("btnFollowText", "Follow");
+                    tag.followTag(user.getUsername());
                 }
                 
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
             
-                
-            request.setAttribute("arts", arts);
-            request.setAttribute("tag_name", request.getParameter("tag"));
-                
-            RequestDispatcher obj = request.getRequestDispatcher("/gallery.jsp");
-            obj.forward(request, response);
-                
+            response.sendRedirect("/Usami/Gallery/?tag="+tag_name);
         }
     }
 
