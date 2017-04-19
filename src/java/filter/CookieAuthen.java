@@ -37,7 +37,6 @@ public class CookieAuthen implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         String path = ((HttpServletRequest) request).getRequestURI();
-        System.out.println(path);
         if (path.equals("/Usami/") || path.equals("/Usami/SignIn") || path.startsWith("/Usami/asset")) {
             chain.doFilter(request, response);
         } else {
@@ -60,7 +59,6 @@ public class CookieAuthen implements Filter {
                                 ServletContext ctx = this.config.getServletContext();
                                 Connection conn = (Connection) ctx.getAttribute("connection");
                                 try {
-                                    System.out.println("Session setAtt !!");
                                     Profiles profile = new Profiles(conn, ck.getValue());
                                     User user = new User(conn, ck.getValue());
                                     session.setAttribute("user", user);
