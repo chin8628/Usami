@@ -51,7 +51,9 @@
                                 <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
                                     <form
                                         action="${SITE_URL}/AddToCart/?id=${art.getId()}&origin=${SITE_URL}/Market" method="POST" >
-                                        <button class="btn btn-success btn-sm col-sm-12">ADD TO CART</button>
+                                        <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
+                                        <button class="btn btn-danger btn-sm col-sm-12">Remove from Cart</button>
+                                        <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
                                     </form>
                                 </c:if>
                             </ul>
