@@ -1,3 +1,4 @@
+        </div>
     </div>
     <footer class="col-sm-12">
         <div class="container">

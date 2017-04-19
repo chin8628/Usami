@@ -8,17 +8,31 @@
 <div class="col-sm-3">
     <div class="panel panel-default">
         <div class="panel-body text-center">
-            <div class="thumbnail">
-                <img src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}" class="img-responsive">
+            <div class="row">
+                <div class="col-sm-12 col-xs-5">
+                    <img src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}" class="img-responsive thumbnail">
+                </div>
+                <div class="col-sm-12 col-xs-7">
+                    <p><span class="label label-default">Standard User</span></p>
+                    <p><strong>${sessionScope.profile.getFirst_name()} ${sessionScope.profile.getLast_name()}</strong></p>
+                </div>
             </div>
-            <p><span class="label label-default">Standard User</span></p>
-            <p><strong>${sessionScope.profile.getFirst_name()} ${sessionScope.profile.getLast_name()}</strong></p>
-            <a href="${SITE_URL}/ViewFollow/?id=${sessionScope.user.getUsername()}">
-                <small>Follower</small>
-                <h4>${requestScope.countFollower}</h4>
-                <small>Following</small>
-                <h4>${requestScope.countFollowing}</h4>
-            </a>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-xs-6">
+                        <a href="${SITE_URL}/ViewFollow/?id=${sessionScope.user.getUsername()}">
+                            <small>Follower</small>
+                            <h4>${requestScope.countFollower}</h4>
+                        </a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="${SITE_URL}/ViewFollow/?id=${sessionScope.user.getUsername()}">
+                            <small>Following</small>
+                            <h4>${requestScope.countFollowing}</h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

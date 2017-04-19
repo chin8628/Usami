@@ -23,8 +23,13 @@
     <style>
         html, body {
             background-image: url('${SITE_URL}/asset/img/background/background-${rand}.jpg');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
             background-size: cover;
-            background-position: center;
         }
         .error {
             blackground-color: red;
@@ -34,4 +39,5 @@
     <title>Usami | Marketplace of Creative</title>
 </head>
 <body>
-    <div class="container col-sm-8 col-sm-offset-2">
+    <div id="main-body">
+        <div class="container col-sm-8 col-sm-offset-2">
