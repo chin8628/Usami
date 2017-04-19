@@ -25,16 +25,16 @@
     </div>
 
     <div class="col-sm-9">
-        
+
            <c:if test="${requestScope.allArt != null}">
-                <c:forEach var="art" items="${requestScope.allArt}">         
+                <c:forEach var="art" items="${requestScope.allArt}">
                     <div class="col-sm-4 image-product">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <ul class="nav nav-pills">
                                     <a href="${SITE_URL}/View/?id=${art.getId()}">
                                         <p>
-                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive thumbnail">
+                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive center-block">
                                         </p>
                                         <div class="title">
                                             <p>
