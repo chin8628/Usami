@@ -153,7 +153,8 @@ public class Art {
 
     public String getPrice() {
         try{
-            float p = getProduct().getPrice();
+            float tempp = getProduct().getPrice();
+            int p = (int) tempp;
             if(p > 0) {
                 return p + "";
             } else {

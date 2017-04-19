@@ -52,7 +52,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <p><strong>Income</strong> <small>Last 30 days</small></p>
-                <h3>$102.85</h3>
+                <h3>${requestScope.coin} <small>coin</small></h3>
             </div>
         </div>
     </div>

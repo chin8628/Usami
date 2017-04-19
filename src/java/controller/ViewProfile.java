@@ -11,7 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -130,8 +132,29 @@ public class ViewProfile extends HttpServlet {
                 allArt.add(art);
             }
             
-            request.setAttribute("allArt", allArt);
+            //count income
+            int in_coin = 0;
+            pstmt = conn.prepareStatement("SELECT sum(buy_price) " +
+                        "FROM User_buy u " +
+                        "JOIN Product p " +
+                        "USING (product_id) " +
+                        "WHERE buy_date >= ? " +
+                        "AND p.user_id = ?");
+                
+                Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
+                time.setTime(time.getTime() - 2592000);
+                
+                pstmt.setTimestamp(1, time);
+                pstmt.setString(2, user.getUsername());
+                
+                rs = pstmt.executeQuery();
+                if(rs.next()) {
+                    in_coin = rs.getInt(1);
+                }
+                
             
+            request.setAttribute("allArt", allArt);
+            request.setAttribute("coin", in_coin);
             request.setAttribute("user", userInPage);
             request.setAttribute("profile", profileInPage);
             

@@ -30,8 +30,8 @@
             <div class="form-group">
                 <label for="price">Price</label>
                 <div class="input-group">
-                    <span class="input-group-addon">$</span>
-                    <input type="number" class="form-control" id="price" name="price" aria-label="Amount (to the nearest dollar)" disabled>
+                    <span class="input-group-addon">Coin</span>
+                    <input type="number" class="form-control" id="price" name="price" aria-label="Amount in whole number" disabled>
                 </div>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>

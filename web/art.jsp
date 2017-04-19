@@ -40,7 +40,7 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <h3><%= art.getPrice() %></h3><br>
+                    <h3><%= art.getPrice()%> <small>coin</small></h3><br>
                     <% if(!art.getUserId().equals(user.getUsername())) { %>
                     <form
                         action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>"
@@ -57,7 +57,7 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <h3>83424 <small>Views</small></h3>
+                    <h3> <%= art.getView() %> <small>Views</small></h3>
                 </div>
             </div>
         </div>

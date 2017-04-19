@@ -46,7 +46,7 @@
                                     <p>${art.getFullname()}</p>
                                 </a>
                                 <div class="price">
-                                    <p>${art.getPrice()}</p>
+                                    <p>${art.getPrice()} <small>coin</small></p>
                                 </div>
                                 <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
                                     <form

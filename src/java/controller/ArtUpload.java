@@ -174,7 +174,7 @@ public class ArtUpload extends HttpServlet {
                 pstmt.setString(4, artDesc);
                 pstmt.setTimestamp(5, new Timestamp(calendar.getTime().getTime()));
                 pstmt.setString(6, profile.getUsername());
-                pstmt.setInt(7, 1);
+                pstmt.setInt(7, 0);
                 pstmt.executeUpdate();
                 
                 pstmt = conn.prepareStatement("INSERT INTO usami.product VALUES(?,?,?,?,?)");
