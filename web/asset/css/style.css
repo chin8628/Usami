@@ -87,6 +87,10 @@ footer {
 
 /* MARKET PAGE */
 
+.image-product img{
+    max-height: 170px;
+}
+
 .image-product img:hover{
     outline: #18bc9c solid 1px;
 }
