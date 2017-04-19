@@ -57,7 +57,7 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <h3>83424 <small>Views</small></h3>
+                    <h3> <%= art.getView() %> <small>Views</small></h3>
                 </div>
             </div>
         </div>
