@@ -9,6 +9,7 @@ html, body {
 footer {
     background: #2a2730;
     min-height: 100px;
+    height: auto;
     padding-top: 20px;
     padding-bottom: 15px;
     color: white;

@@ -41,17 +41,26 @@
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     <h3><%= art.getPrice() %></h3><br>
+                    <% if(!art.getUserId().equals(user.getUsername())) { %>
                     <form
                         action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>"
                         method="POST">
                         <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
+                        <button class="btn btn-danger btn-sm col-sm-12">Remove from Cart</button>
+                        <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
                     </form>
                     <% } %>
                 </div>
             </div>
         </div>
         <% } %>
-        
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <h3>83424 <small>Views</small></h3>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-sm-9">
         <div class="panel panel-default">

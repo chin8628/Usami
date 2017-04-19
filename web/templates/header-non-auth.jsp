@@ -40,4 +40,4 @@
 </head>
 <body>
     <div id="main-body">
-        <div class="container col-sm-8 col-sm-offset-2">
+        <div class="container col-sm-8 col-sm-offset-2 col-xs-12">
