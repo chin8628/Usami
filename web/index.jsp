@@ -70,21 +70,20 @@
     <div class="panel panel-default">
         <div class="panel-heading"><h3>Popular Art</h3></div>
         <div class="panel-body">
-            
             <div class="col-sm-12">
-                <% for(Art art: popArt){ %>
+                <% for(int i=0;i < popArt.size();i++){ %>
+                <% if(i % 4 == 0) {%><div class="row"><% } %>
                 <div class="col-sm-3 image-art">
-                    <a  href="${SITE_URL}/View/?id=<%=art.getId()%>" target="blank" class="thumbnail text-center">
-                        <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="img-responsive">
+                    <a  href="${SITE_URL}/View/?id=<%=popArt.get(i).getId()%>" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art/<%=popArt.get(i).getUrl()%>" class="img-responsive">
                         <div class="title">
-                            <strong> <%= art.getTitle() %> </strong>
+                            <strong> <%= popArt.get(i).getTitle() %> </strong>
                         </div>
                     </a>
                 </div>
+                <% if(i % 4 == 3) {%></div><% } %>
                 <%}%>
             </div>
-            
-                        
         </div>
     </div>
 
@@ -92,18 +91,18 @@
         <div class="panel-heading"><h3>New Work: Following</h3></div>
         <div class="panel-body">
             <div class="col-sm-12">
-                
-                <% for(Art art: folArt){ %>
+                <% for(int i=0;i < folArt.size();i++){ %>
+                <% if(i % 4 == 0) {%><div class="row"><% } %>
                 <div class="col-sm-3 image-art">
-                    <a  href="${SITE_URL}/View/?id=<%=art.getId()%>" target="blank" class="thumbnail text-center">
-                        <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="img-responsive">
+                    <a  href="${SITE_URL}/View/?id=<%=folArt.get(i).getId()%>" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art/<%=folArt.get(i).getUrl()%>" class="img-responsive">
                         <div class="title">
-                            <strong> <%= art.getTitle() %> </strong>
+                            <strong> <%= folArt.get(i).getTitle() %> </strong>
                         </div>
                     </a>
                 </div>
+                <% if(i % 4 == 3) {%></div><% } %>
                 <%}%>
-                
             </div>
         </div>
     </div>
