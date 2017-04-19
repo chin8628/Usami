@@ -6,7 +6,7 @@
 <jsp:include page="templates/header.jsp" />
 <% ArrayList<Art> cart = (ArrayList<Art>) request.getSession().getAttribute("cart"); %>
 <% if(cart == null) {cart = new ArrayList<Art>();} %>
-<%  Float total = 0f; for(Art art:cart) {total += art.getProduct().getPrice();} %>
+<%  float total = 0f; for(Art art:cart) {total += art.getProduct().getPrice();} %>
 
 
 <div class="panel panel-default">
@@ -29,7 +29,7 @@
                     <td><img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" alt="" class="img-responsive"></td>
                     <td><%= art.getTitle() %></td>
                     <td><%= art.getFullname() %></td>
-                    <td><%= (art.getProduct().getPrice()==0) ? "free":art.getProduct().getPrice() %></td>
+                    <td><%= art.getPrice() %></td>
                     <td><a href="${SITE_URL}/RemoveFromCart/?id=<%= art.getId() %>"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 <% } %>
@@ -38,7 +38,7 @@
     </div>
     <div class="panel-body">
         <div class="col-sm-12 text-right">
-            <p><%= total %></p>
+            <p><%= (int)total %> <small>coin</small></p>
             <form action="${SITE_URL}/Buy" method="POST">
                 <p><button class="btn btn-success btn-sm">Buy</button></p>
             </form>
