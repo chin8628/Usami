@@ -61,6 +61,8 @@ public class RemoveFromCart extends HttpServlet {
                 total += inCart.getProduct().getPrice();
             }
             
+            request.setAttribute("message", "Art Removed");
+            request.setAttribute("mtype", "norm");
             session.setAttribute("cart", cart);
             session.setAttribute("total", total);
             

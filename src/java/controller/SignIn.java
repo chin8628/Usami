@@ -77,6 +77,8 @@ public class SignIn extends HttpServlet {
                 //user_coki.setSecure(true);
                 response.addCookie(user_coki);
 
+                request.setAttribute("message", "Invalid Username/Password");
+                request.setAttribute("mtype", "fail");
                 response.sendRedirect("/Usami/Index");
             }
         }

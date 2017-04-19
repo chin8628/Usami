@@ -68,7 +68,8 @@ public class DeleteArt extends HttpServlet {
                 ex.printStackTrace();
             }
             
-            
+            request.setAttribute("message", "Art Deleted");
+            request.setAttribute("mtype", "norm");
             response.sendRedirect("/Usami/Storage");
             
             
