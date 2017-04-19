@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="model.Profiles"%>
 <%@page import="model.User"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -59,8 +60,8 @@
     <div class="col-sm-4">
         <div class="panel panel-default">
             <div class="panel-body">
-                <p><strong>Visited</strong> <small>Last 30 days</small></p>
-                <h3>39,304 <small>visted</small></h3>
+                <p><strong>Visited</strong> <small>All Times</small></p>
+                <h3>${requestScope.visited} <small>visted</small></h3>
             </div>
         </div>
     </div>
@@ -68,8 +69,8 @@
     <div class="col-sm-4">
         <div class="panel panel-default">
             <div class="panel-body">
-                <p><strong>Favorited</strong> <small>Last 30 days</small></p>
-                <h3>3,032 <small>times</small></h3>
+                <p><strong>Favorited</strong> <small>All Times</small></p>
+                <h3>${requestScope.favorited} <small>times</small></h3>
             </div>
         </div>
     </div>
@@ -79,50 +80,18 @@
     <div class="panel-heading"><h2>Arts</h2></div>
     <div class="panel-body" id="profile">
         <div class="col-sm-12">
-            <div class="col-sm-3 image-art">
-                <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
-                    <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                    <div class="title">
-                        <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                    </div>
-                </a>
+            
+            <c:forEach var="art" items="${requestScope.allArt}">
+                <div class="col-sm-3 image-art">
+                    <a  href="${SITE_URL}/View/?id=${art.getId()}" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive">
+                        <div class="title">
+                            <strong>${art.getTitle()}</strong>
+                        </div>
+                    </a>
             </div>
-
-            <div class="col-sm-3 image-art">
-                <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
-                    <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                    <div class="title">
-                        <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-sm-3 image-art">
-                <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
-                    <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                    <div class="title">
-                        <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-sm-3 image-art">
-                <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
-                    <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                    <div class="title">
-                        <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-sm-3 image-art">
-                <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
-                    <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                    <div class="title">
-                        <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                    </div>
-                </a>
-            </div>
+            </c:forEach>
+            
         </div>
     </div>
 </div>
