@@ -38,6 +38,36 @@
     <div class="col-sm-12" id="payment">
         <div class="panel panel-default">
             <div class="panel-heading">
+                <h3 class="panel-title">Payment</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form method="post" action="${SITE_URL}/dwCoin">
+                            <input name="mode" value="0" hidden>
+                            <div class="form-group col-sm-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">฿</span>
+                                    <input type="number" class="form-control" name="amount" id="baht">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Coin</span>
+                                    <input type="number" class="form-control" id="coin" disabled>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success">Paypal</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12" id="withdraw">
+        <div class="panel panel-default">
+            <div class="panel-heading">
                 <h3 class="panel-title">Withdraw</h3>
             </div>
             <div class="panel-body">
@@ -48,46 +78,16 @@
                             <div class="form-group col-sm-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">Coin</span>
-                                    <input type="number" class="form-control" name="amount" id="baht">
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <div class="input-group">
-                                    <span class="input-group-addon">฿</span>
-                                    <input type="number" class="form-control" id="coin" disabled>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-success">Pay</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-12" id="deposit">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Deposit</h3>
-            </div>
-            <div class="panel-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <form method="post" action="${SITE_URL}/dwCoin">
-                            <input name="mode" value="0" hidden>
-                            <div class="form-group col-sm-6">
-                                <div class="input-group">
-                                    <span class="input-group-addon">฿</span>
                                     <input type="number" class="form-control" name="amount" id="coin">
                                 </div>
                             </div>
                             <div class="form-group col-sm-6">
                                 <div class="input-group">
-                                    <span class="input-group-addon">Coin</span>
+                                    <span class="input-group-addon">฿</span>
                                     <input type="number" class="form-control" id="baht" disabled>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success">Deposit</button>
+                            <button type="submit" class="btn btn-success">Withdraw</button>
                         </form>
                     </div>
                 </div>
@@ -101,8 +101,8 @@ $('#payment #baht').on('input', function() {
     $('#payment #coin').val($(this).val() * EXCHANGE);
 });
 
-$('#deposit #coin').on('input', function() {
-    $('#deposit #baht').val($(this).val() / EXCHANGE);
+$('#withdraw #coin').on('input', function() {
+    $('#withdraw #baht').val($(this).val() / EXCHANGE);
 });
 </script>
 
