@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Art;
 import model.Profiles;
 import model.User;
 
@@ -97,11 +99,45 @@ public class ViewProfile extends HttpServlet {
                 request.setAttribute("countFollowing", rs.getInt(1));
             }
             
+            
+            // Count Visited All Time
+            pstmt = conn.prepareStatement("SELECT SUM(view) FROM usami.Image WHERE user_id = ?");
+            pstmt.setString(1, id);
+            
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                request.setAttribute("visited", rs.getInt(1));
+            }
+            
+            // Count Favorite All Time
+            pstmt = conn.prepareStatement("SELECT COUNT(f.user_id) FROM usami.User_favorite f JOIN usami.Image i "
+                    + "USING (image_id) WHERE i.user_id = ?");
+            pstmt.setString(1, id);
+            
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                request.setAttribute("favorited", rs.getInt(1));
+            }
+            
+            // Show Arts Upload
+            pstmt = conn.prepareStatement("SELECT * FROM usami.Image WHERE user_id = ?");
+            pstmt.setString(1, id);
+            
+            ArrayList<Art> allArt = new ArrayList<>();
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Art art = new Art(conn, rs.getString("image_id"));
+                allArt.add(art);
+            }
+            
+            request.setAttribute("allArt", allArt);
+            
             request.setAttribute("user", userInPage);
             request.setAttribute("profile", profileInPage);
             
             RequestDispatcher obj = request.getRequestDispatcher("/profile.jsp");
             obj.forward(request, response);
+            
             
             
         }

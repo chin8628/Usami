@@ -37,6 +37,7 @@ public class CookieAuthen implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         String path = ((HttpServletRequest) request).getRequestURI();
+        System.out.println(path);
         if (path.equals("/Usami/") || path.equals("/Usami/SignIn") || path.startsWith("/Usami/asset")) {
             chain.doFilter(request, response);
         } else {
