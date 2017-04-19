@@ -24,6 +24,7 @@
             </li>
         </ul>
 
+        <!--        Buy Arts History-->
         <div class="tab-content tab-content-custom">
             <div role="tabpanel" class="tab-pane active" id="history-purchase">
                 <div class="table-responsive">
@@ -38,24 +39,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                                <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                                <td>御免なさい＠単行本発売中</td>
-                                <td>$3.14</td>
-                                <td>31/03/2017</td>
-                            </tr>
-                            <tr>
-                                <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                                <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                                <td>御免なさい＠単行本発売中</td>
-                                <td>$3.14</td>
-                                <td>31/03/2017</td>
-                            </tr>
+                            <c:forEach var="art" items="${requestScope.artBuy}">
+                                <tr>
+                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">
+                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" alt="" class="img-responsive"></td>
+                                        </a>
+                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
+                                    <td><a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">${art.getFullname()}</td>
+                                    <td>$${art.getPrice()}</td>
+                                    <td>${art.getBuy_date()}</td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
             </div>
+            
+            <!--Arts Income History-->
             <div role="tabpanel" class="tab-pane" id="history-income">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="income-table">
@@ -69,20 +69,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                                <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                                <td>R' TU</td>
-                                <td>$3.14</td>
-                                <td>31/03/2017</td>
-                            </tr>
-                            <tr>
-                                <td><img src="${SITE_URL}/asset/img/art.jpg" alt="" class="img-responsive"></td>
-                                <td>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</td>
-                                <td>Takisina</td>
-                                <td>$3.14</td>
-                                <td>31/03/2017</td>
-                            </tr>
+                            <c:forEach var="art" items="${requestScope.artIncome}">
+                                <tr>
+                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">
+                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" alt="" class="img-responsive"></td>
+                                        </a>
+                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
+                                    <td><a href="${SITE_URL}/ViewProfile/?id=${art.getCustomerId()}">${art.getCustomerName()}</td>
+                                    <td>$${art.getPrice()}</td>
+                                    <td>${art.getBuy_date()}</td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>

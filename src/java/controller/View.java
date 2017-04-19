@@ -77,7 +77,6 @@ public class View extends HttpServlet {
             
             if (rs.next()){
                 art = new Art(conn, rs.getString("image_id"));
-                art.setPrice("free");
                 
                 profile = new Profiles(conn, rs.getString("user_id"));
  

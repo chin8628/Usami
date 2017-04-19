@@ -57,6 +57,8 @@ public class History extends HttpServlet {
             ArrayList<Art> artUpload = profile.getAllArt();
             
             PreparedStatement pstmt;
+            ResultSet rs;
+            
             try {
                 //Show Arts Comment
                 pstmt = conn.prepareStatement("SELECT * FROM usami.Comment c JOIN usami.Image i USING (image_id) "
@@ -64,7 +66,7 @@ public class History extends HttpServlet {
                 pstmt.setString(1, profile.getUsername());
                 
                 ArrayList<CommentModel> myComm = new ArrayList<>();
-                ResultSet rs = pstmt.executeQuery();
+                rs = pstmt.executeQuery();
                 while (rs.next()) {
                     
                     Profiles own_art = new Profiles(conn, rs.getString("i.user_id"));
@@ -79,10 +81,54 @@ public class History extends HttpServlet {
                     comm.setUsername(rs.getString("i.user_id"));
                     
                     myComm.add(comm);
-                    
-                    System.out.println(comm.getText());
                 }
                 request.setAttribute("myComm", myComm);
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+            
+            //Show purchase history
+            ArrayList<Art> artBuy = new ArrayList<>();
+            try {
+                pstmt = conn.prepareStatement("SELECT * FROM usami.User_buy b JOIN usami.Product p USING(product_id) "
+                        + "JOIN usami.Image i USING(image_id) WHERE b.user_id = ? ORDER BY b.buy_date DESC");
+                pstmt.setString(1, profile.getUsername());
+                rs = pstmt.executeQuery();
+                
+                while (rs.next()) {
+                    Art art = new Art(conn, rs.getString("image_id"));
+                    art.setBuy_date(rs.getString("buy_date"));
+                    artBuy.add(art);
+                }
+                
+                request.setAttribute("artBuy", artBuy);
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+            
+            // Show income history
+            ArrayList<Art> artIncome = new ArrayList<>();
+            try {
+                pstmt = conn.prepareStatement("SELECT * FROM usami.Image i JOIN usami.Product p USING(image_id) "
+                        + "JOIN usami.User_buy b USING(product_id) WHERE i.user_id = ? ORDER BY b.buy_date DESC");
+                pstmt.setString(1, profile.getUsername());
+                rs = pstmt.executeQuery();
+                
+                while (rs.next()) {
+                    Profiles customer = new Profiles(conn, rs.getString("b.user_id"));
+                    Art art = new Art(conn, rs.getString("image_id"));
+                    art.setBuy_date(rs.getString("buy_date"));
+                    art.setCustomerName(customer.getFirst_name()+" "+customer.getLast_name());
+                    art.setCustomerId(customer.getUsername());
+                    artIncome.add(art);
+                    
+                }
+                
+                request.setAttribute("artIncome", artIncome);
                 
             } catch (SQLException ex) {
                 ex.printStackTrace();

@@ -14,7 +14,6 @@ import java.sql.*;
 public class Art {
     
     private String url;
-    private String price;
     private String title;
     private String id;
     private String userId;
@@ -24,6 +23,11 @@ public class Art {
     private String allTag;
     private int view;
     private Connection conn;
+    
+    
+    private String buy_date;
+    private String customerName;
+    private String customerId;
 
     private Product product;
 
@@ -155,11 +159,6 @@ public class Art {
             return "free";
         }
     }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -183,6 +182,34 @@ public class Art {
     public void setAllTag(String allTag) {
         this.allTag = allTag;
     }
+
+    public String getBuy_date() {
+        return buy_date;
+    }
+
+    public void setBuy_date(String buy_date) {
+        this.buy_date = buy_date;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    
+    
+    
     
     
     

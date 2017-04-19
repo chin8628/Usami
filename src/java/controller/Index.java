@@ -64,7 +64,6 @@ public class Index extends HttpServlet {
             
             while (rs.next()){
                 Art art = new Art(conn, rs.getString("image_id"));
-                art.setPrice("free");
                 popArt.add(art);
                 
             }
@@ -79,7 +78,6 @@ public class Index extends HttpServlet {
             
             while (rs.next()){
                 Art art = new Art(conn, rs.getString("image_id"));
-                art.setPrice("free");
 
                 folArt.add(art);
                 
