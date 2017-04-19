@@ -7,11 +7,16 @@ html, body {
 }
 
 footer {
-    height: 100px;
     background: #2a2730;
+    min-height: 100px;
     padding-top: 20px;
     padding-bottom: 15px;
     color: white;
+}
+
+#main-body {
+    min-height: 100%;
+    height: auto !important;
 }
 
 .page-header{
