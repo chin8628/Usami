@@ -138,3 +138,8 @@ footer {
 .tag {
     display: inline-block;
 }
+
+/* Injection alertify */
+.alertify-logs {
+    z-index: 99999;
+}
