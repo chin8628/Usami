@@ -11,22 +11,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.ArtTag;
+import model.User;
 
 /**
  *
  * @author bellkung
  */
-@WebServlet(name = "Tag", urlPatterns = {"/Tag"})
-public class Tag extends HttpServlet {
+@WebServlet(name = "FollowTag", urlPatterns = {"/FollowTag/"})
+public class FollowTag extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,29 +45,35 @@ public class Tag extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            
+            int tag_id = Integer.parseInt(request.getParameter("tag"));
+            
+            // Follow Tag
             PreparedStatement pstmt;
             ResultSet rs;
-            ArrayList<ArtTag> allTag = new ArrayList<>();
-            
             try {
                 
-                pstmt = conn.prepareStatement("SELECT * FROM usami.Tag");
+                ArtTag tag = new ArtTag(conn, tag_id);
+                
+                pstmt = conn.prepareStatement("SELECT * FROM usami.Profile_focus p "
+                        + "JOIN usami.Tag t USING (tag_id) WHERE t.tag_id = ? AND p.user_id = ?");
+                pstmt.setInt(1, tag_id);
+                pstmt.setString(2, user.getUsername());
+                
                 rs = pstmt.executeQuery();
-                while (rs.next()) {
-                    ArtTag artTag = new ArtTag(conn, rs.getString("tag_name"));
-                    if (artTag.checkCountTag()) {
-                        allTag.add(artTag);
-                    } else {
-                        artTag.deleteTag();
-                    }
+                if (rs.next()) {
+                    tag.unfollowTag(user.getUsername());
+                } else {
+                    tag.followTag(user.getUsername());
                 }
-                request.setAttribute("allTag", allTag);
+                
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
             
-            RequestDispatcher obj = request.getRequestDispatcher("tags.jsp");
-            obj.forward(request, response);
+            response.sendRedirect("/Usami/Gallery/?tag="+tag_id);
         }
     }
 

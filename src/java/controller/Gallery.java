@@ -8,6 +8,9 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -16,8 +19,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Art;
 import model.ArtTag;
+import model.User;
 
 /**
  *
@@ -43,19 +48,46 @@ public class Gallery extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            String tag_name = request.getParameter("tag");
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            
+            int tag_id = Integer.parseInt(request.getParameter("tag"));
             
             ArrayList<Art> arts = new ArrayList<>();
-            ArtTag tag = new ArtTag(conn, tag_name);
+            ArtTag tag = new ArtTag(conn, tag_id);
             tag.getImageID();
             
             for (String img_id: tag.getAllImgID()) {
                 Art art = new Art(conn, img_id);
                 arts.add(art);
             }
+            
+            // Follow Tag
+            PreparedStatement pstmt;
+            ResultSet rs;
+            try {
+                
+                pstmt = conn.prepareStatement("SELECT * FROM usami.Profile_focus p "
+                        + "JOIN usami.Tag t USING (tag_id) WHERE t.tag_id = ? AND p.user_id = ?");
+                pstmt.setInt(1, tag_id);
+                pstmt.setString(2, user.getUsername());
+                
+                rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    request.setAttribute("btnFollow", "btn-danger");
+                    request.setAttribute("btnFollowText", "Unfollow");
+                } else {
+                    request.setAttribute("btnFollow", "btn-success");
+                    request.setAttribute("btnFollowText", "Follow");
+                }
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
                 
             request.setAttribute("arts", arts);
-            request.setAttribute("tag_name", request.getParameter("tag"));
+            request.setAttribute("tag", tag);
                 
             RequestDispatcher obj = request.getRequestDispatcher("/gallery.jsp");
             obj.forward(request, response);
