@@ -19,7 +19,7 @@
         </div>
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Income (Last 30 days)</div>
+                <div class="panel-heading">Income</div>
                 <div class="panel-body">
                     <h2><%= request.getAttribute("in_coin") %> <small>Coin</small></h2>
                 </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Outcome (Last 30 days)</div>
+                <div class="panel-heading">Outcome</div>
                 <div class="panel-body">
                     <h2><%= request.getAttribute("out_coin") %> <small>Coin</small></h2>
                 </div>
