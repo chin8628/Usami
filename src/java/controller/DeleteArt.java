@@ -50,6 +50,7 @@ public class DeleteArt extends HttpServlet {
             String appPath = request.getServletContext().getRealPath("");
             String savePath = appPath + "/asset/img/art";
             
+            /*
             PreparedStatement pstmt;
             try {
                 pstmt = conn.prepareStatement("DELETE FROM usami.Image WHERE image_id = ?;");
@@ -67,6 +68,7 @@ public class DeleteArt extends HttpServlet {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+            */
             
             request.setAttribute("message", "Art Deleted");
             request.setAttribute("mtype", "norm");

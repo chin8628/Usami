@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 public class Product {
     
     private String product_id;
-    private Float price;
+    private int price;
     private String pgroup_id;
     private String image_id;
     private String user_id;
@@ -36,7 +36,7 @@ public class Product {
             
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                this.price = rs.getFloat("price");
+                this.price = rs.getInt("price");
                 this.pgroup_id = rs.getString("pgroup_id");
                 this.product_id = rs.getString("product_id");
                 this.user_id = rs.getString("user_id");
@@ -72,11 +72,11 @@ public class Product {
         this.product_id = product_id;
     }
 
-    public Float getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

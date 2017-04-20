@@ -61,14 +61,13 @@ public class EditArt extends HttpServlet {
             String[] allTag = request.getParameter("tags").split(",");
             
             Art art = new Art(conn, artId);
+            art.setTitle(title);
+            art.setDesc(desc);
+            art.getProduct().setPrice(price);
+            art.updateArts();
+            
             PreparedStatement pstmt;
-            try {
-                pstmt = conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ? WHERE image_id = ?;");
-                pstmt.setString(1, title);
-                pstmt.setString(2, desc);
-                pstmt.setString(3, artId);
-                pstmt.executeUpdate();
-                
+            try {                
                 // Delete all tag
                 pstmt = conn.prepareStatement("DELETE FROM usami.Tag_has WHERE image_id = ?");
                 pstmt.setString(1, artId);

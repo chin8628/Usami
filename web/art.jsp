@@ -9,6 +9,9 @@
 <% Art art = (Art) request.getAttribute("art");%>
 <% Profiles owner = (Profiles) request.getAttribute("owner"); %>
 <% User user = (User)request.getAttribute("user"); %>
+<% String oriEna="", resEna=""; %>
+<% if(!art.downloadAble(user.getUsername(), 0)){oriEna = "disabled=''";} %>
+<% if(!art.downloadAble(user.getUsername(), 1)){resEna = "disabled=''";} %>
 
 <div class="row">
     <div class="col-sm-3">
@@ -41,10 +44,12 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <h3><%= art.getPrice()%> <small>coin</small></h3><br>
+                    <% if(!art.getPrice().equals("free")) { %> <h3><%= art.getPrice()%> <small>coin</small></h3><br> <% } %>
+                    <% if(art.getPrice().equals("free")) { %> <h2>Free</h2><br> <% } %>
+                    <% if(!art.getPrice().equals("free")) { %>
                     <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
                                     <c:if test="${art.checkPur(sessionScope.user.getUsername())}">
-                                            <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
+                                            <button class="btn btn-primary btn-sm col-sm-12" disabled="">Purchased</button>
                                     </c:if>
                                     <c:if test="${!art.checkPur(sessionScope.user.getUsername())}">
                                         <c:if test="${ art.isInCart(cart) }">
@@ -62,6 +67,7 @@
                                 <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
                                         <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
                                 </c:if>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -69,6 +75,24 @@
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     <h3> <%= art.getView() %> <small>Views</small></h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <form
+                        action="${SITE_URL}/Download/?id=<%=art.getId()%>&mode=o"
+                        method="POST">
+                        <button class='btn btn-primary col-sm-12' <%=oriEna%> type="submit">Download Original</button>
+                    </form>
+                </div>
+                <div class="panel-body text-center">
+                    <form
+                        action="${SITE_URL}/Download/?id=<%=art.getId()%>&mode=r"
+                        method="POST">
+                        <button class='btn btn-primary col-sm-12' <%=resEna%> type="submit">Download 1080p</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -149,14 +149,12 @@ public class ViewProfile extends HttpServlet {
                         "FROM User_buy u " +
                         "JOIN Product p " +
                         "USING (product_id) " +
-                        "WHERE buy_date >= ? " +
-                        "AND p.user_id = ?");
+                        "WHERE p.user_id = ?");
                 
                 Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
                 time.setTime(time.getTime() - 2592000);
                 
-                pstmt.setTimestamp(1, time);
-                pstmt.setString(2, user.getUsername());
+                pstmt.setString(1, user.getUsername());
                 
                 rs = pstmt.executeQuery();
                 if(rs.next()) {
