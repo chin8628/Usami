@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 4) + 1 %></c:set>
 
 <c:set var="SITE_URL" value="${pageContext.request.contextPath}" scope="request"/>
 
@@ -16,9 +18,6 @@
 
     <script src="${SITE_URL}/asset/js/jquery-3.2.0.min.js"></script>
     <script src="${SITE_URL}/asset/js/bootstrap.min.js"></script>
-
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 4) + 1 %></c:set>
 
     <style>
         html, body {
