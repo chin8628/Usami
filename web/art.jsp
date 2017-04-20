@@ -38,24 +38,33 @@
                 </div>
             </div>
         </div>
-        <% if(!art.getUserId().equals(user.getUsername())) { %>
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     <h3><%= art.getPrice()%> <small>coin</small></h3><br>
-                    <% if(!art.getUserId().equals(user.getUsername())) { %>
-                    <form
-                        action="${SITE_URL}/AddToCart/?id=<%=art.getId()%>&origin=${SITE_URL}/View/?id=<%=art.getId()%>"
-                        method="POST">
-                        <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
-                        <button class="btn btn-danger btn-sm col-sm-12">Remove from Cart</button>
-                        <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
-                    </form>
-                    <% } %>
+                    <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
+                                    <c:if test="${art.checkPur(sessionScope.user.getUsername())}">
+                                            <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
+                                    </c:if>
+                                    <c:if test="${!art.checkPur(sessionScope.user.getUsername())}">
+                                        <c:if test="${ art.isInCart(cart) }">
+                                            <form action="${SITE_URL}/RemoveFromCart/?id=${art.getId()}&origin=${SITE_URL}/View/?id=${art.getId()}" method="POST" >
+                                            <button class="btn btn-danger btn-sm col-sm-12">Remove from cart</button>
+                                        </form>
+                                        </c:if>
+                                        <c:if test="${ !art.isInCart(sessionScope.cart) }">
+                                            <form action="${SITE_URL}/AddToCart/?id=${art.getId()}&origin=${SITE_URL}/View/?id=${art.getId()}" method="POST" >
+                                            <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
+                                        </form>
+                                        </c:if>
+                                    </c:if>
+                                </c:if>
+                                <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
+                                        <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
+                                </c:if>
                 </div>
             </div>
         </div>
-        <% } %>
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">

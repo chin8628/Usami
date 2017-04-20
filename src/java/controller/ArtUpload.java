@@ -154,19 +154,11 @@ public class ArtUpload extends HttpServlet {
 
                 File file = new File(savePath + File.separator + fileName);
                 file.delete();
-                
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                response.sendRedirect("Error.jsp");
-                return;
-            }
 
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
 
             PreparedStatement pstmt;
-            try {
                 pstmt = conn.prepareStatement("INSERT INTO usami.image VALUES(?,?,?,?,?,?,?)");
                 pstmt.setString(1, artId);
                 pstmt.setString(2, artId + ".jpg");
@@ -198,14 +190,14 @@ public class ArtUpload extends HttpServlet {
                     
                 }
                 
-                
-                
             } catch (SQLException ex) {
-                ex.printStackTrace();
-                response.sendRedirect("Error.jsp");
+                request.setAttribute("message", "Upload Failed");
+                request.setAttribute("mtype", "fail");
                 return;
             }
 
+            request.setAttribute("message", "Upload Successful");
+            request.setAttribute("mtype", "pass");
             response.sendRedirect("/Usami/View/?id=" + artId);
             return;
         }

@@ -74,13 +74,17 @@ public class AddToCart extends HttpServlet {
                 while(rs.next()) {
                     if(art.getProduct().getProduct_id().equals(rs.getString("product_id"))) {
                         
-                        request.setAttribute("status", "bought");
+                        request.setAttribute("message", "You already owned this art");
+                        request.setAttribute("mtype", "fail");
                         response.sendRedirect(backUrl);
                         return;
                     }
                 }
                 
             } catch (SQLException ex) {
+                request.setAttribute("message", "Unknown Error");
+                request.setAttribute("mtype", "fail");
+                response.sendRedirect(backUrl);
                 Logger.getLogger(AddToCart.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -98,17 +102,19 @@ public class AddToCart extends HttpServlet {
             
             if(!isDuplicate) {
                 cart.add(art);
+            } else {
+                request.setAttribute("message", "Already in Cart");
+                request.setAttribute("mtype", "fail");
+                response.sendRedirect(backUrl);
             }
-
-            total = 0f;
             
             for(Art inCart: cart) {
                 total += inCart.getProduct().getPrice();
             }
                         
+            request.setAttribute("message", "Added to Cart");
+            request.setAttribute("mtype", "norm");
             session.setAttribute("cart", cart);
-            session.setAttribute("total", total);
-            request.setAttribute("status", isDuplicate + "");
             
             response.sendRedirect(backUrl);
             

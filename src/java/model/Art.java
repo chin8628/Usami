@@ -6,6 +6,9 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,7 +33,50 @@ public class Art {
     private String customerId;
 
     private Product product;
+    
+    public boolean checkPur(String user_id) {
+        
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(""
+                    + "SELECT * "
+                    + "FROM usami.User_buy "
+                    + "WHERE user_id = ? "
+                    + "AND product_id = ? ");
+            
+            pstmt.setString(1, user_id);
+            pstmt.setString(2, product.getProduct_id());
+            
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()) {
+                //purchased
+                return true;
+            } else {
+                //not purchased
+                return false;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Art.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+    }
 
+    public boolean isInCart(ArrayList<Art> cart) {
+        
+        if(cart == null) {
+            return false;
+        }
+        for(Art a: cart) {
+            if(a.getProduct().getProduct_id().equals(product.getProduct_id())) {
+                return true;
+            }
+        }
+        
+        return false;
+        
+    }
+    
     public int getView() {
         return view;
     }

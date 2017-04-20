@@ -60,10 +60,19 @@ public class dwCoin extends HttpServlet {
                 user.ChangeCoin(conn);
             } else if (mode == 1) {
                 //withdraw
+                
+                if(user.getCoin() < amount) {
+                    request.setAttribute("message", "Insufficient Coin");
+            request.setAttribute("mtype", "fail");
+                    response.sendRedirect("/Usami/Pocket");
+                    return;
+                }
                 user.setCoin((int) (user.getCoin() - amount));
                 user.ChangeCoin(conn);
             }
             
+            request.setAttribute("message", "Transaction Successful");
+            request.setAttribute("mtype", "pass");
             response.sendRedirect("/Usami/Pocket");
         }
     }

@@ -93,6 +93,8 @@ public class EditArt extends HttpServlet {
                 artTag.insertTag_has(artId);
             }
             
+            request.setAttribute("message", "Edit Successful");
+            request.setAttribute("mtype", "pass");
             response.sendRedirect("/Usami/Storage");
             
             

@@ -30,7 +30,7 @@
                     <td><%= art.getTitle() %></td>
                     <td><%= art.getFullname() %></td>
                     <td><%= art.getPrice() %></td>
-                    <td><a href="${SITE_URL}/RemoveFromCart/?id=<%= art.getId() %>"><span class="glyphicon glyphicon-trash"></span></a></td>
+                    <td><a href="${SITE_URL}/RemoveFromCart/?id=<%= art.getId() %>&origin=${SITE_URL}/cart.jsp"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 <% } %>
             </tbody>
