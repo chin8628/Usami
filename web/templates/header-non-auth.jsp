@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 4) + 1 %></c:set>
 
 <c:set var="SITE_URL" value="${pageContext.request.contextPath}" scope="request"/>
 
@@ -17,19 +19,11 @@
     <script src="${SITE_URL}/asset/js/jquery-3.2.0.min.js"></script>
     <script src="${SITE_URL}/asset/js/bootstrap.min.js"></script>
 
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 4) + 1 %></c:set>
-
     <style>
         html, body {
-            background-image: url('${SITE_URL}/asset/img/background/background-${rand}.jpg');
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(255,255,255,0);
         }
         .error {
             blackground-color: red;
