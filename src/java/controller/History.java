@@ -61,7 +61,7 @@ public class History extends HttpServlet {
             
             try {
                 //Show Arts Comment
-                pstmt = conn.prepareStatement("SELECT * FROM usami.Comment c JOIN usami.Image i USING (image_id) "
+                pstmt = conn.prepareStatement("SELECT *, DATE_FORMAT(comm_date,'%b %d %Y %h:%i %p') 'fcomm_date' FROM usami.Comment c JOIN usami.Image i USING (image_id) "
                         + "WHERE c.user_id = ? ORDER BY c.comm_date DESC;");
                 pstmt.setString(1, profile.getUsername());
                 
@@ -74,7 +74,7 @@ public class History extends HttpServlet {
                     comm.setImage_id(rs.getString("image_id"));
                     comm.setUrl_image(rs.getString("i.image_url"));
                     comm.setText(rs.getString("c.text"));
-                    comm.setComm_date(rs.getString("c.comm_date"));
+                    comm.setComm_date(rs.getString("fcomm_date"));
                     comm.setTitle(rs.getString("i.image_name"));
                     comm.setFirst_name(own_art.getFirst_name());
                     comm.setLast_name(own_art.getLast_name()); 
@@ -92,14 +92,14 @@ public class History extends HttpServlet {
             //Show purchase history
             ArrayList<Art> artBuy = new ArrayList<>();
             try {
-                pstmt = conn.prepareStatement("SELECT * FROM usami.User_buy b JOIN usami.Product p USING(product_id) "
+                pstmt = conn.prepareStatement("SELECT *, DATE_FORMAT(b.buy_date,'%b %d %Y %h:%i %p') 'fbuy_date' FROM usami.User_buy b JOIN usami.Product p USING(product_id) "
                         + "JOIN usami.Image i USING(image_id) WHERE b.user_id = ? ORDER BY b.buy_date DESC");
                 pstmt.setString(1, profile.getUsername());
                 rs = pstmt.executeQuery();
                 
                 while (rs.next()) {
                     Art art = new Art(conn, rs.getString("image_id"));
-                    art.setBuy_date(rs.getString("buy_date"));
+                    art.setBuy_date(rs.getString("fbuy_date"));
                     artBuy.add(art);
                 }
                 
@@ -113,7 +113,7 @@ public class History extends HttpServlet {
             // Show income history
             ArrayList<Art> artIncome = new ArrayList<>();
             try {
-                pstmt = conn.prepareStatement("SELECT * FROM usami.Image i JOIN usami.Product p USING(image_id) "
+                pstmt = conn.prepareStatement("SELECT *, DATE_FORMAT(b.buy_date,'%b %d %Y %h:%i %p') 'fbuy_date' FROM usami.Image i JOIN usami.Product p USING(image_id) "
                         + "JOIN usami.User_buy b USING(product_id) WHERE i.user_id = ? ORDER BY b.buy_date DESC");
                 pstmt.setString(1, profile.getUsername());
                 rs = pstmt.executeQuery();
@@ -121,7 +121,7 @@ public class History extends HttpServlet {
                 while (rs.next()) {
                     Profiles customer = new Profiles(conn, rs.getString("b.user_id"));
                     Art art = new Art(conn, rs.getString("image_id"));
-                    art.setBuy_date(rs.getString("buy_date"));
+                    art.setBuy_date(rs.getString("fbuy_date"));
                     art.setCustomerName(customer.getFirst_name()+" "+customer.getLast_name());
                     art.setCustomerId(customer.getUsername());
                     artIncome.add(art);

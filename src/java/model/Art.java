@@ -101,7 +101,8 @@ public class Art {
             PreparedStatement pstmt;
             ResultSet rs;
             
-            pstmt = this.conn.prepareStatement("SELECT * FROM usami.Image WHERE image_id = ?");
+            pstmt = this.conn.prepareStatement("SELECT *, DATE_FORMAT(upload_date,'%b %d %Y %h:%i %p') 'fupload_date' "
+                    + "FROM usami.Image WHERE image_id = ?");
             pstmt.setString(1, image_id);
             
             rs = pstmt.executeQuery();
@@ -110,7 +111,7 @@ public class Art {
                 this.title = rs.getString("image_name");
                 this.url = rs.getString("image_url");
                 this.desc = rs.getString("desc");
-                this.upload_date = rs.getString("upload_date");
+                this.upload_date = rs.getString("fupload_date");
                 this.userId = rs.getString("user_id");
                 this.view = rs.getInt("view");
             }
