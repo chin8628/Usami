@@ -23,6 +23,7 @@
     <script src="${SITE_URL}/asset/js/dataTables.bootstrap.min.js"></script>
     <script src="${SITE_URL}/asset/js/Chart.min.js"></script>
     <script src="${SITE_URL}/asset/js/jquery.tagsinput.min.js"></script>
+    <script src="${SITE_URL}/asset/js/isotope.pkgd.min.js"></script>
     <script src="${SITE_URL}/asset/js/script.js"></script>
 
 
@@ -73,4 +74,4 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="container col-sm-8 col-sm-offset-2">
+    <div class="container col-sm-10 col-sm-offset-1">

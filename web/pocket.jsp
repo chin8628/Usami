@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <div class="col-sm-12" id="payment">
+    <div class="col-sm-10 col-sm-offset-1" id="payment">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Payment</h3>
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div class="col-sm-12" id="withdraw">
+    <div class="col-sm-10 col-sm-offset-1" id="withdraw">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Withdraw</h3>

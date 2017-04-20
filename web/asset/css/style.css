@@ -72,7 +72,7 @@ footer {
 /* PROFILE PAGE */
 
 .image-art {
-    padding: 10px;
+    padding: 5px;
 }
 
 .image-art .title {
@@ -158,4 +158,21 @@ video#bgvid{
     background: url('../img/video-cover.jpg') no-repeat;
     background-size: cover;
     transition: 1s opacity;
+}
+
+.thumbnail-2 {
+    display: block;
+    padding: 2px;
+    margin-bottom: 5px;
+    line-height: 1.42857143;
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+#single-art {
+    max-height: 90vh;
 }

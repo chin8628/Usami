@@ -6,7 +6,7 @@
 <% ArrayList<Art> popArt = (ArrayList<Art>) request.getAttribute("popArt");%>
 <% ArrayList<Art> folArt = (ArrayList<Art>) request.getAttribute("folArt");%>
 
-<div class="col-sm-3">
+<div class="col-sm-2">
     <div class="panel panel-default">
         <div class="panel-body text-center">
             <div class="row">
@@ -38,10 +38,7 @@
     </div>
 </div>
 
-                        
-<div class="col-sm-9">
-    
-    <!--    Art Recommend For You-->
+<div class="col-sm-10">
     <div class="panel panel-default">
         <div class="panel-heading"><h3>Recommended For You</h3></div>
         <div class="panel-body">
@@ -64,18 +61,17 @@
     <div class="panel panel-default">
         <div class="panel-heading"><h3>Popular Art</h3></div>
         <div class="panel-body">
-            <div class="col-sm-12">
+            <div class="grid">
+                <div class="grid-sizer col-sm-3"></div>
                 <% for(int i=0;i < popArt.size();i++){ %>
-                <% if(i % 4 == 0) {%><div class="row"><% } %>
-                <div class="col-sm-3 image-art">
-                    <a  href="${SITE_URL}/View/?id=<%=popArt.get(i).getId()%>" target="blank" class="thumbnail text-center">
-                        <img src="${SITE_URL}/asset/img/art/<%=popArt.get(i).getUrl()%>" class="img-responsive">
+                <div class="col-sm-3 grid-item image-art">
+                    <a  href="${SITE_URL}/View/?id=<%=popArt.get(i).getId()%>" target="blank" class="thumbnail-2 text-center">
+                        <img src="${SITE_URL}/asset/img/art/<%=popArt.get(i).getUrl()%>" class="img-responsive center-block">
                         <div class="title">
                             <strong> <%= popArt.get(i).getTitle() %> </strong>
                         </div>
                     </a>
                 </div>
-                <% if(i % 4 == 3) {%></div><% } %>
                 <%}%>
             </div>
         </div>
@@ -84,27 +80,33 @@
     <div class="panel panel-default">
         <div class="panel-heading"><h3>New Work: Following</h3></div>
         <div class="panel-body">
-            <div class="col-sm-12">
+            <div class="grid">
+                <div class="grid-sizer col-sm-3"></div>
                 <% for(int i=0;i < folArt.size();i++){ %>
-                <% if(i % 4 == 0) {%><div class="row"><% } %>
-                <div class="col-sm-3 image-art">
-                    <a  href="${SITE_URL}/View/?id=<%=folArt.get(i).getId()%>" target="blank" class="thumbnail text-center">
-                        <img src="${SITE_URL}/asset/img/art/<%=folArt.get(i).getUrl()%>" class="img-responsive">
+                <div class="col-sm-3 image-art grid-item">
+                    <a  href="${SITE_URL}/View/?id=<%=folArt.get(i).getId()%>" target="blank" class="thumbnail-2 text-center">
+                        <img src="${SITE_URL}/asset/img/art/<%=folArt.get(i).getUrl()%>" class="img-responsive center-block">
                         <div class="title">
                             <strong> <%= folArt.get(i).getTitle() %> </strong>
                         </div>
                     </a>
                 </div>
-                <% if(i % 4 == 3) {%></div><% } %>
                 <%}%>
             </div>
         </div>
     </div>
 </div>
-            <script>
-                $(document).ready(function() {
-                    //
-                }); 
-            </script>
+
+<script>
+    $(document).ready(function() {
+        $('.grid').isotope({
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            masonry: {
+                columnWidth: '.grid-sizer'
+            }
+        })
+    });
+</script>
 
 <jsp:include page="templates/footer.jsp" />

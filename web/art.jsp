@@ -14,7 +14,7 @@
 <% if(!art.downloadAble(user.getUsername(), 1)){resEna = "disabled=''";} %>
 
 <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-2">
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
@@ -27,7 +27,7 @@
                         </a>
                     </p>
                     <p><span class="label label-default">Standard User</span></p>
-                    
+
                     <form
                         action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>&imgid=<%= art.getId() %>&at=art"
                         method="POST">
@@ -37,7 +37,7 @@
                             <%= request.getAttribute("btn-follow-text") %>
                         </button>
                     </form>
-                        
+
                 </div>
             </div>
         </div>
@@ -48,26 +48,25 @@
                     <% if(art.getPrice().equals("free")) { %> <h2>Free</h2><br> <% } %>
                     <% if(!art.getPrice().equals("free")) { %>
                     <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
-                                    <c:if test="${art.checkPur(sessionScope.user.getUsername())}">
-                                            <button class="btn btn-primary btn-sm col-sm-12" disabled="">Purchased</button>
-                                    </c:if>
-                                    <c:if test="${!art.checkPur(sessionScope.user.getUsername())}">
-                                        <c:if test="${ art.isInCart(cart) }">
-                                            <form action="${SITE_URL}/RemoveFromCart/?id=${art.getId()}&origin=${SITE_URL}/View/?id=${art.getId()}" method="POST" >
-                                            <button class="btn btn-danger btn-sm col-sm-12">Remove from cart</button>
-                                        </form>
-                                        </c:if>
-                                        <c:if test="${ !art.isInCart(sessionScope.cart) }">
-                                            <form action="${SITE_URL}/AddToCart/?id=${art.getId()}&origin=${SITE_URL}/View/?id=${art.getId()}" method="POST" >
-                                            <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
-                                        </form>
-                                        </c:if>
-                                    </c:if>
-                                </c:if>
-                                <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
-                                        <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
-                                </c:if>
-                    <% } %>
+                        <c:if test="${art.checkPur(sessionScope.user.getUsername())}">
+                            <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
+                        </c:if>
+                        <c:if test="${!art.checkPur(sessionScope.user.getUsername())}">
+                            <c:if test="${ art.isInCart(cart) }">
+                                <form action="${SITE_URL}/RemoveFromCart/?id=${art.getId()}&origin=${SITE_URL}/View/?id=${art.getId()}" method="POST" >
+                                <button class="btn btn-danger btn-sm col-sm-12">Remove from cart</button>
+                            </form>
+                            </c:if>
+                            <c:if test="${ !art.isInCart(sessionScope.cart) }">
+                                <form action="${SITE_URL}/AddToCart/?id=${art.getId()}&origin=${SITE_URL}/View/?id=${art.getId()}" method="POST" >
+                                <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
+                            </form>
+                            </c:if>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
+                        <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -97,7 +96,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-9">
+    <div class="col-sm-10">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="col-sm-12">
@@ -108,7 +107,7 @@
                 </div>
 
                 <div class="col-sm-12">
-                    <p><%=art.getDesc()%></p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid suscipit minus, impedit natus, ducimus nulla iure delectus. Et maxime blanditiis, possimus expedita. Esse, numquam, doloribus? Eius dicta, temporibus optio. Aut!</p>
                 </div>
 
                 <!--Set Tag-->
@@ -126,7 +125,12 @@
 
                 <!--View Arts-->
                 <div class="col-sm-12">
-                    <img src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" class="img-responsive">
+                    <a href="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" target="_blank">
+                        <img
+                            src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>"
+                            class="img-responsive center-block"
+                            id="single-art">
+                    </a>
                 </div>
 
                 <!--favorite button-->
