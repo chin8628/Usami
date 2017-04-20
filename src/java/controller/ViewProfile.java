@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
+import model.ArtTag;
 import model.Profiles;
 import model.User;
 
@@ -101,6 +102,16 @@ public class ViewProfile extends HttpServlet {
                 request.setAttribute("countFollowing", rs.getInt(1));
             }
             
+            // Show All tag
+            pstmt = conn.prepareStatement("SELECT * FROM usami.Profile_focus WHERE user_id = ?");
+            pstmt.setString(1, id);
+            
+            rs = pstmt.executeQuery();
+            ArrayList<ArtTag> allTag = new ArrayList<>();
+            while (rs.next()) {
+                ArtTag tag = new ArtTag(conn, rs.getInt("tag_id"));
+                allTag.add(tag);
+            }
             
             // Count Visited All Time
             pstmt = conn.prepareStatement("SELECT SUM(view) FROM usami.Image WHERE user_id = ?");
@@ -157,6 +168,7 @@ public class ViewProfile extends HttpServlet {
             request.setAttribute("coin", in_coin);
             request.setAttribute("user", userInPage);
             request.setAttribute("profile", profileInPage);
+            request.setAttribute("allTag", allTag);
             
             RequestDispatcher obj = request.getRequestDispatcher("/profile.jsp");
             obj.forward(request, response);

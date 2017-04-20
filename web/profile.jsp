@@ -31,7 +31,15 @@
             <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
                 <h4><%= request.getAttribute("countFollower") %></h4>
                 <small>Follower</small>
-            </a>
+            </a> <br>
+            <div class="panel-body tag">
+                <c:forEach var="tag" items="${requestScope.allTag}">
+                    <a href="${SITE_URL}/Gallery/?tag=${tag.getTag_id()}">
+                        <span class="label label-info"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> ${tag.getTag_name()}</span>
+                    </a>
+                </c:forEach>
+            </div>
+
         </div>
     </div>
 </div>
