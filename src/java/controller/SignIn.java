@@ -72,11 +72,24 @@ public class SignIn extends HttpServlet {
             if (true) { // set chech remember me box
                 Cookie user_coki;
                 String uid = rs.getString("user_id");
-                user_coki = new Cookie("user", uid);
+                String mail = rs.getString("email");
+                String sign = hashPassword(uid+mail);
+                        
+                user_coki = new Cookie("uid", uid);
                 user_coki.setMaxAge(60 * 60 * 24 * 7); // Exp 7 Day
                 //user_coki.setSecure(true);
                 response.addCookie(user_coki);
-
+                
+                user_coki = new Cookie("m", mail);
+                user_coki.setMaxAge(60 * 60 * 24 * 7); // Exp 7 Day
+                //user_coki.setSecure(true);
+                response.addCookie(user_coki);
+                
+                user_coki = new Cookie("s", sign);
+                user_coki.setMaxAge(60 * 60 * 24 * 7); // Exp 7 Day
+                //user_coki.setSecure(true);
+                response.addCookie(user_coki);
+                
                 response.sendRedirect("/Usami/Index");
             }
         }

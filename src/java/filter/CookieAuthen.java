@@ -8,7 +8,6 @@ package filter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.Filter;
@@ -37,8 +36,10 @@ public class CookieAuthen implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         String path = ((HttpServletRequest) request).getRequestURI();
-        if (path.equals("/Usami/") || path.equals("/Usami/SignIn") || path.startsWith("/Usami/asset")) {
-            chain.doFilter(request, response);
+        System.out.println(path);
+
+        if (path.matches("\\/Usami\\/(SignIn)?") || path.startsWith("/Usami/asset")) {
+            chain.doFilter(request, response); //next to filter Prevent img/protected 
         } else {
 
             HttpServletRequest req = (HttpServletRequest) request;
@@ -51,21 +52,41 @@ public class CookieAuthen implements Filter {
                 chain.doFilter(request, response);
             } else {
                 if (cookies != null) {
+
+                    String uid = null;
+                    String email = null;
+                    String signature = null;
+
                     for (Cookie ck : cookies) {
-                        if (ck.getName().equals("user")) {
-                            ServletContext ctx = this.config.getServletContext();
-                            Connection conn = (Connection) ctx.getAttribute("connection");
-                            try {
-                                Profiles profile = new Profiles(conn, ck.getValue());
-                                User user = new User(conn, ck.getValue());
-                                session.setAttribute("user", user);
-                                session.setAttribute("profile", profile);
-                            } catch (SQLException ex) {
-                                Logger.getLogger(CookieAuthen.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            chain.doFilter(request, response);
-                            return;
+                        if (ck.getName().equals("uid")) {
+                            uid = ck.getValue();
                         }
+                        if (ck.getName().equals("m")) {
+                            email = ck.getValue();
+                        }
+                        if (ck.getName().equals("s")) {
+                            signature = ck.getValue();
+                        }
+                    }
+                    if (hashPassword(uid + email).equals(signature)) {
+                        ServletContext ctx = this.config.getServletContext();
+                        Connection conn = (Connection) ctx.getAttribute("connection");
+                        try {
+                            Profiles profile = new Profiles(conn, uid);
+                            User user = new User(conn, uid);
+                            session.setAttribute("user", user);
+                            session.setAttribute("profile", profile);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CookieAuthen.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        chain.doFilter(request, response);
+                        return;
+                    } else {
+                        for (Cookie ck : cookies) {
+                            ck.setMaxAge(0);
+                            res.addCookie(ck);
+                        }
+                        res.sendRedirect("/Usami");
                     }
                 }
                 res.sendRedirect("/Usami");

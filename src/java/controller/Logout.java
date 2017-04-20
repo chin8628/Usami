@@ -39,10 +39,8 @@ public class Logout extends HttpServlet {
             HttpSession session = request.getSession();
             Cookie[] cookies = request.getCookies();
             for (Cookie ck : cookies) {
-                if (ck.getName().equals("user")) {
-                    ck.setMaxAge(0);
-                    response.addCookie(ck);
-                }
+                ck.setMaxAge(0);
+                response.addCookie(ck);
             }
             session.invalidate();
             response.sendRedirect("/Usami");
