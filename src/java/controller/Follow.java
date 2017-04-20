@@ -43,6 +43,8 @@ public class Follow extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String id = request.getParameter("id");
             String ownid = request.getParameter("ownid");
+            String img_id = request.getParameter("imgid");
+            String at = request.getParameter("at");
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
@@ -65,7 +67,11 @@ public class Follow extends HttpServlet {
                 pstmt.executeUpdate();
             }
             
-            response.sendRedirect("/Usami/ViewProfile/?id="+ownid);
+            if (at.equals("art")) {
+               response.sendRedirect("/Usami/View/?id="+img_id);
+            } else {
+               response.sendRedirect("/Usami/ViewProfile/?id="+ownid);
+            }
             
         }
     }

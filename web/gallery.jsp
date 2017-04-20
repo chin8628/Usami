@@ -5,8 +5,8 @@
 <div class="col-sm-12">
     <div class="page-header">
         <h1 style="display: inline-block">
-            #${requestScope.tag_name}
-            <a class="btn ${requestScope.btnFollow} btn-sm" href="${SITE_URL}/FollowTag/?tag=${requestScope.tag_name}">${requestScope.btnFollowText}</a>
+            #${requestScope.tag.getTag_name()}
+            <a class="btn ${requestScope.btnFollow} btn-sm" href="${SITE_URL}/FollowTag/?tag=${requestScope.tag.getTag_id()}">${requestScope.btnFollowText}</a>
         </h1>
     </div>
     

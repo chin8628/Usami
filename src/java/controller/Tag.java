@@ -47,7 +47,7 @@ public class Tag extends HttpServlet {
             
             PreparedStatement pstmt;
             ResultSet rs;
-            ArrayList<String> allTag = new ArrayList<>();
+            ArrayList<ArtTag> allTag = new ArrayList<>();
             
             try {
                 
@@ -56,7 +56,7 @@ public class Tag extends HttpServlet {
                 while (rs.next()) {
                     ArtTag artTag = new ArtTag(conn, rs.getString("tag_name"));
                     if (artTag.checkCountTag()) {
-                        allTag.add(artTag.getTag_name());
+                        allTag.add(artTag);
                     } else {
                         artTag.deleteTag();
                     }

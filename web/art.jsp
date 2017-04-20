@@ -24,8 +24,9 @@
                         </a>
                     </p>
                     <p><span class="label label-default">Standard User</span></p>
+                    
                     <form
-                        action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>"
+                        action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>&imgid=<%= art.getId() %>&at=art"
                         method="POST">
                         <button
                             class='btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %> col-sm-12'
@@ -33,6 +34,7 @@
                             <%= request.getAttribute("btn-follow-text") %>
                         </button>
                     </form>
+                        
                 </div>
             </div>
         </div>

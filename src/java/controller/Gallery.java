@@ -51,10 +51,10 @@ public class Gallery extends HttpServlet {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
             
-            String tag_name = request.getParameter("tag");
+            int tag_id = Integer.parseInt(request.getParameter("tag"));
             
             ArrayList<Art> arts = new ArrayList<>();
-            ArtTag tag = new ArtTag(conn, tag_name);
+            ArtTag tag = new ArtTag(conn, tag_id);
             tag.getImageID();
             
             for (String img_id: tag.getAllImgID()) {
@@ -68,8 +68,8 @@ public class Gallery extends HttpServlet {
             try {
                 
                 pstmt = conn.prepareStatement("SELECT * FROM usami.Profile_focus p "
-                        + "JOIN usami.Tag t USING (tag_id) WHERE t.tag_name = ? AND p.user_id = ?");
-                pstmt.setString(1, tag_name);
+                        + "JOIN usami.Tag t USING (tag_id) WHERE t.tag_id = ? AND p.user_id = ?");
+                pstmt.setInt(1, tag_id);
                 pstmt.setString(2, user.getUsername());
                 
                 rs = pstmt.executeQuery();
@@ -87,7 +87,7 @@ public class Gallery extends HttpServlet {
             
                 
             request.setAttribute("arts", arts);
-            request.setAttribute("tag_name", request.getParameter("tag"));
+            request.setAttribute("tag", tag);
                 
             RequestDispatcher obj = request.getRequestDispatcher("/gallery.jsp");
             obj.forward(request, response);
