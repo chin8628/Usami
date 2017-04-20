@@ -30,44 +30,91 @@ import model.User;
  * @author Chiib_000
  */
 public class CookieAuthen implements Filter {
-
+    
     private FilterConfig config;
-
+    
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         String path = ((HttpServletRequest) request).getRequestURI();
         System.out.println(path);
-
-        if (path.matches("\\/Usami\\/(SignIn)?") || path.startsWith("/Usami/asset")) {
+        
+        if (path.matches("\\/Usami\\/(SignIn|SignUp|CheckEmail|CheckUsername)+") || path.startsWith("/Usami/asset")) {
             chain.doFilter(request, response); //next to filter Prevent img/protected 
-        } else {
-
+        } else if (path.equals("/Usami/")) {
+            
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse res = (HttpServletResponse) response;
-
+            
             HttpSession session = req.getSession();
             Cookie[] cookies = req.getCookies();
-
+            
+            if (session.getAttribute("user") != null && session.getAttribute("profile") != null) {
+                res.sendRedirect("/Usami/Index");
+            } else {
+                if (cookies != null) {
+                    String uid = null;
+                    String email = null;
+                    String signature = null;
+                    for (Cookie ck : cookies) {
+                        if (ck.getName().equals("UID")) {
+                            uid = ck.getValue();
+                        }
+                        if (ck.getName().equals("EMAIL")) {
+                            email = ck.getValue();
+                        }
+                        if (ck.getName().equals("SIGN")) {
+                            signature = ck.getValue();
+                        }
+                    }
+                    //Start hash check
+                    if (hashPassword(uid + email).equals(signature)) {
+                        ServletContext ctx = this.config.getServletContext();
+                        Connection conn = (Connection) ctx.getAttribute("connection");
+                        try {
+                            Profiles profile = new Profiles(conn, uid);
+                            User user = new User(conn, uid);
+                            session.setAttribute("user", user);
+                            session.setAttribute("profile", profile);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CookieAuthen.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        res.sendRedirect("/Usami/Index");
+                        return;
+                    } else {
+                        for (Cookie ck : cookies) {
+                            ck.setMaxAge(0);
+                            res.addCookie(ck);
+                        }
+                    }//End Hash Check     
+                }
+                chain.doFilter(request, response);
+            }
+        } else {
+            HttpServletRequest req = (HttpServletRequest) request;
+            HttpServletResponse res = (HttpServletResponse) response;
+            
+            HttpSession session = req.getSession();
+            Cookie[] cookies = req.getCookies();
+            
             if (session.getAttribute("user") != null && session.getAttribute("profile") != null) {
                 chain.doFilter(request, response);
             } else {
                 if (cookies != null) {
-
                     String uid = null;
                     String email = null;
                     String signature = null;
-
                     for (Cookie ck : cookies) {
-                        if (ck.getName().equals("uid")) {
+                        if (ck.getName().equals("UID")) {
                             uid = ck.getValue();
                         }
-                        if (ck.getName().equals("m")) {
+                        if (ck.getName().equals("EMAIL")) {
                             email = ck.getValue();
                         }
-                        if (ck.getName().equals("s")) {
+                        if (ck.getName().equals("SIGN")) {
                             signature = ck.getValue();
                         }
                     }
+                    //Start hash check
                     if (hashPassword(uid + email).equals(signature)) {
                         ServletContext ctx = this.config.getServletContext();
                         Connection conn = (Connection) ctx.getAttribute("connection");
@@ -86,22 +133,21 @@ public class CookieAuthen implements Filter {
                             ck.setMaxAge(0);
                             res.addCookie(ck);
                         }
-                        res.sendRedirect("/Usami");
-                    }
+                    }//End Hash Check     
                 }
-                res.sendRedirect("/Usami");
+                res.sendRedirect("/Usami/");
             }
         }
     }
-
+    
     @Override
     public void destroy() {
-
+        
     }
-
+    
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.config = filterConfig;
     }
-
+    
 }

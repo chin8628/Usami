@@ -69,23 +69,23 @@ public class SignIn extends HttpServlet {
             User user = new User(conn, request.getParameter("username"));
             session.setAttribute("user", user);
             session.setAttribute("profile", profile);
-            if (true) { // set chech remember me box
+            if (true) { // set check remember me box
                 Cookie user_coki;
                 String uid = rs.getString("user_id");
                 String mail = rs.getString("email");
                 String sign = hashPassword(uid+mail);
                         
-                user_coki = new Cookie("uid", uid);
+                user_coki = new Cookie("UID", uid);
                 user_coki.setMaxAge(60 * 60 * 24 * 7); // Exp 7 Day
                 //user_coki.setSecure(true);
                 response.addCookie(user_coki);
                 
-                user_coki = new Cookie("m", mail);
+                user_coki = new Cookie("EMAIL", mail);
                 user_coki.setMaxAge(60 * 60 * 24 * 7); // Exp 7 Day
                 //user_coki.setSecure(true);
                 response.addCookie(user_coki);
                 
-                user_coki = new Cookie("s", sign);
+                user_coki = new Cookie("SIGN", sign);
                 user_coki.setMaxAge(60 * 60 * 24 * 7); // Exp 7 Day
                 //user_coki.setSecure(true);
                 response.addCookie(user_coki);
