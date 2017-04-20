@@ -145,12 +145,12 @@ public class View extends HttpServlet {
             pstmt = conn.prepareStatement("SELECT * FROM usami.Tag_has WHERE image_id = ?;");
             pstmt.setString(1, request.getParameter("id"));
             
-            ArrayList<String> allTag = new ArrayList<>();
+            ArrayList<ArtTag> allTag = new ArrayList<>();
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 
                 ArtTag tag = new ArtTag(conn, rs.getInt("tag_id"));
-                allTag.add(tag.getTag_name());
+                allTag.add(tag);
                 
             }
             
