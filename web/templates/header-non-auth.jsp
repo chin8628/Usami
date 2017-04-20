@@ -22,14 +22,9 @@
 
     <style>
         html, body {
-            background-image: url('${SITE_URL}/asset/img/background/background-${rand}.jpg');
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(255,255,255,0);
         }
         .error {
             blackground-color: red;
