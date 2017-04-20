@@ -1,6 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../templates/header-non-auth.jsp" />
 
+<video
+    poster="${SITE_URL}/asset/img/video-cover.jpg"
+    id="bgvid"
+    playsinline autoplay muted loop >
+    <source src="${SITE_URL}/asset/video/background.mp4" type="video/mp4">
+</video>
+
 <div class="container col-sm-12" style="margin-top: 5vh;">
     <div class="col-sm-12 opacity-9">
         <div class="panel panel-default">
