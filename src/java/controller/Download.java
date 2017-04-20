@@ -5,18 +5,12 @@
  */
 package controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,8 +25,8 @@ import model.User;
  *
  * @author frostnoxia
  */
-@WebServlet(name = "Pocket", urlPatterns = {"/Pocket"})
-public class Pocket extends HttpServlet {
+@WebServlet(name = "Download", urlPatterns = {"/Download/"})
+public class Download extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,64 +39,64 @@ public class Pocket extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            response.setContentType("image/jpg");
             
-            HttpSession session = request.getSession();
-            User user = (User)session.getAttribute("user");
+            HttpSession se = request.getSession();
+            User profile = (User) se.getAttribute("user");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            String cur_coin = user.getCoin() + "";
+            String mode = request.getParameter("mode");
+            Art art = new Art(conn, request.getParameter("id"));
+            response.setHeader("Content-disposition","attachment; filename=" + art.getTitle() + ".jpg");
+            String appPath = request.getServletContext().getRealPath("");
+            String savePath = appPath + "/asset/img/art";
             
-            int in_coin = 0;
-            int out_coin = 0;
+            String modeString = "";
             
-            try {
-                PreparedStatement pstmt = conn.prepareStatement("SELECT sum(buy_price) " +
-                        "FROM User_buy u " +
-                        "JOIN Product p " +
-                        "USING (product_id) " +
-                        "WHERE p.user_id = ?");
-                
-                Timestamp time = new Timestamp(Calendar.getInstance().getTime().getTime());
-                time.setTime(time.getTime() - 2592000);
-                
-                pstmt.setString(1, user.getUsername());
-                
-                ResultSet rs = pstmt.executeQuery();
-                if(rs.next()) {
-                    in_coin = rs.getInt(1);
+            
+            if(art.checkPur(profile.getUsername()) || art.getUserId().equals(profile.getUsername())) {
+                if(mode.equals("o")) {
+                    modeString=".original";
+                } else {
+                    modeString=".resized";
                 }
-                
-                pstmt = conn.prepareStatement("SELECT sum(buy_price) " +
-                        "FROM User_buy " +
-                        "WHERE user_id = ?");
-                
-                time = new Timestamp(Calendar.getInstance().getTime().getTime());
-                time.setTime(time.getTime() - 2592000);
-                
-                pstmt.setString(1, user.getUsername());
-                
-                rs = pstmt.executeQuery();
-                if(rs.next()) {
-                    out_coin = rs.getInt(1);
+            } else {
+                if(art.getProduct().getPrice() == 0) {
+                    
+                        if(mode.equals("o")) {
+                            if(profile.getU_type().equals("STD")){
+                                request.setAttribute("message", "Only Premium user are allowed to download free original photos");
+                                request.setAttribute("mtype", "fail");
+                                response.sendRedirect("/Usami/View/?id=" + art.getId());
+                                return;
+                            }
+                            modeString=".original";
+                        } else {
+                            modeString=".resized";
+                        }
+                    
+                } else {
+                    request.setAttribute("message", "You do not owned this art");
+                    request.setAttribute("mtype", "fail");
+                    response.sendRedirect("/Usami/View/?id=" + art.getId());
+                    return;
                 }
-                
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(Pocket.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            request.setAttribute("cur_coin", cur_coin);
-            request.setAttribute("in_coin", in_coin);
-            request.setAttribute("out_coin", out_coin);
+                    
+                    
+
+            OutputStream out = response.getOutputStream();
+            FileInputStream in = new FileInputStream(savePath + File.separator + "protected" + File.separator + art.getId() + modeString + ".jpg");
+            byte[] buffer = new byte[4096];
+            int length;
+            while ((length = in.read(buffer)) > 0){
+                out.write(buffer, 0, length);
+            }
+            in.close();
+            out.flush();
             
-            RequestDispatcher obj = request.getRequestDispatcher("/pocket.jsp");
-            obj.forward(request, response);
-            
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

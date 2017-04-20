@@ -34,6 +34,30 @@ public class Art {
 
     private Product product;
     
+    public boolean downloadAble(String user_id, int mode) {
+        try {
+                User user = new User(conn, user_id);
+                if(userId.equals(user_id)){
+                    return true;
+                } else {
+                if(product.getPrice() == 0) {
+                    if(mode == 0) {
+                        return !user.getU_type().equals("STD");
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return checkPur(user_id);
+                }
+                }
+                
+        } catch (SQLException ex) {
+                Logger.getLogger(Art.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+        }
+
+    }
+    
     public boolean checkPur(String user_id) {
         
         try {
