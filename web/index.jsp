@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="model.Art"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -37,46 +38,25 @@
     </div>
 </div>
 
+                        
 <div class="col-sm-9">
+    
+    <!--    Art Recommend For You-->
     <div class="panel panel-default">
         <div class="panel-heading"><h3>Recommended For You</h3></div>
         <div class="panel-body">
             <div class="col-sm-12">
-                <div class="col-sm-3 image-art">
-                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
+                <c:forEach var="art" items="${requestScope.artRecommend}">
+                    <div class="col-sm-3 image-art">
+                    <a  href="${SITE_URL}/View/?id=${art.getId()}" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive">
                         <div class="title">
-                            <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
+                            <strong>${art.getTitle()}</strong>
                         </div>
                     </a>
-                </div>
-
-                <div class="col-sm-3 image-art">
-                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                        <div class="title">
-                            <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-sm-3 image-art">
-                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                        <div class="title">
-                            <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-sm-3 image-art">
-                    <a  href="${SITE_URL}/art.jsp" target="blank" class="thumbnail text-center">
-                        <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive">
-                        <div class="title">
-                            <strong>進撃の艦娘・初雪「明日から本気だす…から…っ見てて…！」</strong>
-                        </div>
-                    </a>
-                </div>
+                    </div>
+                </c:forEach>
+                
             </div>
         </div>
     </div>
