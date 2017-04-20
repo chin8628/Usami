@@ -9,7 +9,7 @@
 <div class="panel panel-default">
     <div class="panel-body" >
         <c:forEach var="tag" items="${requestScope.allTag}">
-            <div class="tag"><a href="${SITE_URL}/Gallery/?tag=${tag.getTag_id()}"><span class="label label-info">${tag.getTag_name()}</span></a></div>
+            <div class="tag"><a href="${SITE_URL}/Gallery/?tag=${tag.getTag_id()}"><span class="label label-info"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> ${tag.getTag_name()}</span></a></div>
         </c:forEach>
         
     </div>
