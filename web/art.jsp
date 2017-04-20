@@ -67,6 +67,7 @@
                     <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
                         <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
                     </c:if>
+                    <%}%>
                 </div>
             </div>
         </div>
