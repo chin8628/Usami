@@ -10,35 +10,38 @@
         <h1>My Storage</h1>
     </div>
     <c:if test="${requestScope.allArt != null}">
-        <c:forEach var="art" items="${requestScope.allArt}">
-            <div class="col-sm-3 image-storage">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <ul class="nav nav-pills">
-                            <a href="${SITE_URL}/View/?id=${art.getId()}">
-                                <p><img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive"></p>
-                                <div class="title">
-                                    <p><strong>${art.getTitle()}</strong></p>
+        <div class="grid">
+            <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
+            <c:forEach var="art" items="${requestScope.allArt}">
+                <div class="col-md-3 col-sm-4 col-xs-6 image-storage grid-item">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="nav nav-pills">
+                                <a href="${SITE_URL}/View/?id=${art.getId()}">
+                                    <p><img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive center-block"></p>
+                                    <div class="title">
+                                        <p><strong>${art.getTitle()}</strong></p>
+                                    </div>
+                                </a>
+                                <div class="price">
+                                    <p>${art.getPrice()}</p>
                                 </div>
-                            </a>
-                            <div class="price">
-                                <p>${art.getPrice()}</p>
-                            </div>
-                            <button
-                                data-toggle="modal"
-                                data-target="#${art.getId()}-modal"
-                                data-site-url="${SITE_URL}"
-                                data-art-id="${art.getId()}"
-                                data-art-title="${art.getTitle()}"
-                                data-art-desc="${art.getDesc()}"
-                                class="btn btn-success col-sm-12 btn-xs">
-                                EDIT
-                            </button>
-                        </ul>
+                                <button
+                                    data-toggle="modal"
+                                    data-target="#${art.getId()}-modal"
+                                    data-site-url="${SITE_URL}"
+                                    data-art-id="${art.getId()}"
+                                    data-art-title="${art.getTitle()}"
+                                    data-art-desc="${art.getDesc()}"
+                                    class="btn btn-success col-sm-12 btn-xs">
+                                    EDIT
+                                </button>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </c:forEach>
+            </c:forEach>
+        </div>
     </c:if>
 </div>
 
@@ -93,23 +96,33 @@
 </c:if>
 
 <script>
-    <c:if test="${requestScope.allArt != null}">
-        <c:forEach var="art" items="${requestScope.allArt}">
-            $('#${art.getId()}-tags').tagsInput({
-                'width': "auto",
-                'height': "auto",
-                'delimiter': [',']
-            });
+    $(document).ready(function() {
+        <c:if test="${requestScope.allArt != null}">
+            <c:forEach var="art" items="${requestScope.allArt}">
+                $('#${art.getId()}-tags').tagsInput({
+                    'width': "auto",
+                    'height': "auto",
+                    'delimiter': [',']
+                });
 
-            $('#${art.getId()}-sell').click(function(event) {
-                if ($(this).is(':checked') === true) {
-                    $('#${art.getId()}-price').prop( "disabled", false );
-                } else {
-                    $('#${art.getId()}-price').prop( "disabled", true ).val(null);
-                }
-            });
-        </c:forEach>
-    </c:if>
+                $('#${art.getId()}-sell').click(function(event) {
+                    if ($(this).is(':checked') === true) {
+                        $('#${art.getId()}-price').prop( "disabled", false );
+                    } else {
+                        $('#${art.getId()}-price').prop( "disabled", true ).val(null);
+                    }
+                });
+            </c:forEach>
+        </c:if>
+
+        $('.grid').isotope({
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            masonry: {
+                columnWidth: '.grid-sizer'
+            }
+        })
+    });
 </script>
 
 <jsp:include page="templates/footer.jsp" />
