@@ -52,14 +52,19 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Modal title</h4>
+                <h4 class="modal-title">Update comment</h4>
             </div>
             <div class="modal-body">
-                <p>One fine body&hellip;</p>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="comment">Comment</label>
+                        <textarea class="form-control" rows="7" id="comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil minus, ab totam corrupti alias iusto. Omnis culpa, fugit, repudiandae deserunt voluptas aut nemo velit ullam error aliquid tempore accusamus, fuga.</textarea>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <button type="submit" class="btn btn-default">Update</button>
             </div>
         </div>
     </div>
