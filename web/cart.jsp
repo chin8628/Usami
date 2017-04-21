@@ -40,9 +40,7 @@
 
             <div class="col-sm-12 text-right">
                 <p id="total"><%= (int)total %> <small>coin</small></p>
-                <form action="${SITE_URL}/Buy" method="POST">
-                    <p><button class="btn btn-success btn-sm">Buy</button></p>
-                </form>
+                <p><button class="btn btn-success btn-sm" id="buy">Buy</button></p>
             </div>
         <% } else { %>
 
@@ -81,6 +79,24 @@
                     }
                 });
             }
+            
+        });
+        
+        // Buy Button
+        $("#buy").click(function() {
+            alertify.confirm("Confirm purchase?", function () {
+                alertify.success("Purchase Successful");
+                    $.ajax({
+                        url: "${SITE_URL}/Buy",
+                        success: function(){
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        }
+                    });
+            }, function() {
+                alertify.error("Purchase Cancled");
+            });
             
         });
 </script>
