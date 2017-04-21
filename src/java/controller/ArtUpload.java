@@ -68,7 +68,7 @@ public class ArtUpload extends HttpServlet {
             
             Float price;
             String tempPrice = request.getParameter("price");
-            if(tempPrice == null) {
+            if(tempPrice == null || !profile.getU_type().equals("prm")) {
                 price = 0f;
             } else {
                 price = Float.parseFloat(tempPrice);

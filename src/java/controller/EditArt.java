@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import model.Art;
 import model.ArtTag;
 import model.Profiles;
+import model.User;
 
 /**
  *
@@ -45,16 +46,24 @@ public class EditArt extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             HttpSession session = request.getSession();
-            Profiles user = (Profiles) session.getAttribute("profile");
+            Profiles profile = (Profiles) session.getAttribute("profile");
+            
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
+            User user = null;
+            
+            try {
+                user = new User(conn, profile.getUsername());
+            } catch (SQLException ex) {
+                Logger.getLogger(EditArt.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             String artId = request.getParameter("id");
             String title = request.getParameter("title");
             String desc = request.getParameter("desc");
             String tempPrice = request.getParameter("price");
-            if(tempPrice == null) {
+            if(tempPrice == null || !user.getU_type().equals("prm")) {
                 tempPrice = "0";
             }
             int price = Integer.parseInt(tempPrice);
