@@ -62,14 +62,17 @@
                                             </c:if>
                                             <c:if test="${!art.checkPur(sessionScope.user.getUsername())}">
                                                 <c:if test="${ art.isInCart(cart) }">
-                                                    <form action="${SITE_URL}/RemoveFromCart/?id=${art.getId()}&origin=${SITE_URL}/Market" method="POST" >
-                                                    <button class="btn btn-danger btn-sm col-sm-12">Remove from cart</button>
-                                                </form>
+                                                    <button class="btn btn-danger btn-sm col-sm-12 cart-btn remove-cart"
+                                                            value="${art.getId()},${art.getTitle()}">
+                                                        Remove from cart
+                                                    </button>
                                                 </c:if>
                                                 <c:if test="${ !art.isInCart(sessionScope.cart) }">
-                                                    <form action="${SITE_URL}/AddToCart/?id=${art.getId()}&origin=${SITE_URL}/Market" method="POST" >
-                                                    <button class="btn btn-success btn-sm col-sm-12">Add to cart</button>
-                                                </form>
+                                                    <button 
+                                                        class="btn btn-success btn-sm col-sm-12 cart-btn add-cart" 
+                                                        value="${art.getId()},${art.getTitle()}">
+                                                        Add to cart
+                                                    </button>
                                                 </c:if>
                                             </c:if>
                                             </c:if>
@@ -107,9 +110,29 @@
                                         <div class="price">
                                             <p>${art.getPrice()} <small>coin</small></p>
                                         </div>
-                                            <form action="${SITE_URL}/BuyPremium/?id=${art.getProduct_id()}" method="POST" >
-                                                    <button class="btn btn-success btn-sm col-sm-12">Buy</button>
-                                            </form>
+                                        <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
+                                            <c:if test="${art.checkPur(sessionScope.user.getUsername())}">
+                                                    <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
+                                            </c:if>
+                                            <c:if test="${!art.checkPur(sessionScope.user.getUsername())}">
+                                                <c:if test="${ art.isInCart(cart) }">
+                                                    <button class="btn btn-danger btn-sm col-sm-12 cart-btn remove-cart"
+                                                            value="${art.getId()},${art.getTitle()}">
+                                                        Remove from cart
+                                                    </button>
+                                                </c:if>
+                                                <c:if test="${ !art.isInCart(sessionScope.cart) }">
+                                                    <button 
+                                                        class="btn btn-success btn-sm col-sm-12 cart-btn add-cart" 
+                                                        value="${art.getId()},${art.getTitle()}">
+                                                        Add to cart
+                                                    </button>
+                                                </c:if>
+                                            </c:if>
+                                        </c:if>
+                                        <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
+                                                <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
+                                        </c:if>
                                     </ul>
                                 </div>
                             </div>
@@ -138,7 +161,43 @@
                 $('.grid').isotope();
             });
         });
+        
+        // Cart Button
+        $('.cart-btn').click(function() {
+            text = $(this).val();
+            text = text.split(',');
+            id = text[0];
+            title = text[1];
+            btn = this;
+            if ($(this).hasClass('add-cart')) { 
+                
+                $.ajax({
+                    url: "${SITE_URL}/AddToCart/?id="+id+"&origin=${SITE_URL}/Market",
+                    success: function(result){
+                        if ($.trim(result) === "ok") {
+                            $(btn).removeClass( "btn-success" ).addClass("btn-danger").text('Remove from cart').removeClass('add-cart').addClass('remove-cart');
+                            alertify.success("Added <strong>"+title+"</strong> to <strong>cart</strong>");
+                            
+                        }
+                    }
+                });
+            }
+            else if ($(this).hasClass('remove-cart')) {
+                $.ajax({
+                    url: "${SITE_URL}/RemoveFromCart/?id="+id+"&origin=${SITE_URL}/Market",
+                    success: function(result){
+                        if ($.trim(result) === "ok") {
+                            $(btn).removeClass( "btn-danger" ).addClass("btn-success").text('Add to cart').removeClass('remove-cart').addClass('add-cart');
+                            alertify.error("Removed <strong>"+title+"</strong> from <strong>cart</strong>");
+                            
+                        }
+                    }
+                });
+            }
+        });
     });
 </script>
+
+
 
 <jsp:include page="templates/footer.jsp" />

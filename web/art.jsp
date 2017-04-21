@@ -28,15 +28,12 @@
                     </p>
                     <p><span class="label label-default">Standard User</span></p>
 
-                    <form
-                        action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= owner.getUsername() %>&imgid=<%= art.getId() %>&at=art"
-                        method="POST">
+                        <!--Follow Button-->
                         <button
-                            class='btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %> col-sm-12'
-                            type="submit">
-                            <%= request.getAttribute("btn-follow-text") %>
+                            class='btn ${requestScope.btnFollow} btn-sm ${requestScope.btnShow} btn-follow ${requestScope.btnColor} col-sm-12'
+                            type="submit" value="${sessionScope.user.getUsername()},<%= owner.getUsername() %>,<%= art.getId() %>"
+                            >${requestScope.btnFollowText}
                         </button>
-                    </form>
 
                 </div>
             </div>
@@ -186,5 +183,42 @@
         </div>
     </div>
 </div>
+                        
+\<script>
+        // Cart Button
+        $('.btn-follow').click(function() {
+            text = $(this).val();
+            text = text.split(',');
+            user_id = text[0];
+            own_id = text[1];
+            img_id = text[2];
+            btn = this;
+            if ($(this).hasClass('btn-green')) { 
+                
+                $.ajax({
+                    url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&imgid="+img_id+"&at=art",
+                    success: function(result){
+                        $(btn)
+                                .removeClass('btn-success btn-green')
+                                .addClass('btn-danger btn-red')
+                                .text('Unfollow');
+                        alertify.success("Followed <strong>"+own_id+"</strong> Already");  
+                        }
+                    });
+            }
+            else if ($(this).hasClass('btn-red')) {
+                $.ajax({
+                    url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&imgid="+img_id+"&at=art",
+                    success: function(result){
+                        $(btn)
+                                .removeClass('btn-danger btn-red')
+                                .addClass('btn-success btn-green')
+                                .text('Follow');
+                        alertify.error("Unfollowed <strong>"+own_id+"</strong> Already");
+                    }
+                });
+            }
+        });
+</script>
 
 <jsp:include page="templates/footer.jsp" />
