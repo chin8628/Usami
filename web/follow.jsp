@@ -18,7 +18,6 @@
                         </div>
                         <div class="media-body follow-name">
                             <strong><%= following.getFirst_name() %> <%= following.getLast_name() %></strong>
-                            <p>Lorem ipsum dolor.</p>
                         </div>
                     </a>
                 </div>
@@ -41,7 +40,6 @@
                         </div>
                         <div class="media-body follow-name">
                             <strong><%= follower.getFirst_name() %> <%= follower.getLast_name() %></strong>
-                            <p>Lorem ipsum dolor.</p>
                         </div>
                     </a>
                 </div>
