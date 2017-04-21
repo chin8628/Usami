@@ -56,6 +56,7 @@ public class Market extends HttpServlet {
             PreparedStatement pstmt =  conn.prepareStatement(""
                     + "SELECT * "
                     + "FROM usami.Image "
+                    + "WHERE status = 1 "
                     + "ORDER BY upload_date DESC;");
             
             ResultSet rs = pstmt.executeQuery();
@@ -65,7 +66,6 @@ public class Market extends HttpServlet {
             
             while (rs.next()){
                 Art art = new Art(conn, rs.getString("image_id"));
-                
                 allArt.add(art);
                 
             }

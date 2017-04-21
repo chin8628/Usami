@@ -59,7 +59,7 @@ public class Gallery extends HttpServlet {
             
             for (String img_id: tag.getAllImgID()) {
                 Art art = new Art(conn, img_id);
-                arts.add(art);
+                if(art.getStatus() == 1 ) arts.add(art);
             }
             
             // Follow Tag

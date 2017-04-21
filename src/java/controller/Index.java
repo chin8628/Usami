@@ -58,7 +58,7 @@ public class Index extends HttpServlet {
             ArrayList<Art> artRecommend = new ArrayList<>();
             try {
                 pstmt = conn.prepareStatement("SELECT DISTINCT i.image_id FROM usami.Profile_focus p JOIN usami.Tag_has t USING (tag_id) " +
-                        "JOIN usami.Image i USING (image_id) WHERE  p.user_id = ? " +
+                        "JOIN usami.Image i USING (image_id) WHERE  p.user_id = ? AND i.status = 1" +
                         "ORDER BY upload_date DESC LIMIT 8;");
                 
                 pstmt.setString(1, user.getUsername());
@@ -77,7 +77,7 @@ public class Index extends HttpServlet {
             
             // Popular Arts
             pstmt =  conn.prepareStatement(""
-                    + "SELECT * FROM Image ORDER BY view DESC LIMIT 8");
+                    + "SELECT * FROM Image WHERE status = 1 ORDER BY view DESC LIMIT 8");
             
             rs = pstmt.executeQuery();
             
@@ -93,7 +93,7 @@ public class Index extends HttpServlet {
             
             
             //New work: Following
-            pstmt =  conn.prepareStatement("SELECT * FROM User_follow JOIN Image USING (user_id) WHERE follower_id = '"+user.getUsername()+"' LIMIT 8");
+            pstmt =  conn.prepareStatement("SELECT * FROM User_follow JOIN Image USING (user_id) WHERE follower_id = '"+user.getUsername()+"' AND status = 1 LIMIT 8");
             
             rs = pstmt.executeQuery();
             
