@@ -42,9 +42,10 @@
     <div class="panel panel-default">
         <div class="panel-heading"><h3>Recommended For You</h3></div>
         <div class="panel-body">
-            <div class="col-sm-12">
+            <div class="grid">
+                <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
                 <c:forEach var="art" items="${requestScope.artRecommend}">
-                    <div class="col-sm-3 image-art">
+                    <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
                     <a  href="${SITE_URL}/View/?id=${art.getId()}" target="blank" class="thumbnail text-center">
                         <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive">
                         <div class="title">
@@ -53,7 +54,27 @@
                     </a>
                     </div>
                 </c:forEach>
-                
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Random Art</h3></div>
+        <div class="panel-body">
+            <div class="grid">
+                <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
+                <c:forEach var="art" items="${requestScope.artRecommend}">
+                    <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
+                    <a  href="${SITE_URL}/View/?id=${art.getId()}" target="blank" class="thumbnail text-center">
+                        <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive">
+                        <div class="title">
+                            <strong>${art.getTitle()}</strong>
+                        </div>
+                    </a>
+                    </div>
+                </c:forEach>
+
             </div>
         </div>
     </div>
@@ -62,9 +83,9 @@
         <div class="panel-heading"><h3>Popular Art</h3></div>
         <div class="panel-body">
             <div class="grid">
-                <div class="grid-sizer col-sm-3"></div>
+                <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
                 <% for(int i=0;i < popArt.size();i++){ %>
-                <div class="col-sm-3 grid-item image-art">
+                <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
                     <a  href="${SITE_URL}/View/?id=<%=popArt.get(i).getId()%>" target="blank" class="thumbnail-2 text-center">
                         <img src="${SITE_URL}/asset/img/art/<%=popArt.get(i).getUrl()%>" class="img-responsive center-block">
                         <div class="title">
@@ -81,9 +102,9 @@
         <div class="panel-heading"><h3>New Work: Following</h3></div>
         <div class="panel-body">
             <div class="grid">
-                <div class="grid-sizer col-sm-3"></div>
+                <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
                 <% for(int i=0;i < folArt.size();i++){ %>
-                <div class="col-sm-3 image-art grid-item">
+                <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
                     <a  href="${SITE_URL}/View/?id=<%=folArt.get(i).getId()%>" target="blank" class="thumbnail-2 text-center">
                         <img src="${SITE_URL}/asset/img/art/<%=folArt.get(i).getUrl()%>" class="img-responsive center-block">
                         <div class="title">
