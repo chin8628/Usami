@@ -62,6 +62,7 @@ public class View extends HttpServlet {
             
             if(art.getStatus() != 1) {
                 response.sendRedirect("/Usami/Error/?id=404");
+                return;
             }
             
             art.setView(art.getView()+1);
