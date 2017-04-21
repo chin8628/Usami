@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static model.Hash.hashPassword;
 
 /**
@@ -24,6 +26,7 @@ public class User {
     private Timestamp exp_date;
     private String u_type;
     private Connection conn;
+    private Profiles profile;
     
     public User(String username) {
         this.username = username;
@@ -151,6 +154,15 @@ public class User {
 
     public void setConn(Connection conn) {
         this.conn = conn;
+    }
+    
+    public Profiles getProfile(){
+        try {
+            return new Profiles(conn, username);
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     

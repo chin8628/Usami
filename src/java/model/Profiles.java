@@ -126,5 +126,9 @@ public class Profiles {
         this.conn = conn;
     }
     
+    public String getFullname() {
+        return this.first_name + " " + this.last_name;
+    }
+    
     
 }

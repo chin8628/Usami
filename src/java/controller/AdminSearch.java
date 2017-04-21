@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Art;
+import model.User;
 
 /**
  *
@@ -48,13 +49,25 @@ public class AdminSearch extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             
             Searcher searcher = new Searcher(conn);
-            ArrayList<Art> allArt = new ArrayList<Art>();
             
             if(mode == 1) {
-                allArt = searcher.searchArt(key);
+                 ArrayList<Art> allArt = searcher.searchArt(key);
                 
                 request.setAttribute("allArt", allArt);
                 RequestDispatcher obj = request.getRequestDispatcher("/administrator/result-search-art.jsp");
+                obj.forward(request, response);
+                return;
+            }
+            
+            if(mode == 2) {
+                ArrayList<User> allUser = searcher.searchUser(key);
+                
+                for(User user:allUser){
+                    out.println(user.getUsername());
+                }
+                
+                request.setAttribute("allUser", allUser);
+                RequestDispatcher obj = request.getRequestDispatcher("/administrator/result-search-creator.jsp");
                 obj.forward(request, response);
                 return;
             }
