@@ -11,9 +11,9 @@
     </div>
     <c:if test="${requestScope.allArt != null}">
         <div class="grid">
-            <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
+            <div class="grid-sizer col-md-3 col-sm-4 col-xs-12"></div>
             <c:forEach var="art" items="${requestScope.allArt}">
-                <div class="col-md-3 col-sm-4 col-xs-6 image-storage grid-item">
+                <div class="col-md-3 col-sm-4 col-xs-12 image-storage grid-item">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <ul class="nav nav-pills">
@@ -35,6 +35,48 @@
                                     data-art-desc="${art.getDesc()}"
                                     class="btn btn-success col-sm-12 btn-xs">
                                     EDIT
+                                </button>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </c:if>
+</div>
+
+<div class="col-sm-12">
+    <div class="page-header">
+        <h1>My Purchase</h1>
+    </div>
+    <c:if test="${requestScope.allArt != null}">
+        <div class="grid">
+            <div class="grid-sizer col-md-3 col-sm-4 col-xs-12"></div>
+            <c:forEach var="art" items="${requestScope.allArt}">
+                <div class="col-md-3 col-sm-4 col-xs-12 image-storage grid-item">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="nav nav-pills">
+                                <a href="${SITE_URL}/View/?id=${art.getId()}">
+                                    <p>
+                                        <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive center-block">
+                                    </p>
+                                    <div class="title">
+                                        <p><strong>${art.getTitle()}</strong></p>
+                                    </div>
+                                </a>
+                                <div class="price">
+                                    <p>${art.getPrice()}</p>
+                                </div>
+                                <button
+                                    data-toggle="modal"
+                                    data-target="#${art.getId()}-modal"
+                                    data-site-url="${SITE_URL}"
+                                    data-art-id="${art.getId()}"
+                                    data-art-title="${art.getTitle()}"
+                                    data-art-desc="${art.getDesc()}"
+                                    class="btn btn-success col-sm-12 btn-xs">
+                                    View
                                 </button>
                             </ul>
                         </div>
