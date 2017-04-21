@@ -9,6 +9,7 @@ import static model.Hash.hashPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,7 +68,7 @@ public class SignUp extends HttpServlet {
                 profile.setUrl_image("profile-placeholder.jpg");
                 profile.addNewProfile(conn);
                 
-                response.sendRedirect("non-auth/auth.jsp");
+                response.sendRedirect("/Usami/?signup=failed");
                 return;
                 } catch (SQLException ex) {
                     ex.printStackTrace();
