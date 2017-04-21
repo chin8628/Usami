@@ -17,7 +17,7 @@
                 <img src="${SITE_URL}/asset/img/avatar-img/<%= profile.getUrl_image() %>" class="img-responsive">
             </span>
         </div>
-        <div class="col-xs-8 col-sm-8" id="description">
+        <div class="col-xs-8 col-sm-8" id="description"
             <h3><%= user.getUsername() %></h3>
             <p><%= profile.getFirst_name() %> <%= profile.getLast_name() %></p>
             <p><%= user.getEmail() %></p>
@@ -28,7 +28,12 @@
             <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
                 <h4><%= request.getAttribute("countFollower") %></h4>
                 <small>Follower</small>
-            </a> <br>
+            </a>
+            <p>
+                <span class="label label-default">Standard creator</span>
+                <span class="label label-warning">Premium creator</span>
+                <p>Valid until: 99 Dec 9999</p>
+            </p>
             <div class="panel-body tag">
                 <c:forEach var="tag" items="${requestScope.allTag}">
                     <a href="${SITE_URL}/Gallery/?tag=${tag.getTag_id()}">
@@ -54,11 +59,15 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="panel-default panel">
+        <div class="panel-default panel hidden-xs">
             <div class="panel-heading">Overview</div>
             <div class="panel-body">
-                <canvas id="myChart" height="100"></canvas>
+                <canvas id="myChart" height="70"></canvas>
             </div>
+        </div>
+
+        <div class="alert alert-warning visible-xs-block" role="alert">
+            <b>Oops!</b> This screen is too small to display Overview chart.
         </div>
     </div>
 </div>
