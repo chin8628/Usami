@@ -47,11 +47,21 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li class="visible-xs-inline-block">
+                        <a href="#search-box" data-toggle="modal" data-target="#search-box">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                        </a>
+                    </li>
                     <li><a href="${SITE_URL}/Market">Market</a></li>
                     <li><a href="${SITE_URL}/upload.jsp">Upload</a></li>
                     <li><a href="${SITE_URL}/Tag">Tags</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden-xs">
+                        <a href="#search-box" data-toggle="modal" data-target="#search-box">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </a>
+                    </li>
                     <li><a href="${SITE_URL}/administrator/index.jsp">Admin</a></li>
                     <li><a href="${SITE_URL}/cart.jsp">Cart</a></li>
                     <li class="dropdown">
@@ -74,4 +84,21 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+
+    <!-- Search box -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="search-box">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-lg" id="search" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-success">Go!</button>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="container col-sm-10 col-sm-offset-1">
