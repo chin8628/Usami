@@ -123,7 +123,7 @@ public class View extends HttpServlet {
             // Follow Button
             
             if (art.getUserId().equals(user.getUsername())) {
-                request.setAttribute("btn-show", "hidden");
+                request.setAttribute("btnShow", "hidden");
             } else {
                 pstmt = conn.prepareStatement("SELECT * FROM usami.User_follow WHERE user_id = ? AND follower_id = ?");
                 pstmt.setString(1, art.getUserId());
@@ -132,13 +132,15 @@ public class View extends HttpServlet {
                 rs = pstmt.executeQuery();
 
                 if (rs.next()) {
-                    request.setAttribute("btn-follow", "btn-danger");
-                    request.setAttribute("btn-follow-text", "Unfollow");
+                    request.setAttribute("btnFollow", "btn-danger");
+                    request.setAttribute("btnFollowText", "Unfollow");
+                    request.setAttribute("btnColor", "btn-red");
                 } else {
-                    request.setAttribute("btn-follow", "btn-success");
-                    request.setAttribute("btn-follow-text", "Follow");
+                    request.setAttribute("btnFollow", "btn-success");
+                    request.setAttribute("btnFollowText", "Follow");
+                    request.setAttribute("btnColor", "btn-green");
                 }
-                request.setAttribute("btn-show", "");
+                request.setAttribute("btnShow", "");
             }
             
             //Show Tag

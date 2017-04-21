@@ -116,7 +116,8 @@ public class AddToCart extends HttpServlet {
             request.setAttribute("mtype", "norm");
             session.setAttribute("cart", cart);
             
-            response.sendRedirect(backUrl);
+            out.println("ok");
+            
             
             
         }
