@@ -69,10 +69,23 @@ public class Storage extends HttpServlet {
                 Art art = new Art(conn, rs.getString("image_id"));
                 art.getCurrentTags();
                 allArt.add(art);
-                
+            }
+            
+            pstmt = conn.prepareStatement("SELECT *, DATE_FORMAT(b.buy_date,'%b %d %Y %h:%i %p') 'fbuy_date' FROM usami.User_buy b JOIN usami.Product p USING(product_id) "
+                        + "JOIN usami.Image i USING(image_id) WHERE b.user_id = ? ORDER BY b.buy_date DESC");
+                pstmt.setString(1, user.getUsername());
+                rs = pstmt.executeQuery();
+            
+            ArrayList<Art> allPur = new ArrayList<Art>();
+            
+            while (rs.next()){
+                Art art = new Art(conn, rs.getString("image_id"));
+                art.getCurrentTags();
+                allPur.add(art);
             }
 
             request.setAttribute("allArt", allArt);
+            request.setAttribute("allPur", allPur);
             RequestDispatcher obj = request.getRequestDispatcher("/storage.jsp");
             obj.forward(request, response);
 

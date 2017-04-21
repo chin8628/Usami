@@ -49,10 +49,10 @@
     <div class="page-header">
         <h1>My Purchase</h1>
     </div>
-    <c:if test="${requestScope.allArt != null}">
+    <c:if test="${requestScope.allPur != null}">
         <div class="grid">
             <div class="grid-sizer col-md-3 col-sm-4 col-xs-12"></div>
-            <c:forEach var="art" items="${requestScope.allArt}">
+            <c:forEach var="art" items="${requestScope.allPur}">
                 <div class="col-md-3 col-sm-4 col-xs-12 image-storage grid-item">
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -65,19 +65,12 @@
                                         <p><strong>${art.getTitle()}</strong></p>
                                     </div>
                                 </a>
-                                <div class="price">
-                                    <p>${art.getPrice()}</p>
-                                </div>
-                                <button
-                                    data-toggle="modal"
-                                    data-target="#${art.getId()}-modal"
-                                    data-site-url="${SITE_URL}"
-                                    data-art-id="${art.getId()}"
-                                    data-art-title="${art.getTitle()}"
-                                    data-art-desc="${art.getDesc()}"
-                                    class="btn btn-success col-sm-12 btn-xs">
-                                    View
-                                </button>
+                                    <form action="${SITE_URL}/Download/?id=${art.getId()}&mode=o" method="POST">
+                                        <button class="btn btn-success col-sm-12 btn-xs">Download original</button>
+                                    </form>
+                                    <form action="${SITE_URL}/Download/?id=${art.getId()}&mode=r" method="POST">
+                                            <button class="btn btn-success col-sm-12 btn-xs">Download 1080p</button>
+                                    </form>
                             </ul>
                         </div>
                     </div>
