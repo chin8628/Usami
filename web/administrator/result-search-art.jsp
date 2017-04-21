@@ -48,19 +48,45 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form method="post" action="${SITE_URL}/EditArt">
+                <input type="hidden"  value="" name="id">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="editModalLabel">Edit</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Art's name" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="desciption">Description</label>
+                        <textarea class="form-control" name="desc"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">Tags (Seperate each tag by comma)</label>
+                        <input type="tags" class="form-control" id="-tags" name="tags" value="">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="-sell" name="sell"> Do you want to sell this art?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" class="form-control" id="-price" name="price" aria-label="Amount (to the nearest dollar)" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" form="del-form" name="id2" value="">DELETE</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </form>
+            <form method="post" action="${SITE_URL}/DeleteArt/" id="del-form">
+            </form>
         </div>
     </div>
 </div>
