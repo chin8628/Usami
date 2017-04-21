@@ -74,10 +74,25 @@ public class Index extends HttpServlet {
             }
             request.setAttribute("artRecommend", artRecommend);
             
+            // Random Art
+            ArrayList<Art> artRandom = new ArrayList<>();
+            try {
+                pstmt = conn.prepareStatement("SELECT * FROM usami.Image ORDER BY RAND() LIMIT 8;");
+                rs = pstmt.executeQuery();
+                
+                while (rs.next()) {
+                    Art art = new Art(conn, rs.getString("image_id"));
+                    artRandom.add(art);
+                }
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            request.setAttribute("artRandom", artRandom);
+            
             
             // Popular Arts
-            pstmt =  conn.prepareStatement(""
-                    + "SELECT * FROM Image ORDER BY view DESC LIMIT 8");
+            pstmt =  conn.prepareStatement("SELECT * FROM Image ORDER BY view DESC LIMIT 8");
             
             rs = pstmt.executeQuery();
             
