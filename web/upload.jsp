@@ -1,6 +1,7 @@
+<%@page import="model.User"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
-
+<% User user = (User) request.getSession().getAttribute("user"); %>
 <div class="panel-default panel">
     <div class="panel-heading"><h2>Upload Art</h2></div>
     <div class="panel-body">
@@ -22,6 +23,7 @@
                 <label for="tags">Tags (Seperate each tag by comma)</label>
                 <input type="tags" class="form-control" id="tags" name="tags">
             </div>
+            <% if(user.getU_type().equals("prm")) { %>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" id="sell" name="sell"> Do you want to sell this art?
@@ -34,6 +36,7 @@
                     <input type="number" class="form-control" id="price" name="price" aria-label="Amount in whole number" disabled>
                 </div>
             </div>
+            <% } %>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>

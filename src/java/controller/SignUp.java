@@ -57,7 +57,7 @@ public class SignUp extends HttpServlet {
                 user.setPassword(password);
                 user.setEmail(email);
                 user.setCoin(0);
-                user.setExp_date("2013-09-04 13:30:00");
+                user.setExp_date(new Timestamp(System.currentTimeMillis() - 100));
                 user.setU_type("STD");
                 user.addNewUser(conn);
                 

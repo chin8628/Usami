@@ -11,10 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,17 +21,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Art;
 import model.User;
-import model.CommentModel;
-import model.PremiumProduct;
 
 /**
  *
  * @author frostnoxia
  */
-@WebServlet(name = "Market", urlPatterns = {"/Market"})
-public class Market extends HttpServlet {
+@WebServlet(name = "BuyPremium", urlPatterns = {"/BuyPremium/"})
+public class BuyPremium extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,59 +45,42 @@ public class Market extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
+            HttpSession se = request.getSession();
+            User user = (User) se.getAttribute("user");
+            
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
             
-            PreparedStatement pstmt =  conn.prepareStatement(""
-                    + "SELECT * "
-                    + "FROM usami.Image "
-                    + "JOIN usami.Product "
-                    + "USING (image_id) "
-                    + "WHERE status = 1 "
-                    + "AND price > 0 "
-                    + "ORDER BY upload_date DESC;");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM Product WHERE product_id = ?");
+            pstmt.setString(1, request.getParameter("id"));
             
             ResultSet rs = pstmt.executeQuery();
-            
-            ArrayList<Art> allArt = new ArrayList<Art>();
-            
-            while (rs.next()){
-                Art art = new Art(conn, rs.getString("image_id"));
-                allArt.add(art);
+            if(rs.next()) {
+                int price = rs.getInt("price");
+                int duration = Integer.parseInt(request.getParameter("id").substring(3));
+                
+                if(user.getCoin() < price) {
+                    //not enough coin
+                    return;
+                } else {
+                    user.setCoin(user.getCoin() - price);
+                    Timestamp time = user.getExp_date();
+                    Timestamp curtime = new Timestamp(System.currentTimeMillis());
+                    if(time.before(curtime)) {
+                        time = curtime;
+                    }
+                    
+                    time.setTime(time.getTime() + 2592000);
+                    user.setU_type("prm");
+                    
+                    user.UpdatePremium(conn);
+                }
                 
             }
             
-            
-            
-            pstmt = conn.prepareStatement("SELECT * FROM Product WHERE pgroup_id like 'prm'");
-            
-            rs = pstmt.executeQuery();
-            
-            ArrayList<PremiumProduct> allPrm = new ArrayList<PremiumProduct>();
-            
-            while(rs.next()) {
-                
-                PremiumProduct temp = new PremiumProduct();
-                String text = rs.getString("product_id");
-                temp.setProduct_id(text);
-                temp.setPrice(rs.getInt("price"));
-                temp.setDuration(Integer.parseInt(text.substring(3)));
-                temp.setName("Premium Accound - " + text.substring(3) + " Days");
-                
-                allPrm.add(temp);
-            }
-            
-            
-            
-
-            request.setAttribute("allArt", allArt);
-            request.setAttribute("allPrm", allPrm);
-            request.setAttribute("user", user);
-            RequestDispatcher obj = request.getRequestDispatcher("market.jsp");
-            obj.forward(request, response);
-            
+            //completed
+            response.sendRedirect("/Usami/Market#special");
+            return;
             
         }
     }
@@ -121,7 +100,7 @@ public class Market extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Market.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuyPremium.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -139,7 +118,7 @@ public class Market extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Market.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuyPremium.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
