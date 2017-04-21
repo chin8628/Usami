@@ -13,48 +13,6 @@
 </div>
 
 <div class="panel-default panel">
-    <div class="panel-heading">All Report</div>
-    <div class="panel-body">
-        <table class="table table-bordered report">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Type</th>
-                    <th>Report by</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><a href="#" data-toggle="modal" data-target="#myModal">Too explicit sexual</a></td>
-                    <td>Art</td>
-                    <td><a href="${SITE_URL}/profile.jsp">chin8628</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><a href="#" data-toggle="modal" data-target="#myModal">Found bug on system</a></td>
-                    <td>Problem usage</td>
-                    <td><a href="${SITE_URL}/profile.jsp">chin8628</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><a href="#" data-toggle="modal" data-target="#myModal">Too violation comment</a></td>
-                    <td>Comment</td>
-                    <td><a href="${SITE_URL}/profile.jsp">chin8628</a></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td><a href="#" data-toggle="modal" data-target="#myModal">I was spamed by another user</a></td>
-                    <td>User</td>
-                    <td><a href="${SITE_URL}/profile.jsp">chin8628</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="panel-default panel">
     <div class="panel-heading">Search</div>
     <div class="panel-body">
         <form method="post">
@@ -76,8 +34,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="search">Search</label>
-                <input type="text" class="form-control" id="search" name="search">
+                <input type="text" class="form-control" id="search" name="search" required="">
             </div>
             <button class="btn btn-primary">Search</button>
         </form>
