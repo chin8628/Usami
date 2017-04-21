@@ -54,7 +54,9 @@
                     </a>
                     </div>
                 </c:forEach>
-
+            </div>
+            <div class="col-sm-12 text-right">
+                <a href="#">>> View more</a>
             </div>
         </div>
     </div>
@@ -66,15 +68,17 @@
                 <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
                 <c:forEach var="art" items="${requestScope.artRecommend}">
                     <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
-                    <a  href="${SITE_URL}/View/?id=${art.getId()}" target="blank" class="thumbnail text-center">
-                        <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive">
-                        <div class="title">
-                            <strong>${art.getTitle()}</strong>
-                        </div>
-                    </a>
+                        <a  href="${SITE_URL}/View/?id=${art.getId()}" target="blank" class="thumbnail text-center">
+                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive">
+                            <div class="title">
+                                <strong>${art.getTitle()}</strong>
+                            </div>
+                        </a>
                     </div>
                 </c:forEach>
-
+            </div>
+            <div class="col-sm-12 text-right">
+                <a href="#">>> View more</a>
             </div>
         </div>
     </div>
@@ -95,6 +99,9 @@
                 </div>
                 <%}%>
             </div>
+            <div class="col-sm-12 text-right">
+                <a href="#">>> View more</a>
+            </div>
         </div>
     </div>
 
@@ -113,6 +120,9 @@
                     </a>
                 </div>
                 <%}%>
+            </div>
+            <div class="col-sm-12 text-right">
+                <a href="#">>> View more</a>
             </div>
         </div>
     </div>
