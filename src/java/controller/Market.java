@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import model.Art;
 import model.User;
 import model.CommentModel;
+import model.PremiumProduct;
 
 /**
  *
@@ -66,14 +67,36 @@ public class Market extends HttpServlet {
             
             ArrayList<Art> allArt = new ArrayList<Art>();
             
-            
             while (rs.next()){
                 Art art = new Art(conn, rs.getString("image_id"));
                 allArt.add(art);
                 
             }
+            
+            
+            
+            pstmt = conn.prepareStatement("SELECT * FROM Product WHERE pgroup_id like 'prm'");
+            
+            rs = pstmt.executeQuery();
+            
+            ArrayList<PremiumProduct> allPrm = new ArrayList<PremiumProduct>();
+            
+            while(rs.next()) {
+                
+                PremiumProduct temp = new PremiumProduct();
+                String text = rs.getString("product_id");
+                temp.setProduct_id(text);
+                temp.setPrice(rs.getInt("price"));
+                temp.setDuration(Integer.parseInt(text.substring(3)));
+                
+                allPrm.add(temp);
+            }
+            
+            
+            
 
             request.setAttribute("allArt", allArt);
+            request.setAttribute("allPrm", allPrm);
             request.setAttribute("user", user);
             RequestDispatcher obj = request.getRequestDispatcher("market.jsp");
             obj.forward(request, response);
