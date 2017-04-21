@@ -56,7 +56,10 @@ public class Market extends HttpServlet {
             PreparedStatement pstmt =  conn.prepareStatement(""
                     + "SELECT * "
                     + "FROM usami.Image "
+                    + "JOIN usami.Product "
+                    + "USING (image_id) "
                     + "WHERE status = 1 "
+                    + "AND price > 0 "
                     + "ORDER BY upload_date DESC;");
             
             ResultSet rs = pstmt.executeQuery();
