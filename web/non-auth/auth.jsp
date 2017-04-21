@@ -21,6 +21,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
+                <div class="alert alert-success" role="alert">Thank you, You are a member now.</div>
                 <form action="${SITE_URL}/SignUp" method="POST">
                     <div class="form-group has-feedback" id="fNameInDiv">
                         <label class="control-label" for="fullname">Full Name</label>
@@ -56,6 +57,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign In</div>
             <div class="panel-body">
+                <div class="alert alert-danger" role="alert">Sorry, the username and password you entered do not match. Please try again.</div>
                 <form action="${SITE_URL}/SignIn" method="POST" >
                     <div class="form-group">
                         <label for="username">Username</label>
