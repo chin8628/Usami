@@ -71,7 +71,7 @@
                     </label>
                     <label style="margin-right: 15px;">
                         <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-                        Comment [Part of comment, Art of comment]
+                        Comment [Part of comment, Art of comment, User]
                     </label>
                 </div>
             </div>
