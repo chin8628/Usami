@@ -1,8 +1,8 @@
+<%@page import="model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="SITE_URL" value="${pageContext.request.contextPath}" scope="request"/>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +52,9 @@
                     <li><a href="${SITE_URL}/Tag">Tags</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <c:if test="${sessionScope.user.getU_type().equals('adm')}">
                     <li><a href="${SITE_URL}/administrator/index.jsp">Admin</a></li>
+                    </c:if>
                     <li><a href="${SITE_URL}/cart.jsp">Cart</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

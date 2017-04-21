@@ -19,26 +19,26 @@
 <div class="panel-default panel">
     <div class="panel-heading">Search</div>
     <div class="panel-body">
-        <form method="post">
+        <form method="post" action="${SITE_URL}/AdminSearch">
             <div class="form-group">
                 <label for="search-type">Search Type</label>
                 <div class="radio" id="search-type">
                     <label style="margin-right: 15px;">
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+                        <input type="radio" name="mode" id="optionsRadios1" value="1">
                         Art [ID art, Name art, Artist]
                     </label>
                     <label style="margin-right: 15px;">
-                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                        <input type="radio" name="mode" id="optionsRadios2" value="2">
                         User [Username, User ID, Firstname, Lastname]
                     </label>
                     <label style="margin-right: 15px;">
-                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                        <input type="radio" name="mode" id="optionsRadios3" value="3">
                         Comment [Part of comment, Art of comment, User]
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="search" name="search" required="">
+                <input type="text" class="form-control" id="search" name="key" required="">
             </div>
             <button class="btn btn-primary">Search</button>
         </form>

@@ -1,6 +1,9 @@
+<%@page import="model.Art"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../templates/header.jsp" />
-
 <div class="page-header">
     <h1>Result search art</h1>
 </div>
@@ -20,16 +23,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <c:forEach var="art" items="${requestScope.allArt}">
                     <tr>
-                        <td>1</td>
+                        <td>${art.getId()}</td>
                         <td>
                             <a href="#">
-                                <img src="${SITE_URL}/asset/img/art.jpg" class="img-responsive image-art">
+                                <img src="${SITE_URL}/asset/img/art/${art.getId()}.jpg" class="img-responsive image-art">
                             </a>
                         </td>
-                        <td><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, dolor.</a></td>
-                        <td><a href="#">Lorem</a></td>
-                        <td>12-04-1023</td>
+                        <td><a href="#">${art.getTitle()}</a></td>
+                        <td><a href="#">${art.getFullname()}</a></td>
+                        <td>${art.getUpload_date()}</td>
                         <td class="text-center">
                             <button
                                 class="btn btn-default btn-sm"
@@ -39,6 +43,7 @@
                             </button>
                         </td>
                     </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
