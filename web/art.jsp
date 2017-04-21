@@ -184,8 +184,8 @@
     </div>
 </div>
                         
-\<script>
-        // Cart Button
+<script>
+        // Follow Button
         $('.btn-follow').click(function() {
             text = $(this).val();
             text = text.split(',');

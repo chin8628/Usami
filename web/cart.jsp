@@ -31,7 +31,7 @@
                                 <td><%= art.getTitle() %></td>
                                 <td><%= art.getFullname() %></td>
                                 <td class="show-price"><%= art.getPrice() %></td>
-                                <td><button class="btn btn-link btn-sm cart-btn remove-cart" value="<%= art.getId() %>"><span class="glyphicon glyphicon-trash"></span></button></td>
+                                <td><button class="btn btn-link btn-sm cart-btn remove-cart" value="<%= art.getId() %>,<%= art.getTitle() %>"><span class="glyphicon glyphicon-trash"></span></button></td>
                             </tr>
                         <% } %>
                     </tbody>
@@ -55,7 +55,9 @@
 <script>
         // Cart Button
         $('.cart-btn').click(function() {
-            id = $(this).val();
+            text = $(this).val().split(',');
+            id = text[0];
+            title = text[1];
             btn = this;
             total_price = 0;
             cnt = 0;
@@ -65,7 +67,7 @@
                     success: function(result){
                         if ($.trim(result) === "ok") {
                             $(btn).parent().parent().remove();
-                            alertify.error("Removed <strong> </strong> from <strong>cart</strong>");
+                            alertify.error("Removed <strong>"+title+"</strong> from <strong>cart</strong>");
                             $('.show-price').each(function() {
                                 total_price += parseInt($(this).text(), 10) || 0;
                                 cnt++;

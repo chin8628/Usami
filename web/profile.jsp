@@ -39,7 +39,7 @@
 
         </div>
         <div class="col-xs-12 col-sm-2 text-right">
-            <form
+<!--            <form
                 action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= user.getUsername() %>&at=profile"
                 method="POST" >
                 <button
@@ -47,7 +47,12 @@
                     type="submit">
                         <%= request.getAttribute("btn-follow-text") %>
                     </button>
-            </form>
+            </form>-->
+            <button
+                class='btn ${requestScope.btnFollow} btn-sm ${requestScope.btnShow} btn-follow ${requestScope.btnColor} col-sm-12'
+                type="submit" value="${sessionScope.user.getUsername()},<%= user.getUsername() %>"
+                >${requestScope.btnFollowText}
+            </button>
         </div>
     </div>
 </div>
@@ -152,6 +157,40 @@
             }
         })
     });
+    
+    // Follow Button
+        $('.btn-follow').click(function() {
+            text = $(this).val().split(',');
+            user_id = text[0];
+            own_id = text[1];
+            btn = this;
+            if ($(this).hasClass('btn-green')) { 
+                
+                $.ajax({
+                    url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&at=profile",
+                    success: function(result){
+                        $(btn)
+                                .removeClass('btn-success btn-green')
+                                .addClass('btn-danger btn-red')
+                                .text('Unfollow');
+                        alertify.success("Followed <strong>"+own_id+"</strong> Already");  
+                        }
+                    });
+            }
+            else if ($(this).hasClass('btn-red')) {
+                $.ajax({
+                    url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&at=profile",
+                    success: function(result){
+                        $(btn)
+                                .removeClass('btn-danger btn-red')
+                                .addClass('btn-success btn-green')
+                                .text('Follow');
+                        alertify.error("Unfollowed <strong>"+own_id+"</strong> Already");
+                    }
+                });
+            }
+        });
+    
 </script>
 
 <jsp:include page="templates/footer.jsp" />

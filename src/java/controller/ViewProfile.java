@@ -63,7 +63,7 @@ public class ViewProfile extends HttpServlet {
             ResultSet rs;
             
             if (user.getUsername().equals(id)) {
-                request.setAttribute("btn-show", "hidden");
+                request.setAttribute("btnShow", "hidden");
                 
             } else {
                 // Check follow
@@ -74,13 +74,15 @@ public class ViewProfile extends HttpServlet {
                 rs = pstmt.executeQuery();
 
                 if (rs.next()) {
-                    request.setAttribute("btn-follow", "btn-danger");
-                    request.setAttribute("btn-follow-text", "Unfollow");
+                    request.setAttribute("btnFollow", "btn-danger");
+                    request.setAttribute("btnFollowText", "Unfollow");
+                    request.setAttribute("btnColor", "btn-red");
                 } else {
-                    request.setAttribute("btn-follow", "btn-success");
-                    request.setAttribute("btn-follow-text", "Follow");
+                    request.setAttribute("btnFollow", "btn-success");
+                    request.setAttribute("btnFollowText", "Follow");
+                    request.setAttribute("btnColor", "btn-green");
                 }
-                request.setAttribute("btn-show", "");
+                request.setAttribute("btnShow", "");
             }
             
             // Count Follower

@@ -144,6 +144,7 @@ public class View extends HttpServlet {
                     request.setAttribute("btnFollow", "btn-success");
                     request.setAttribute("btnFollowText", "Follow");
                     request.setAttribute("btnColor", "btn-green");
+                    
                 }
                 request.setAttribute("btnShow", "");
             }
