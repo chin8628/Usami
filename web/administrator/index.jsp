@@ -5,11 +5,15 @@
     <h1>Control Panel</h1>
 </div>
 
-<div class="panel-default panel">
+<div class="panel-default panel hidden-xs">
     <div class="panel-heading">Overview</div>
     <div class="panel-body">
-        <canvas id="myChart" height="100"></canvas>
+        <canvas id="myChart" height="70"></canvas>
     </div>
+</div>
+
+<div class="alert alert-warning visible-xs-block" role="alert">
+    <b>Oops!</b> This screen is too small to display Overview chart.
 </div>
 
 <div class="panel-default panel">
