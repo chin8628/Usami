@@ -39,7 +39,7 @@
             </div>
 
             <div class="col-sm-12 text-right">
-                <p id="total"><%= (int)total %> <small>coin</small></p>
+                <p id="total">Total: <%= (int)total %> <small>coin</small></p>
                 <form action="${SITE_URL}/Buy" method="POST">
                     <p><button class="btn btn-success btn-sm">Buy</button></p>
                 </form>
@@ -71,7 +71,7 @@
                                 cnt++;
                             });
                             $('#total').text(total_price + " coin");
-                            
+
                             if (cnt == 0) {
                                 $('.panel-body').html("<h3 class='text-center'><small> There is nothing here. Let's add something. </small></h3><br>");
                             }
@@ -79,7 +79,7 @@
                     }
                 });
             }
-            
+
         });
 </script>
 

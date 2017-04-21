@@ -19,7 +19,7 @@
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     <div class="thumbnail">
-                        <img src="${SITE_URL}/asset/img/avatar-img/<%=owner.getUrl_image()%>" class="img-responsive">
+                        <img src="${SITE_URL}/asset/img/avatar-img/<%=owner.getUrl_image()%>" class="img-responsive avatar-img">
                     </div>
                     <p>
                         <a href="${SITE_URL}/ViewProfile/?id=<%= owner.getUsername() %>">
@@ -146,7 +146,9 @@
                         <div class="panel-body">
                             <div class="media">
                                 <div class="media-left">
-                                    <img class="media-object" src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}">
+                                    <img
+                                        class="media-object avatar-img"
+                                        src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}">
                                 </div>
                                 <div class="media-body">
                                     <!--Comment Box-->
@@ -183,7 +185,7 @@
         </div>
     </div>
 </div>
-                        
+
 \<script>
         // Cart Button
         $('.btn-follow').click(function() {
@@ -193,8 +195,8 @@
             own_id = text[1];
             img_id = text[2];
             btn = this;
-            if ($(this).hasClass('btn-green')) { 
-                
+            if ($(this).hasClass('btn-green')) {
+
                 $.ajax({
                     url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&imgid="+img_id+"&at=art",
                     success: function(result){
@@ -202,7 +204,7 @@
                                 .removeClass('btn-success btn-green')
                                 .addClass('btn-danger btn-red')
                                 .text('Unfollow');
-                        alertify.success("Followed <strong>"+own_id+"</strong> Already");  
+                        alertify.success("Followed <strong>"+own_id+"</strong> Already");
                         }
                     });
             }

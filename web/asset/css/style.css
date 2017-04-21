@@ -40,6 +40,26 @@ footer {
     opacity: 0.9;
 }
 
+#single-art {
+    max-height: 90vh;
+}
+
+.avatar-img {
+    max-height: 100px;
+}
+
+.image-search {
+    max-height: 100px;
+}
+
+.search-item{
+    height: 100px;
+}
+
+.image-art-thumbnail {
+    max-height: 170px;
+}
+
 /* ART PAGE */
 
 #favorite-btn {
@@ -171,20 +191,4 @@ video#bgvid{
     -webkit-transition: border .2s ease-in-out;
     -o-transition: border .2s ease-in-out;
     transition: border .2s ease-in-out;
-}
-
-#single-art {
-    max-height: 90vh;
-}
-
-.avatar-img {
-    max-height: 100px;
-}
-
-.image-search {
-    max-height: 100px;
-}
-
-.search-item{
-    height: 100px;
 }

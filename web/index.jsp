@@ -11,7 +11,9 @@
         <div class="panel-body text-center">
             <div class="row">
                 <div class="col-sm-12 col-xs-5">
-                    <img src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}" class="img-responsive thumbnail">
+                    <div class="col-xs-12 thumbnail">
+                        <img src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}" class="img-responsive avatar-img">
+                    </div>
                 </div>
                 <div class="col-sm-12 col-xs-7">
                     <p>

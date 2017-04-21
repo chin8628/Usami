@@ -22,7 +22,11 @@
                         <div class="panel-body">
                             <ul class="nav nav-pills">
                                 <a href="${SITE_URL}/View/?id=${art.getId()}">
-                                    <p><img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive"></p>
+                                    <p>
+                                        <img
+                                            src="${SITE_URL}/asset/img/art/${art.getUrl()}"
+                                            class="img-responsive image-art-thumbnail center-block">
+                                    </p>
                                 </a>
                                 <div class="title">
                                     <a href="${SITE_URL}/View/?id=${art.getId()}">
@@ -44,7 +48,7 @@
 
 <!--    View Art       -->
 <c:if test="${requestScope.artType != null}">
-        <div class="col-sm-12">
+    <div class="col-sm-12">
         <div class="page-header">
             <h1 style="display: inline-block">${requestScope.artType}</h1>
         </div>
@@ -57,7 +61,11 @@
                         <div class="panel-body">
                             <ul class="nav nav-pills">
                                 <a href="${SITE_URL}/View/?id=${art.getId()}">
-                                    <p><img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive"></p>
+                                    <p>
+                                        <img
+                                            src="${SITE_URL}/asset/img/art/${art.getUrl()}"
+                                            class="img-responsive image-art-thumbnail  center-block">
+                                    </p>
                                 </a>
                                 <div class="title">
                                     <a href="${SITE_URL}/View/?id=${art.getId()}">
@@ -77,7 +85,7 @@
 </c:if>
 
 
-        
+
 <script>
     $(document).ready(function() {
         $('.grid').isotope({

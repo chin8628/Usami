@@ -45,7 +45,7 @@
                                         <a href="${SITE_URL}/View/?id=${art.getId()}">
                                             <img
                                                 src="${SITE_URL}/asset/img/art/${art.getUrl()}"
-                                                class="img-responsive">
+                                                class="img-responsive image-art-thumbnail">
                                         </a>
                                     </td>
                                     <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
@@ -75,12 +75,12 @@
                         <tbody>
                             <c:forEach var="art" items="${requestScope.artIncome}">
                                 <tr>
-                                    <td>
+                                    <td class="col-sm-2">
                                         <a href="${SITE_URL}/View/?id=${art.getId()}">
                                             <img
                                                 src="${SITE_URL}/asset/img/art/${art.getUrl()}"
                                                 alt=""
-                                                class="img-responsive">
+                                                class="img-responsive image-art-thumbnail">
                                         </a>
                                     <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
                                     <td>
@@ -115,8 +115,7 @@
                                         <a href="${SITE_URL}/View/?id=${art.getId()}">
                                             <img
                                                 src="${SITE_URL}/asset/img/art/${art.getUrl()}"
-                                                alt=""
-                                                class="img-responsive">
+                                                class="img-responsive image-art-thumbnail">
                                         </a>
                                     </td>
                                     <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
@@ -144,12 +143,11 @@
                         <tbody>
                             <c:forEach var="comm" items="${requestScope.myComm}">
                                 <tr>
-                                    <td>
+                                    <td class="col-sm-2">
                                         <a href="${SITE_URL}/View/?id=${comm.getImage_id()}">
                                             <img
                                                 src="${SITE_URL}/asset/img/art/${comm.getUrl_image()}"
-                                                alt=""
-                                                class="img-responsive">
+                                                class="img-responsive image-art-thumbnail">
                                         </a>
                                     </td>
                                     <td>

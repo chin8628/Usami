@@ -14,7 +14,7 @@
     <div class="panel-body row" id="profile">
         <div class="col-xs-4 col-sm-2 text-center">
             <span class="thumbnail">
-                <img src="${SITE_URL}/asset/img/avatar-img/<%= profile.getUrl_image() %>" class="img-responsive">
+                <img src="${SITE_URL}/asset/img/avatar-img/<%= profile.getUrl_image() %>" class="img-responsive avatar-img">
             </span>
         </div>
         <div class="col-xs-8 col-sm-8" id="description"
