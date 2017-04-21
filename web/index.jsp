@@ -38,7 +38,9 @@
     </div>
 </div>
 
+
 <div class="col-sm-10">
+    <!--Recommend For You-->
     <div class="panel panel-default">
         <div class="panel-heading"><h3>Recommended For You</h3></div>
         <div class="panel-body">
@@ -56,17 +58,18 @@
                 </c:forEach>
             </div>
             <div class="col-sm-12 text-right">
-                <a href="#">>> View more</a>
+                <a href="${SITE_URL}/Gallery/?art=recommend">>> View more</a>
             </div>
         </div>
     </div>
 
+    <!--Random Art-->
     <div class="panel panel-default">
         <div class="panel-heading"><h3>Random Art</h3></div>
         <div class="panel-body">
             <div class="grid">
                 <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
-                <c:forEach var="art" items="${requestScope.artRecommend}">
+                <c:forEach var="art" items="${requestScope.artRandom}">
                     <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
                         <a  href="${SITE_URL}/View/?id=${art.getId()}" target="blank" class="thumbnail text-center">
                             <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive">
@@ -78,11 +81,12 @@
                 </c:forEach>
             </div>
             <div class="col-sm-12 text-right">
-                <a href="#">>> View more</a>
+                <a href="${SITE_URL}/Gallery/?art=random">>> View more</a>
             </div>
         </div>
     </div>
 
+    <!--    Popular Art     -->
     <div class="panel panel-default">
         <div class="panel-heading"><h3>Popular Art</h3></div>
         <div class="panel-body">
@@ -100,11 +104,12 @@
                 <%}%>
             </div>
             <div class="col-sm-12 text-right">
-                <a href="#">>> View more</a>
+                <a href="${SITE_URL}/Gallery/?art=popular">>> View more</a>
             </div>
         </div>
     </div>
 
+    <!--    Following Art       -->
     <div class="panel panel-default">
         <div class="panel-heading"><h3>New Work: Following</h3></div>
         <div class="panel-body">
@@ -122,7 +127,7 @@
                 <%}%>
             </div>
             <div class="col-sm-12 text-right">
-                <a href="#">>> View more</a>
+                <a href="${SITE_URL}/Gallery/?art=following">>> View more</a>
             </div>
         </div>
     </div>
