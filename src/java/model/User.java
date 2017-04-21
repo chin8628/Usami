@@ -21,7 +21,7 @@ public class User {
     private String password;
     private String email;
     private int coin;
-    private String exp_date;
+    private Timestamp exp_date;
     private String u_type;
     private Connection conn;
     
@@ -39,7 +39,7 @@ public class User {
             this.password = rs.getString("password");
             this.email = rs.getString("email");
             this.coin = rs.getInt("coin");
-            this.exp_date = rs.getString("exp_date");
+            this.exp_date = rs.getTimestamp("exp_date");
             this.u_type = rs.getString("u_type");
         }
     }
@@ -50,8 +50,17 @@ public class User {
         pstmt.setString(2, hashPassword(this.password));
         pstmt.setString(3, this.email);
         pstmt.setInt(4, this.coin);
-        pstmt.setTimestamp(5, Timestamp.valueOf(this.exp_date));
+        pstmt.setTimestamp(5, this.exp_date);
         pstmt.setString(6, this.u_type);
+        pstmt.executeUpdate();
+    }
+    
+    public void UpdatePremium(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.User SET exp_date = ?, u_type = ?, coin = ? WHERE user_id = ?");
+        pstmt.setTimestamp(1, this.exp_date);
+        pstmt.setString(2, this.u_type);
+        pstmt.setInt(3, coin);
+        pstmt.setString(4, username);
         pstmt.executeUpdate();
     }
     
@@ -120,11 +129,11 @@ public class User {
         this.coin = coin;
     }
 
-    public String getExp_date() {
+    public Timestamp getExp_date() {
         return exp_date;
     }
 
-    public void setExp_date(String exp_date) {
+    public void setExp_date(Timestamp exp_date) {
         this.exp_date = exp_date;
     }
 

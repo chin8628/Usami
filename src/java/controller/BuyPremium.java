@@ -5,26 +5,30 @@
  */
 package controller;
 
-import static model.Hash.hashPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
-import javax.servlet.RequestDispatcher;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Profiles;
+import javax.servlet.http.HttpSession;
 import model.User;
 
 /**
  *
- * @author bellkung
+ * @author frostnoxia
  */
-@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
-public class SignUp extends HttpServlet {
+@WebServlet(name = "BuyPremium", urlPatterns = {"/BuyPremium/"})
+public class BuyPremium extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,43 +40,48 @@ public class SignUp extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String[] fullname = request.getParameter("fullname").split("\\s+");
-            String firstname = fullname[0];
-            String lastname = "";
-            if (fullname.length == 2) {
-                lastname = fullname[1];
-            }
-            String username = request.getParameter("username");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
+            /* TODO output your page here. You may use following sample code. */
+            
+            HttpSession se = request.getSession();
+            User user = (User) se.getAttribute("user");
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
-        
-            try {
-                User user = new User(username);
-                user.setPassword(password);
-                user.setEmail(email);
-                user.setCoin(0);
-                user.setExp_date(new Timestamp(System.currentTimeMillis() - 100));
-                user.setU_type("STD");
-                user.addNewUser(conn);
+            
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM Product WHERE product_id = ?");
+            pstmt.setString(1, request.getParameter("id"));
+            
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()) {
+                int price = rs.getInt("price");
+                int duration = Integer.parseInt(request.getParameter("id").substring(3));
                 
-                Profiles profile = new Profiles();
-                profile.setUsername(username);
-                profile.setFirst_name(firstname);
-                profile.setLast_name(lastname);
-                profile.setUrl_image("profile-placeholder.jpg");
-                profile.addNewProfile(conn);
-                
-                response.sendRedirect("/Usami/?signup=failed");
-                return;
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+                if(user.getCoin() < price) {
+                    //not enough coin
+                    return;
+                } else {
+                    user.setCoin(user.getCoin() - price);
+                    Timestamp time = user.getExp_date();
+                    Timestamp curtime = new Timestamp(System.currentTimeMillis());
+                    if(time.before(curtime)) {
+                        time = curtime;
+                    }
+                    
+                    time.setTime(time.getTime() + 2592000);
+                    user.setU_type("prm");
+                    
+                    user.UpdatePremium(conn);
                 }
+                
+            }
+            
+            //completed
+            response.sendRedirect("/Usami/Market#special");
+            return;
+            
         }
     }
 
@@ -88,7 +97,11 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuyPremium.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -102,7 +115,11 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuyPremium.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
