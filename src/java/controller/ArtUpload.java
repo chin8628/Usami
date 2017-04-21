@@ -194,6 +194,7 @@ public class ArtUpload extends HttpServlet {
             } catch (SQLException ex) {
                 request.setAttribute("message", "Upload Failed");
                 request.setAttribute("mtype", "fail");
+                ex.printStackTrace();
                 return;
             }
 
