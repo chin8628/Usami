@@ -61,7 +61,7 @@ public class CookieAuthen implements Filter {
         String path = req.getRequestURI();
         System.out.println(path);
 
-        if (path.matches("\\/Usami\\/(SignIn|SignUp|CheckEmail|CheckUsername)+") || path.startsWith("/Usami/asset")) {
+        if (path.matches("\\/Usami\\/(SignIn|SignUp|CheckEmail|CheckUsername)+") || path.startsWith("/Usami/asset") || path.startsWith("/Usami/non-auth")) {
             chain.doFilter(request, response); //next to filter Prevent img/protected 
         } else if (path.equals("/Usami/")) {
 
