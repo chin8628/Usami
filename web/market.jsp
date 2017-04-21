@@ -78,7 +78,7 @@
                                             </c:if>
                                         </c:if>
                                         <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
-                                                <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
+                                                <button class="btn btn-default btn-sm col-sm-12" disabled="">--- his is your art</button>
                                         </c:if>
                                     </ul>
                                 </div>
@@ -110,29 +110,9 @@
                                         <div class="price">
                                             <p>${art.getPrice()} <small>coin</small></p>
                                         </div>
-                                        <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
-                                            <c:if test="${art.checkPur(sessionScope.user.getUsername())}">
-                                                    <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
-                                            </c:if>
-                                            <c:if test="${!art.checkPur(sessionScope.user.getUsername())}">
-                                                <c:if test="${ art.isInCart(cart) }">
-                                                    <button class="btn btn-danger btn-sm col-sm-12 cart-btn remove-cart"
-                                                            value="${art.getId()},${art.getTitle()}">
-                                                        Remove from cart
-                                                    </button>
-                                                </c:if>
-                                                <c:if test="${ !art.isInCart(sessionScope.cart) }">
-                                                    <button 
-                                                        class="btn btn-success btn-sm col-sm-12 cart-btn add-cart" 
-                                                        value="${art.getId()},${art.getTitle()}">
-                                                        Add to cart
-                                                    </button>
-                                                </c:if>
-                                            </c:if>
-                                        </c:if>
-                                        <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
-                                                <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
-                                        </c:if>
+                                        <form action="${SITE_URL}/BuyPremium/?id=${art.getProduct_id()}" method="POST" > 
+                                            <button class="btn btn-success btn-sm col-sm-12">Buy</button> 
+                                        </form> 
                                     </ul>
                                 </div>
                             </div>
