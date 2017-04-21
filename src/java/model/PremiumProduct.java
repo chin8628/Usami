@@ -14,7 +14,19 @@ public class PremiumProduct {
     private int price;
     private int duration;
     private String product_id;
+    private String name;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
+    
+    
     public int getPrice() {
         return price;
     }
