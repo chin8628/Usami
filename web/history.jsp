@@ -41,7 +41,7 @@
                         <tbody>
                             <c:forEach var="art" items="${requestScope.artBuy}">
                                 <tr>
-                                    <td class="col-sm-2>
+                                    <td class="col-sm-2">
                                         <a href="${SITE_URL}/View/?id=${art.getId()}">
                                             <img
                                                 src="${SITE_URL}/asset/img/art/${art.getUrl()}"
