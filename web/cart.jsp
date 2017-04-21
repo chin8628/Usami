@@ -8,6 +8,7 @@
 <% if(cart == null) {cart = new ArrayList<Art>();} %>
 <%  int total = 0; for(Art art:cart) {total += art.getProduct().getPrice();} %>
 
+<div class="alert alert-warning" role="alert"><b>Ohh!</b> Your money is not enough to purchase. Please add more money to your <a href="${SITE_URL}/Pocket">Pocket.</a></div>
 
 <div class="panel panel-default">
     <div class="panel-heading"><h2>Cart</h2></div>
