@@ -14,8 +14,11 @@
                     <img src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}" class="img-responsive thumbnail">
                 </div>
                 <div class="col-sm-12 col-xs-7">
-                    <p><strong>${sessionScope.profile.getFirst_name()} ${sessionScope.profile.getLast_name()}</strong></p>
-                    <p><span class="label label-default">Standard User</span></p>
+                    <p>
+                        <strong>${sessionScope.profile.getFirst_name()} ${sessionScope.profile.getLast_name()}</strong>
+                    </p>
+                    <p><span class="label label-default">Standard creator</span></p>
+                    <p><span class="label label-warning">Premium creator</span></p>
                 </div>
             </div>
             <div class="row">
@@ -79,9 +82,6 @@
                         </a>
                     </div>
                 </c:forEach>
-            </div>
-            <div class="col-sm-12 text-right">
-                <a href="${SITE_URL}/Gallery/?art=random">>> View more</a>
             </div>
         </div>
     </div>
