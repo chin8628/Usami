@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="col-sm-12">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid suscipit minus, impedit natus, ducimus nulla iure delectus. Et maxime blanditiis, possimus expedita. Esse, numquam, doloribus? Eius dicta, temporibus optio. Aut!</p>
+                    <p><%= art.getDesc() %> </p>
                 </div>
 
                 <!--Set Tag-->

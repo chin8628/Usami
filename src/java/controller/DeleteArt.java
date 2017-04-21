@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Art;
 
 /**
  *
@@ -49,6 +50,11 @@ public class DeleteArt extends HttpServlet {
             
             String appPath = request.getServletContext().getRealPath("");
             String savePath = appPath + "/asset/img/art";
+            
+            
+            Art art = new Art(conn, id);
+            art.setStatus(0);
+            art.updateArts();
             
             /*
             PreparedStatement pstmt;

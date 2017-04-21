@@ -26,6 +26,17 @@ public class Art {
     private String allTag;
     private int view;
     private Connection conn;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
+    
     
     
     private String buy_date;
@@ -138,6 +149,7 @@ public class Art {
                 this.upload_date = rs.getString("fupload_date");
                 this.userId = rs.getString("user_id");
                 this.view = rs.getInt("view");
+                this.status = rs.getInt("status");
             }
             
             pstmt = this.conn.prepareStatement("SELECT * FROM usami.Profile WHERE user_id = ?");
@@ -158,11 +170,12 @@ public class Art {
     
     public void updateArts() {
         try {
-            PreparedStatement pstmt = this.conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ?, view = ? WHERE image_id = ?");
+            PreparedStatement pstmt = this.conn.prepareStatement("UPDATE usami.Image SET image_name = ?, Image.desc = ?, view = ?, status = ? WHERE image_id = ?");
             pstmt.setString(1, this.title);
             pstmt.setString(2, this.desc);
             pstmt.setInt(3, this.view);
-            pstmt.setString(4, this.id);
+            pstmt.setInt(4, this.status);
+            pstmt.setString(5, this.id);
             pstmt.executeUpdate();
             
             product.update();

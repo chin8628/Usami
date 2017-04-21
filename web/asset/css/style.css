@@ -176,3 +176,7 @@ video#bgvid{
 #single-art {
     max-height: 90vh;
 }
+
+.avatar-img {
+    max-height: 100px;
+}

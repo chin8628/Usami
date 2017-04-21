@@ -11,7 +11,7 @@
 
 <div class="jumbotron" style="margin-top: 5vh;">
   <h1>Something went wrong!</h1>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel, quod!</p>
+  <p><%= (String)request.getAttribute("message") %></p>
   <p><a class="btn btn-success btn-lg" href="${SITE_URL}" role="button">Back to home</a></p>
 </div>
 

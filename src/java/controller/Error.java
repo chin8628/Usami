@@ -5,26 +5,21 @@
  */
 package controller;
 
-import static model.Hash.hashPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Profiles;
-import model.User;
 
 /**
  *
- * @author bellkung
+ * @author frostnoxia
  */
-@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
-public class SignUp extends HttpServlet {
+@WebServlet(name = "Error", urlPatterns = {"/Error/"})
+public class Error extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,40 +34,26 @@ public class SignUp extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String[] fullname = request.getParameter("fullname").split("\\s+");
-            String firstname = fullname[0];
-            String lastname = "";
-            if (fullname.length == 2) {
-                lastname = fullname[1];
-            }
-            String username = request.getParameter("username");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
+            /* TODO output your page here. You may use following sample code. */
             
-            ServletContext ctx = getServletContext();
-            Connection conn = (Connection) ctx.getAttribute("connection");
-        
-            try {
-                User user = new User(username);
-                user.setPassword(password);
-                user.setEmail(email);
-                user.setCoin(0);
-                user.setExp_date("2013-09-04 13:30:00");
-                user.setU_type("STD");
-                user.addNewUser(conn);
-                
-                Profiles profile = new Profiles();
-                profile.setUsername(username);
-                profile.setFirst_name(firstname);
-                profile.setLast_name(lastname);
-                profile.setUrl_image("profile-placeholder.jpg");
-                profile.addNewProfile(conn);
-                
-                response.sendRedirect("/Usami/?signup=failed");
-                return;
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+            String text = request.getParameter("id");
+            int error = Integer.parseInt(text);
+            
+            if(error == 404) {
+                text = "This art does not existed or deleted";
+            } else {
+                text = "Unknown Error";
+            }
+            
+            
+            
+            RequestDispatcher obj = request.getRequestDispatcher("/non-auth/error.jsp");
+            request.setAttribute("message", text);
+            obj.forward(request, response);
+            
+            
+            
+            
         }
     }
 

@@ -59,6 +59,12 @@ public class View extends HttpServlet {
             ResultSet rs;
             
             Art art = new Art(conn, request.getParameter("id"));
+            
+            if(art.getStatus() != 1) {
+                response.sendRedirect("/Usami/Error/?id=404");
+                return;
+            }
+            
             art.setView(art.getView()+1);
             
             art.updateArts();
@@ -77,7 +83,6 @@ public class View extends HttpServlet {
             
             if (rs.next()){
                 art = new Art(conn, rs.getString("image_id"));
-                
                 profile = new Profiles(conn, rs.getString("user_id"));
  
             }

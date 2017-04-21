@@ -41,9 +41,13 @@
                         <tbody>
                             <c:forEach var="art" items="${requestScope.artBuy}">
                                 <tr>
-                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">
-                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" alt="" class="img-responsive"></td>
+                                    <td>
+                                        <a href="${SITE_URL}/View/?id=${art.getId()}">
+                                            <img
+                                                src="${SITE_URL}/asset/img/art/${art.getUrl()}"
+                                                class="img-responsive">
                                         </a>
+                                    </td>
                                     <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
                                     <td><a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">${art.getFullname()}</td>
                                     <td>$${art.getPrice()}</td>
@@ -54,7 +58,7 @@
                     </table>
                 </div>
             </div>
-            
+
             <!--Arts Income History-->
             <div role="tabpanel" class="tab-pane" id="history-income">
                 <div class="table-responsive">
@@ -71,11 +75,19 @@
                         <tbody>
                             <c:forEach var="art" items="${requestScope.artIncome}">
                                 <tr>
-                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">
-                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" alt="" class="img-responsive"></td>
+                                    <td>
+                                        <a href="${SITE_URL}/View/?id=${art.getId()}">
+                                            <img
+                                                src="${SITE_URL}/asset/img/art/${art.getUrl()}"
+                                                alt=""
+                                                class="img-responsive">
                                         </a>
                                     <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
-                                    <td><a href="${SITE_URL}/ViewProfile/?id=${art.getCustomerId()}">${art.getCustomerName()}</td>
+                                    <td>
+                                        <a href="${SITE_URL}/ViewProfile/?id=${art.getCustomerId()}">
+                                            ${art.getCustomerName()}
+                                        </a>
+                                    </td>
                                     <td>$${art.getPrice()}</td>
                                     <td>${art.getBuy_date()}</td>
                                 </tr>
@@ -84,7 +96,7 @@
                     </table>
                 </div>
             </div>
-                                
+
             <!--            ArtUpload                   -->
             <div role="tabpanel" class="tab-pane" id="history-upload">
                 <div class="table-responsive">
@@ -99,9 +111,14 @@
                         <tbody>
                             <c:forEach var="art" items="${requestScope.artUpload}">
                                 <tr>
-                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">
-                                            <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" alt="" class="img-responsive">
-                                    </a></td>
+                                    <td>
+                                        <a href="${SITE_URL}/View/?id=${art.getId()}">
+                                            <img
+                                                src="${SITE_URL}/asset/img/art/${art.getUrl()}"
+                                                alt=""
+                                                class="img-responsive">
+                                        </a>
+                                    </td>
                                     <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
                                     <td>${art.getUpload_date()}</td>
                                 </tr>
@@ -110,8 +127,8 @@
                     </table>
                 </div>
             </div>
-                                
-            <!--            My Comment                    -->
+
+            <!--  My Comment  -->
             <div role="tabpanel" class="tab-pane" id="history-comment">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="comment-table">
@@ -127,18 +144,27 @@
                         <tbody>
                             <c:forEach var="comm" items="${requestScope.myComm}">
                                 <tr>
-                                    <td><a href="${SITE_URL}/View/?id=${comm.getImage_id()}">
-                                            <img src="${SITE_URL}/asset/img/art/${comm.getUrl_image()}" alt="" class="img-responsive">
-                                        </a></td>
-                                    <td><a href="${SITE_URL}/View/?id=${comm.getImage_id()}">${comm.getTitle()}</a></td>
-                                    <td><a href="${SITE_URL}/ViewProfile/?id=${comm.getUsername()}">
-                                        ${comm.getFirst_name()} ${comm.getLast_name()}
-                                        </a></td>
+                                    <td>
+                                        <a href="${SITE_URL}/View/?id=${comm.getImage_id()}">
+                                            <img
+                                                src="${SITE_URL}/asset/img/art/${comm.getUrl_image()}"
+                                                alt=""
+                                                class="img-responsive">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="${SITE_URL}/View/?id=${comm.getImage_id()}">${comm.getTitle()}</a>
+                                    </td>
+                                    <td>
+                                        <a href="${SITE_URL}/ViewProfile/?id=${comm.getUsername()}">
+                                            ${comm.getFirst_name()} ${comm.getLast_name()}
+                                        </a>
+                                    </td>
                                     <td>${comm.getText()}</td>
                                     <td>${comm.getComm_date()}</td>
                                 </tr>
                             </c:forEach>
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -152,9 +178,9 @@
     /* Manage table */
     $(document).ready(function(){
         $('#purchase-table').DataTable();
-        // $('#income-table').DataTable();
-        // $('#upload-table').DataTable();
-        // $('#comment-table').DataTable();
+        $('#income-table').DataTable();
+        $('#upload-table').DataTable();
+        $('#comment-table').DataTable();
     });
 </script>
 
