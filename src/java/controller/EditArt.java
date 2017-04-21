@@ -94,7 +94,7 @@ public class EditArt extends HttpServlet {
             
             // Edit Tag
             for (String tag: allTag) {
-                ArtTag artTag = new ArtTag(conn, tag);
+                ArtTag artTag = new ArtTag(conn, tag.toLowerCase());
                 if (artTag.getTag_id() == 0) {
                     artTag.insertTag();
                 }

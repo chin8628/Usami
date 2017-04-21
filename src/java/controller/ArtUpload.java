@@ -183,7 +183,7 @@ public class ArtUpload extends HttpServlet {
                 // Set Tag
                 String[] tags = request.getParameter("tags").split(",");
                 for (String tag: tags) {
-                    ArtTag artTag = new ArtTag(conn, tag);
+                    ArtTag artTag = new ArtTag(conn, tag.toLowerCase());
                     if (artTag.getTag_id() == 0) {
                         artTag.insertTag();
                     }
