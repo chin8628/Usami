@@ -49,15 +49,55 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Modal title</h4>
+                </button>Edit Profile</h4>
             </div>
             <div class="modal-body">
-                <p>One fine body&hellip;</p>
+                <form method="post" enctype="multipart/form-data" action="${SITE_URL}/EditProfile">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <span class="thumbnail">
+                              <img src="${SITE_URL}/asset/img/avatar-img/${sessionScope.profile.getUrl_image()}" class="img-responsive">
+                            </span>
+                        </div>
+                        <div class="col-sm-9">
+                            <label for="avatar">Avatar Image</label>
+                            <input type="file" class="form-control" id="avatar" name="avatar">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" disabled="disabled" value="${sessionScope.profile.username}">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname">First Name</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname" value="${sessionScope.profile.first_name}">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" value="${sessionScope.profile.last_name}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">***Old-Password</label>
+                        <input type="password" class="form-control" id="old-password" placeholder="Old-Password" name="old-password">
+                    </div>
+                    <div class="form-group">
+                        <label for="re-password">New-Password</label>
+                        <input type="password" class="form-control" id="new-password" placeholder="New-type Password" name="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label for="re-password">Re-Password</label>
+                        <input type="password" class="form-control" id="re-password" placeholder="Re-type Password" name="re-password">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-danger">Delete Account</button>
+                <button type="button" class="btn btn-primary">Update</button>
             </div>
         </div>
     </div>
