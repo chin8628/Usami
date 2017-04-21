@@ -68,7 +68,7 @@ public class SignUp extends HttpServlet {
                 profile.setUrl_image("profile-placeholder.jpg");
                 profile.addNewProfile(conn);
                 
-                response.sendRedirect("/Usami/?signup=failed");
+                response.sendRedirect("/Usami/?signup=success");
                 return;
                 } catch (SQLException ex) {
                     ex.printStackTrace();
