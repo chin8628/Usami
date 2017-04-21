@@ -68,8 +68,8 @@
                                                     </button>
                                                 </c:if>
                                                 <c:if test="${ !art.isInCart(sessionScope.cart) }">
-                                                    <button 
-                                                        class="btn btn-success btn-sm col-sm-12 cart-btn add-cart" 
+                                                    <button
+                                                        class="btn btn-success btn-sm col-sm-12 cart-btn add-cart"
                                                         value="${art.getId()},${art.getTitle()}">
                                                         Add to cart
                                                     </button>
@@ -107,12 +107,15 @@
                                                     <strong>${art.getName()}</strong>
                                                 </p>
                                             </div>
+                                        </a>
                                         <div class="price">
                                             <p>${art.getPrice()} <small>coin</small></p>
                                         </div>
-                                        <form action="${SITE_URL}/BuyPremium/?id=${art.getProduct_id()}" method="POST" > 
-                                            <button class="btn btn-success btn-sm col-sm-12">Buy</button> 
-                                        </form> 
+                                        <form
+                                            action="${SITE_URL}/BuyPremium/?id=${art.getProduct_id()}"
+                                            method="POST" >
+                                            <button class="btn btn-success btn-sm col-sm-12">Buy</button>
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
@@ -141,7 +144,7 @@
                 $('.grid').isotope();
             });
         });
-        
+
         // Cart Button
         $('.cart-btn').click(function() {
             text = $(this).val();
@@ -149,15 +152,15 @@
             id = text[0];
             title = text[1];
             btn = this;
-            if ($(this).hasClass('add-cart')) { 
-                
+            if ($(this).hasClass('add-cart')) {
+
                 $.ajax({
                     url: "${SITE_URL}/AddToCart/?id="+id+"&origin=${SITE_URL}/Market",
                     success: function(result){
                         if ($.trim(result) === "ok") {
                             $(btn).removeClass( "btn-success" ).addClass("btn-danger").text('Remove from cart').removeClass('add-cart').addClass('remove-cart');
                             alertify.success("Added <strong>"+title+"</strong> to <strong>cart</strong>");
-                            
+
                         }
                     }
                 });
@@ -169,7 +172,7 @@
                         if ($.trim(result) === "ok") {
                             $(btn).removeClass( "btn-danger" ).addClass("btn-success").text('Add to cart').removeClass('remove-cart').addClass('add-cart');
                             alertify.error("Removed <strong>"+title+"</strong> from <strong>cart</strong>");
-                            
+
                         }
                     }
                 });

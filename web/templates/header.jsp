@@ -24,6 +24,7 @@
     <script src="${SITE_URL}/asset/js/Chart.min.js"></script>
     <script src="${SITE_URL}/asset/js/jquery.tagsinput.min.js"></script>
     <script src="${SITE_URL}/asset/js/isotope.pkgd.min.js"></script>
+    <script src="${SITE_URL}/asset/js/jquery.dotdotdot.min.js"></script>
     <script src="${SITE_URL}/asset/js/script.js"></script>
 
 

@@ -180,3 +180,11 @@ video#bgvid{
 .avatar-img {
     max-height: 100px;
 }
+
+.image-search {
+    max-height: 100px;
+}
+
+.search-item{
+    height: 100px;
+}
