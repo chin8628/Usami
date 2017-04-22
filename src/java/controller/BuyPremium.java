@@ -62,7 +62,7 @@ public class BuyPremium extends HttpServlet {
                 if(user.getCoin() < price) {
                     //not enough coin
                     return;
-                } else {
+                } else if(!user.getU_type().equals("ADM")){
                     user.setCoin(user.getCoin() - price);
                     Timestamp time = user.getExp_date();
                     Timestamp curtime = new Timestamp(System.currentTimeMillis());
