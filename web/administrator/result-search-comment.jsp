@@ -59,16 +59,19 @@
                 <h4 class="modal-title">Update comment</h4>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="post" id="update-comm-${comm.getId()}" action="${SITE_URL}/AdminEditComment/">
                     <div class="form-group">
                         <label for="comment">Comment</label>
-                        <textarea class="form-control" rows="7" id="comment">${comm.getText()}</textarea>
+                        <input type="texte" value="${comm.getUsername()}" name="username">
+                        <input type="hidden" value="${comm.getImage_id()}" name="image_id">
+                        <input type="hidden" value="${comm.getComm_date().getTime()}" name="comm_date">
+                        <textarea class="form-control" rows="7" id="comment" name="text">${comm.getText()}</textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger">Delete</button>
-                <button type="submit" class="btn btn-default">Update</button>
+                <button type="submit" class="btn btn-default" form="update-comm-${comm.getId()}">Update</button>
             </div>
         </div>
     </div>

@@ -92,6 +92,7 @@ public class CommentModel {
     }
 
     public void setComm_date(Timestamp comm_date) {
+
         this.comm_date = comm_date;
     }
     

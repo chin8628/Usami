@@ -62,7 +62,7 @@
                 </button>Edit Profile</h4>
             </div>
             <div class="modal-body">
-                <form method="post" enctype="multipart/form-data" action="${SITE_URL}/AdminEditProfile">
+                <form method="post" id="pedit-${user.getUsername()}" enctype="multipart/form-data" action="${SITE_URL}/AdminEditProfile/">
                     <div class="form-group row">
                         <div class="col-sm-3">
                             <span class="thumbnail">
@@ -76,7 +76,8 @@
                     </div>
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" disabled="disabled" value="${user.getProfile().username}">
+                        <input type="text" class="form-control"  disabled="disabled" value="${user.getProfile().username}">
+                        <input type="hidden" class="form-control" id="username" name="username" value="${user.getProfile().username}">
                     </div>
                     <div class="form-group">
                         <label for="firstname">First Name</label>
@@ -102,7 +103,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger">Delete Account</button>
-                <button type="button" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary" form="pedit-${user.getUsername()}">Update</button>
             </div>
         </div>
     </div>

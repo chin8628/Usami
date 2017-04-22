@@ -78,11 +78,16 @@ public class User {
         pstmt.executeUpdate();
     }
     
-    public void changeEmail(Connection conn) throws SQLException {
-        PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.User SET email = ? WHERE user_id = ?");
-        pstmt.setString(1, email);
-        pstmt.setString(2, username);
-        pstmt.executeUpdate();
+    public void changeEmail(Connection conn) {
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.User SET email = ? WHERE user_id = ?");
+            pstmt.setString(1, email);
+            pstmt.setString(2, username);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
     }
     
     public void changePassword(Connection conn) throws SQLException {
@@ -105,18 +110,6 @@ public class User {
     }
 
     public String getUsername() {
-        
-        Timestamp time = exp_date;
-        Timestamp curtime = new Timestamp(System.currentTimeMillis());
-        if(time.before(curtime) && u_type.equals("PRM")) {
-            u_type = "STD";
-        }
-        try {
-            updatePremium(conn);
-        } catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         return username;
     }
 

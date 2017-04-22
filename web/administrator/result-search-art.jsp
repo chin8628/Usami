@@ -61,6 +61,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <form method="post" action="${SITE_URL}/EditArt">
+                        <input type="text" value="" name="key" hidden="true">
                         <input type="hidden"  value="${art.getId()}" name="id">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
