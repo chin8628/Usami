@@ -88,7 +88,7 @@ public class Market extends HttpServlet {
                 temp.setProduct_id(text);
                 temp.setPrice(rs.getInt("price"));
                 temp.setDuration(Integer.parseInt(text.substring(3)));
-                temp.setName("Premium Accound - " + text.substring(3) + " Days");
+                temp.setName("Premium Account - " + text.substring(3) + " Days");
                 
                 allPrm.add(temp);
             }
