@@ -56,6 +56,8 @@ public class ViewProfile extends HttpServlet {
             
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
+            user = new User(conn, user.getUsername());
+            session.setAttribute("user", user);
             
             User userInPage = new User(conn, id);
             Profiles profileInPage = new Profiles(conn, id);
