@@ -36,8 +36,8 @@
                         <p><span class="label label-warning">Premium creator</span></p>
                     </c:otherwise>
                 </c:choose>
-
-                <c:if test="${requestScope.user.getUsername() == sessionScope.user.getUsername()}">
+                
+                <c:if test="${(requestScope.user.getUsername() == sessionScope.user.getUsername()) && sessionScope.user.getU_type() != 'STD'}">
                     <p>Valid until: ${sessionScope.user.getFexp_date()}</p>
                 </c:if>
 

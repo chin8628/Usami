@@ -45,8 +45,8 @@ public class BuyPremium extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            HttpSession se = request.getSession();
-            User user = (User) se.getAttribute("user");
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
@@ -70,16 +70,18 @@ public class BuyPremium extends HttpServlet {
                         time = curtime;
                     }
                     
-                    time.setTime(time.getTime() + 2592000);
+                    time.setTime(time.getTime()+2592000000l);
                     user.setU_type("PRM");
                     user.setExp_date(time);
                     
                     user.UpdatePremium(conn);
+                    session.setAttribute("user", user);
                 }
                 
             }
             
             //completed
+            
             response.sendRedirect("/Usami/Market#special");
             return;
             

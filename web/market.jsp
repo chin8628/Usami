@@ -89,6 +89,7 @@
             </div>
         </div>
 
+        <!--Special-->
         <div class="col-sm-10 tab-pane" id="special" role="tabpanel">
             <div class="grid">
                 <c:if test="${requestScope.allPrm != null}">
@@ -111,11 +112,9 @@
                                         <div class="price">
                                             <p>${art.getPrice()} <small>coin</small></p>
                                         </div>
-                                        <form
-                                            action="${SITE_URL}/BuyPremium/?id=${art.getProduct_id()}"
-                                            method="POST" >
-                                            <button class="btn btn-success btn-sm col-sm-12">Buy</button>
-                                        </form>
+                                        
+                                        <!--Buy Premium-->
+                                        <button class="btn btn-success btn-sm col-sm-12" id="buy" value="${art.getProduct_id()}">Buy</button>
                                     </ul>
                                 </div>
                             </div>
@@ -177,6 +176,28 @@
                     }
                 });
             }
+        });
+        
+        // Buy Button
+        $("#buy").click(function() {
+            pro_id = $(this).val();
+            alertify.confirm("<h4>Premium Privilage </h4> \n\
+                - Permission to sell your art on the marketplace. <br> \n\
+                - Download free art at the original size. <br> \n\
+                - Ads-free browsing", function () {
+                alertify.success("Purchase Successful");
+                    $.ajax({
+                        url: "${SITE_URL}/BuyPremium/?id="+pro_id,
+                        success: function(){
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        }
+                    });
+            }, function() {
+                alertify.error("Purchase Cancled");
+            });
+            
         });
     });
 </script>
