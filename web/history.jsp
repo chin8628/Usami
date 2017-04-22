@@ -48,9 +48,13 @@
                                                 class="img-responsive image-art-thumbnail">
                                         </a>
                                     </td>
-                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
-                                    <td><a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">${art.getFullname()}</td>
-                                    <td>$${art.getPrice()}</td>
+                                    <td class="col-sm-4">
+                                        <a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a>
+                                    </td>
+                                    <td class="col-sm-4">
+                                        <a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">${art.getFullname
+                                    ()}</td>
+                                    <td class="col-sm-1">$${art.getPrice()}</td>
                                     <td>${art.getBuy_date()}</td>
                                 </tr>
                             </c:forEach>
@@ -82,13 +86,15 @@
                                                 alt=""
                                                 class="img-responsive image-art-thumbnail">
                                         </a>
-                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
-                                    <td>
+                                    <td class="col-sm-4">
+                                        <a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a>
+                                    </td>
+                                    <td class="col-sm-4">
                                         <a href="${SITE_URL}/ViewProfile/?id=${art.getCustomerId()}">
                                             ${art.getCustomerName()}
                                         </a>
                                     </td>
-                                    <td>$${art.getPrice()}</td>
+                                    <td class="col-sm-1">$${art.getPrice()}</td>
                                     <td>${art.getBuy_date()}</td>
                                 </tr>
                             </c:forEach>
@@ -97,7 +103,7 @@
                 </div>
             </div>
 
-            <!--            ArtUpload                   -->
+            <!-- ArtUpload  -->
             <div role="tabpanel" class="tab-pane" id="history-upload">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="upload-table">
@@ -117,8 +123,10 @@
                                                 src="${SITE_URL}/asset/img/art/${art.getUrl()}"
                                                 class="img-responsive image-art-thumbnail">
                                         </a>
+                                    </td class="col-sm-8">
+                                    <td class="col-sm-2">
+                                        <a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a>
                                     </td>
-                                    <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
                                     <td>${art.getUpload_date()}</td>
                                 </tr>
                             </c:forEach>
@@ -150,15 +158,15 @@
                                                 class="img-responsive image-art-thumbnail">
                                         </a>
                                     </td>
-                                    <td>
+                                    <td  class="col-sm-3">
                                         <a href="${SITE_URL}/View/?id=${comm.getImage_id()}">${comm.getTitle()}</a>
                                     </td>
-                                    <td>
+                                    <td class="col-sm-2">
                                         <a href="${SITE_URL}/ViewProfile/?id=${comm.getUsername()}">
                                             ${comm.getFirst_name()} ${comm.getLast_name()}
                                         </a>
                                     </td>
-                                    <td>${comm.getText()}</td>
+                                    <td class="col-sm-5">${comm.getText()}</td>
                                     <td>${comm.getComm_date()}</td>
                                 </tr>
                             </c:forEach>
