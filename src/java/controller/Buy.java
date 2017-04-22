@@ -68,7 +68,7 @@ public class Buy extends HttpServlet {
                 //insufficient coin
                 request.setAttribute("code", "coin");
                 request.setAttribute("message", "Insufficient Coin");
-                request.setAttribute("mtype", "fail");
+                request.setAttribute("mtype", "failed");
                 response.sendRedirect("/Usami/cart.jsp");
                 out.println("Insufficient coin");
                 return;
@@ -96,6 +96,7 @@ public class Buy extends HttpServlet {
                 
                 session.setAttribute("cart", cart);
                 session.setAttribute("total", total);
+                request.setAttribute("mtype", "success");
                 
                 request.setAttribute("message", "Transaction Completed");
                 request.setAttribute("mtype", "pass");
