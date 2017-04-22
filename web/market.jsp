@@ -44,13 +44,13 @@
                                                 <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive center-block">
                                             </p>
                                             <div class="title">
-                                                <p>
-                                                    <strong>${art.getTitle()}</strong>
-                                                </p>
+                                                <strong>${art.getTitle()}</strong>
                                             </div>
                                         </a>
                                         <a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">
-                                            <p>${art.getFullname()}</p>
+                                            <div class="title">
+                                                <strong>${art.getFullname()}</strong>
+                                            </div>
                                         </a>
                                         <div class="price">
                                             <p>${art.getPrice()} <small>coin</small></p>
@@ -104,9 +104,7 @@
                                                 <img src="${SITE_URL}/asset/img/${art.getProduct_id()}.png" class="img-responsive center-block">
                                             </p>
                                             <div class="title">
-                                                <p>
-                                                    <strong>${art.getName()}</strong>
-                                                </p>
+                                                <strong>${art.getName()}</strong>
                                             </div>
                                         </a>
                                         <div class="price">

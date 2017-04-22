@@ -19,7 +19,9 @@
                         <div class="panel-body">
                             <ul class="nav nav-pills">
                                 <a href="${SITE_URL}/View/?id=${art.getId()}">
-                                    <p><img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive center-block"></p>
+                                    <p>
+                                        <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive center-block image-art-thumbnail">
+                                    </p>
                                     <div class="title">
                                         <p><strong>${art.getTitle()}</strong></p>
                                     </div>
@@ -60,7 +62,7 @@
                             <ul class="nav nav-pills">
                                 <a href="${SITE_URL}/View/?id=${art.getId()}">
                                     <p>
-                                        <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="img-responsive center-block">
+                                        <img src="${SITE_URL}/asset/img/art/${art.getUrl()}" class="image-art-thumbnail img-responsive center-block">
                                     </p>
                                     <div class="title">
                                         <p><strong>${art.getTitle()}</strong></p>
@@ -160,8 +162,8 @@
                 columnWidth: '.grid-sizer'
             }
         })
-        
-        
+
+
     });
 </script>
 

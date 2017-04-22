@@ -10,12 +10,12 @@
 
 <div class="panel panel-default">
     <div class="panel-body row" id="profile">
-        <div class="col-xs-4 col-sm-2 text-center">
+        <div class="col-xs-4 col-sm-3 text-center">
             <span class="thumbnail">
                 <img src="${SITE_URL}/asset/img/avatar-img/${requestScope.profile.getUrl_image()}" class="img-responsive avatar-img">
             </span>
         </div>
-        <div class="col-xs-8 col-sm-8" id="description">
+        <div class="col-xs-8 col-sm-7" id="description">
             <h3>${requestScope.user.getUsername()}</h3>
             <p>${requestScope.profile.getFirst_name()} ${requestScope.profile.getLast_name()}</p>
             <p>${requestScope.user.getEmail()}</p>
@@ -39,7 +39,7 @@
                         <p><span class="label label-warning">Premium creator</span></p>
                     </c:otherwise>
                 </c:choose>
-                
+
                 <c:if test="${(requestScope.user.getUsername() == sessionScope.user.getUsername()) && sessionScope.user.getU_type() != 'STD'}">
                     <p>Valid until: ${sessionScope.user.getFexp_date()}</p>
                 </c:if>
