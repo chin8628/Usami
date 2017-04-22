@@ -54,7 +54,7 @@
                                     <td class="col-sm-4">
                                         <a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">${art.getFullname
                                     ()}</td>
-                                    <td class="col-sm-1">$${art.getPrice()}</td>
+                                    <td class="col-sm-1">${art.getPrice()} coin</td>
                                     <td>${art.getBuy_date()}</td>
                                 </tr>
                             </c:forEach>
@@ -94,7 +94,7 @@
                                             ${art.getCustomerName()}
                                         </a>
                                     </td>
-                                    <td class="col-sm-1">$${art.getPrice()}</td>
+                                    <td class="col-sm-1">${art.getPrice()} coin</td>
                                     <td>${art.getBuy_date()}</td>
                                 </tr>
                             </c:forEach>

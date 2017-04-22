@@ -22,7 +22,7 @@
                         <a href="#art" aria-controls="art" role="tab" data-toggle="pill">Art</a>
                     </li>
                     <li role="presentation" id="special-btn">
-                        <a href="#special" aria-controls="special" role="tab" data-toggle="pill">Special</a>
+                        <a href="#special" aria-controls="special" role="tab" data-toggle="pill">Buy Premium</a>
                     </li>
                 </ul>
             </div>
@@ -108,11 +108,11 @@
                                             </div>
                                         </a>
                                         <div class="price">
-                                            <p>${art.getPrice()} <small>coin</small></p>
+                                            <p id="price">${art.getPrice()} <small>coin</small></p>
                                         </div>
                                         
                                         <!--Buy Premium-->
-                                        <button class="btn btn-success btn-sm col-sm-12" id="buy" value="${art.getProduct_id()}">Buy</button>
+                                        <button class="btn btn-success btn-sm col-sm-12" id="buy" value="${art.getProduct_id()},${art.getName()},${sessionScope.user.getCoin()},${art.getPrice()}">Buy</button>
                                     </ul>
                                 </div>
                             </div>
@@ -178,12 +178,21 @@
         
         // Buy Button
         $("#buy").click(function() {
-            pro_id = $(this).val();
-            alertify.confirm("<h4>Premium Privilage </h4> \n\
+            text = $(this).val().split(',');
+            pro_id = text[0];
+            title = text[1];
+            coin = parseInt(text[2]);
+            price = parseInt(text[3]);
+            
+            alertify.confirm("<h3><strong>"+title+"</strong></h3>\n\
+                <img src=\"${SITE_URL}/asset/img/"+pro_id+".png\" class=\"img-responsive center-block\"> \n\
+                <h4>Premium Privilage </h4> \n\
                 - Permission to sell your art on the marketplace. <br> \n\
                 - Download free art at the original size. <br> \n\
                 - Ads-free browsing", function () {
-                alertify.success("Purchase Successful");
+                
+                if (coin >= price) {
+                    alertify.success("Purchase Successful");
                     $.ajax({
                         url: "${SITE_URL}/BuyPremium/?id="+pro_id,
                         success: function(){
@@ -192,6 +201,15 @@
                             }, 1000);
                         }
                     });
+                } else {
+                    alertify.delay(3000).error("Your money is not enough to purchase. Please add more money to your <a href=\"${SITE_URL}/Pocket\">Pocket.</a>");
+                    $.ajax({
+                        url: "#",
+                        success: function(){
+                        }
+                    });
+                }
+                
             }, function() {
                 alertify.error("Purchase Cancled");
             });

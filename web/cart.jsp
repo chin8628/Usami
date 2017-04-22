@@ -8,8 +8,6 @@
 <% if(cart == null) {cart = new ArrayList<Art>();} %>
 <%  int total = 0; for(Art art:cart) {total += art.getProduct().getPrice();} %>
 
-<div class="alert alert-warning" role="alert"><b>Ohh!</b> Your money is not enough to purchase. Please add more money to your <a href="${SITE_URL}/Pocket">Pocket.</a></div>
-
 <div class="panel panel-default">
     <div class="panel-heading"><h2>Cart</h2></div>
     <div class="panel-body">
@@ -41,7 +39,7 @@
 
             <div class="col-sm-12 text-right">
                 <p id="total"><%= (int)total %> <small>coin</small></p>
-                <p><button class="btn btn-success btn-sm" id="buy">Buy</button></p>
+                <p><button class="btn btn-success btn-sm" id="buy" value="${sessionScope.user.getCoin()}" >Buy</button></p>
             </div>
         <% } else { %>
 
@@ -85,16 +83,27 @@
         
         // Buy Button
         $("#buy").click(function() {
+        coin = parseInt($(this).val());
             alertify.confirm("Confirm purchase?", function () {
-                alertify.success("Purchase Successful");
-                    $.ajax({
-                        url: "${SITE_URL}/Buy",
-                        success: function(){
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000);
-                        }
-                    });
+                    price = parseInt($('#total').text().split(' ')[0]);
+                    if (coin >= price) {
+                        alertify.success("Purchase Successful");
+                        $.ajax({
+                            url: "${SITE_URL}/Buy",
+                            success: function(){
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        });
+                    } else {
+                        alertify.delay(3000).error("Your money is not enough to purchase. Please add more money to your <a href=\"${SITE_URL}/Pocket\">Pocket.</a>");
+                        $.ajax({
+                            url: "#",
+                            success: function(){
+                            }
+                        });
+                    }
             }, function() {
                 alertify.error("Purchase Cancled");
             });
