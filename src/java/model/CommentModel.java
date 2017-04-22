@@ -49,6 +49,11 @@ public class CommentModel {
         }
         
     }
+    
+    public String getId(){
+    
+        return (image_id + "" + username + "" + comm_date).hashCode() + "";
+    }
 
     public String getUsername() {
         return username;

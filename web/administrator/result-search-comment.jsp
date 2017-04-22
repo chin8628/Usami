@@ -36,6 +36,7 @@
                             <button
                                 class="btn btn-default btn-sm"
                                 data-toggle="modal"
+                                data-target="#${comm.getId()}-modal"
                                 data-target="#modal">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </button>
@@ -47,8 +48,8 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+<c:forEach var="comm" items="${requestScope.allComm}">
+<div class="modal fade" tabindex="-1" role="dialog" id="${comm.getId()}-modal" aria-labelledby="${comm.getId()}-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -61,7 +62,7 @@
                 <form method="post">
                     <div class="form-group">
                         <label for="comment">Comment</label>
-                        <textarea class="form-control" rows="7" id="comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil minus, ab totam corrupti alias iusto. Omnis culpa, fugit, repudiandae deserunt voluptas aut nemo velit ullam error aliquid tempore accusamus, fuga.</textarea>
+                        <textarea class="form-control" rows="7" id="comment">${comm.getText()}</textarea>
                     </div>
                 </form>
             </div>
@@ -72,7 +73,7 @@
         </div>
     </div>
 </div>
-
+</c:forEach>
 <script>
     /* Manage table */
     $(document).ready(function(){
