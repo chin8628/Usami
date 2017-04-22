@@ -25,7 +25,7 @@
                         <td>${user.getUsername()}</td>
                         <td>
                             <a href="#">
-                                <img src="${SITE_URL}/asset/img/avatar-img/${user.getUsername()}" class="img-responsive avatar-art">
+                                <img src="${SITE_URL}/asset/img/avatar-img/${user.getProfile().getUrl_image()}" class="img-responsive avatar-art">
                             </a>
                         </td>
                         <td><a href="#">${user.getProfile().getFullname()}</a></td>

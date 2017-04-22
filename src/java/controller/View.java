@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,7 +102,7 @@ public class View extends HttpServlet {
                 comm.setImage_id(rs.getString("image_id"));
                 comm.setFirst_name(rs.getString("first_name"));
                 comm.setLast_name(rs.getString("last_name"));
-                comm.setComm_date(rs.getString("fcomm_date"));
+                comm.setComm_date(rs.getTimestamp("fcomm_date"));
                 comm.setText(rs.getString("text"));
                 comm.setUrl_image(rs.getString("profile_image"));
                 allComm.add(comm);

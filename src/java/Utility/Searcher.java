@@ -109,13 +109,14 @@ public class Searcher {
     
     public ArrayList<CommentModel> searchComment(String key){
     
-        sql = "SELECT * FROM usami.Comment JOIN usami.Image USING (image_id) JOIN usami.Profile USING (user_id) " +
-            "WHERE lower(image_name) like ? " +
-            "OR lower(first_name) like ? " +
-            "OR lower(last_name) like ? " +
-            "OR lower(CONCAT(first_name,' ', last_name)) like ? " +
-            "OR lower(image_id) like ? "
-                + "OR lower(text) like ?";
+        sql = "SELECT * FROM usami.Comment c JOIN usami.Image i USING (image_id) JOIN usami.Profile p ON (c.user_id = p.user_id) " +
+            "WHERE lower(i.image_name) like ? " +
+            "OR lower(p.first_name) like ? " +
+            "OR lower(p.last_name) like ? " +
+            "OR lower(p.user_id) like ? " +
+            "OR lower(CONCAT(p.first_name,' ', p.last_name)) like ? " +
+            "OR lower(c.image_id) like ? "
+                + "OR lower(c.text) like ?";
         
         
         try {
@@ -126,6 +127,7 @@ public class Searcher {
             pstmt.setString(4, "%" + key + "%");
             pstmt.setString(5, "%" + key + "%");
             pstmt.setString(6, "%" + key + "%");
+            pstmt.setString(7, "%" + key + "%");
             rs = pstmt.executeQuery();
         
             ArrayList<CommentModel> allCom = new ArrayList<CommentModel>();
@@ -133,7 +135,7 @@ public class Searcher {
             CommentModel temp;
             
             while(rs.next()) {
-                temp = new CommentModel();
+                temp = new CommentModel(conn, rs.getString("user_id"), rs.getString("image_id"), rs.getTimestamp("comm_date"));
                 allCom.add(temp);
             }
             

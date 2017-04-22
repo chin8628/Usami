@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Art;
+import model.CommentModel;
 import model.User;
 
 /**
@@ -69,6 +70,17 @@ public class AdminSearch extends HttpServlet {
                 
                 request.setAttribute("allUser", allUser);
                 RequestDispatcher obj = request.getRequestDispatcher("/administrator/result-search-creator.jsp");
+                obj.forward(request, response);
+                return;
+            }
+            
+            if(mode == 3) {
+                 ArrayList<CommentModel> allComm = searcher.searchComment(key);
+                
+                request.setAttribute("allComm", allComm);
+                RequestDispatcher obj = request.getRequestDispatcher("/administrator/result-search-comment.jsp");
+                
+                
                 obj.forward(request, response);
                 return;
             }
