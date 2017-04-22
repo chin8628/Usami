@@ -22,9 +22,12 @@
             <li role="presentation">
                 <a href="#history-comment" aria-controls="history-comment" role="tab" data-toggle="tab">Comment</a>
             </li>
+            <li role="presentation">
+                <a href="#history-addmoney" aria-controls="history-addmoney" role="tab" data-toggle="tab">Add Money</a>
+            </li>
         </ul>
 
-        <!--        Buy Arts History-->
+        <!-- Buy Arts History -->
         <div class="tab-content tab-content-custom">
             <div role="tabpanel" class="tab-pane active" id="history-purchase">
                 <div class="table-responsive">
@@ -35,7 +38,7 @@
                                 <th class="col-sm-4">Art</th>
                                 <th class="col-sm-4">Creator</th>
                                 <th class="col-sm-1">Price</th>
-                                <th>Date</th>
+                                <th class="col-sm-1">Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,10 +55,12 @@
                                         <a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a>
                                     </td>
                                     <td class="col-sm-4">
-                                        <a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">${art.getFullname
-                                    ()}</td>
+                                        <a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">
+                                            ${art.getFullname()}
+                                        </a>
+                                    </td>
                                     <td class="col-sm-1">${art.getPrice()} coin</td>
-                                    <td>${art.getBuy_date()}</td>
+                                    <td class="col-sm-1">${art.getBuy_date()}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -73,7 +78,7 @@
                                 <th class="col-sm-4">Art</th>
                                 <th class="col-sm-4">Buy by</th>
                                 <th class="col-sm-1">Price</th>
-                                <th>Date</th>
+                                <th class="col-sm-1">Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,6 +91,7 @@
                                                 alt=""
                                                 class="img-responsive image-art-thumbnail">
                                         </a>
+                                    </td>
                                     <td class="col-sm-4">
                                         <a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a>
                                     </td>
@@ -95,7 +101,7 @@
                                         </a>
                                     </td>
                                     <td class="col-sm-1">${art.getPrice()} coin</td>
-                                    <td>${art.getBuy_date()}</td>
+                                    <td class="col-sm-1">${art.getBuy_date()}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -110,8 +116,8 @@
                         <thead>
                             <tr>
                                 <th class="col-sm-2"></th>
-                                <th class="col-sm-8">Art</th>
-                                <th class="col-sm-2">Date</th>
+                                <th class="col-sm-9">Art</th>
+                                <th class="col-sm-1">Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,11 +129,11 @@
                                                 src="${SITE_URL}/asset/img/art/${art.getUrl()}"
                                                 class="img-responsive image-art-thumbnail">
                                         </a>
-                                    </td class="col-sm-8">
-                                    <td class="col-sm-2">
+                                    </td>
+                                    <td class="col-sm-9">
                                         <a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a>
                                     </td>
-                                    <td>${art.getUpload_date()}</td>
+                                    <td class="col-sm-1">${art.getUpload_date()}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -144,8 +150,8 @@
                                 <th class="col-sm-2"></th>
                                 <th class="col-sm-3">Art</th>
                                 <th class="col-sm-2">Creator</th>
-                                <th class="col-sm-5">Comment</th>
-                                <th>Date</th>
+                                <th class="col-sm-4">Comment</th>
+                                <th class="col-sm-1">Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -166,8 +172,8 @@
                                             ${comm.getFirst_name()} ${comm.getLast_name()}
                                         </a>
                                     </td>
-                                    <td class="col-sm-5">${comm.getText()}</td>
-                                    <td>${comm.getFcomm_date()}</td>
+                                    <td class="col-sm-4">${comm.getText()}</td>
+                                    <td class="col-sm-1">${comm.getFcomm_date()}</td>
                                 </tr>
                             </c:forEach>
 
@@ -175,8 +181,37 @@
                     </table>
                 </div>
             </div>
-        </div>
 
+            <!--  My addmoney  -->
+            <div role="tabpanel" class="tab-pane" id="history-addmoney">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="addmoney-table">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-2">ID</th>
+                                <th class="col-sm-4">Money Amount</th>
+                                <th class="col-sm-4">Coin Amount</th>
+                                <th class="col-sm-2">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-sm-2">
+                                    lorem
+                                </td>
+                                <td  class="col-sm-4">
+                                    lorem
+                                </td>
+                                <td class="col-sm-4">
+                                    lorem
+                                </td>
+                                <td class="col-sm-2">99/99/9999</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -187,6 +222,7 @@
         $('#income-table').DataTable();
         $('#upload-table').DataTable();
         $('#comment-table').DataTable();
+        $('#addmoney-table').DataTable();
     });
 </script>
 
