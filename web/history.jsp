@@ -167,7 +167,7 @@
                                         </a>
                                     </td>
                                     <td class="col-sm-5">${comm.getText()}</td>
-                                    <td>${comm.getComm_date()}</td>
+                                    <td>${comm.getFcomm_date()}</td>
                                 </tr>
                             </c:forEach>
 

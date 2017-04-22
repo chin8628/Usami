@@ -183,7 +183,7 @@
                                                 <img class="media-object image-search" src="${SITE_URL}/asset/img/avatar-img/<%=comm.getUrl_image()%>">
                                             </div>
                                             <div class="media-body">
-                                                <p><a href="${SITE_URL}/ViewProfile/?id=<%= comm.getUsername() %>"><%= comm.getFirst_name() %> <%= comm.getLast_name() %></a> <small><%= comm.getComm_date() %></small></p>
+                                                <p><a href="${SITE_URL}/ViewProfile/?id=<%= comm.getUsername() %>"><%= comm.getFirst_name() %> <%= comm.getLast_name() %></a> <small><%= comm.getFcomm_date() %></small></p>
                                                 <p><%= comm.getText() %></p>
                                             </div>
                                             <hr>
