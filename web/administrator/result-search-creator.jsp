@@ -3,7 +3,7 @@
 <jsp:include page="../templates/header.jsp" />
 
 <div class="page-header">
-    <h1>Result search art</h1>
+    <h1>Result search user</h1>
 </div>
 
 <div class="panel-default panel">
@@ -15,7 +15,7 @@
                         <th class="col-md-1">ID</th>
                         <th class="col-md-1"></th>
                         <th>Creator</th>
-                        <!--<th>Signup Date</th>-->
+                        <th>Coin</th>
                         <th class="col-sm-1">Action</th>
                     </tr>
                 </thead>
@@ -29,7 +29,7 @@
                             </a>
                         </td>
                         <td><a href="#">${user.getProfile().getFullname()}</a></td>
-                        <!--<td>12-04-1023</td>-->
+                        <td>${user.getCoin()}</td>
                         <td class="text-center">
                             <button
                                 class="btn btn-default btn-sm"

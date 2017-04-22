@@ -33,6 +33,8 @@ public class User {
     }
 
     public User(Connection conn, String username) throws SQLException {
+        
+        this.conn = conn;
         PreparedStatement pstmt = conn.prepareStatement("SELECT user_id, password, email, coin, exp_date, u_type FROM usami.User WHERE user_id = ?");
         pstmt.setString(1, username);
         ResultSet rs = pstmt.executeQuery();
