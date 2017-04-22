@@ -60,6 +60,7 @@ public class Searcher {
             
             while(rs.next()) {
                 temp = new Art(conn, rs.getString("image_id"));
+                temp.getCurrentTags();
                 allArt.add(temp);
             }
             
