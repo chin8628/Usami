@@ -105,7 +105,7 @@
                                 <label for="tags">Tags (Seperate each tag by comma)</label>
                                 <input type="tags" class="form-control" id="${art.getId()}-tags" name="tags" value="${art.getAllTag()}">
                             </div>
-                            <% if(user.getU_type().equals("prm")) { %>
+                            <% if(user.getU_type().equals("PRM")) { %>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" id="${art.getId()}-sell" name="sell"> Do you want to sell this art?

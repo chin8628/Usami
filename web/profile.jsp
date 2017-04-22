@@ -32,6 +32,9 @@
                     <c:when test="${requestScope.user.getU_type() == 'STD'}">
                         <p><span class="label label-default">Standard creator</span></p>
                     </c:when>
+                    <c:when test="${requestScope.user.getU_type() == 'ADM'}">
+                        <p><span class="label label-primary">Administrator</span></p>
+                    </c:when>
                     <c:otherwise>
                         <p><span class="label label-warning">Premium creator</span></p>
                     </c:otherwise>

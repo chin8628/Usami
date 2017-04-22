@@ -63,7 +63,7 @@
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                         </a>
                     </li>
-                    <c:if test="${sessionScope.user.getU_type().equals('adm')}">
+                    <c:if test="${sessionScope.user.getU_type().equals('ADM')}">
                     <li><a href="${SITE_URL}/administrator/index.jsp">Admin</a></li>
                     </c:if>
                     <li><a href="${SITE_URL}/cart.jsp">Cart</a></li>
