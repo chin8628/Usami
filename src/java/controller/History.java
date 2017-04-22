@@ -75,7 +75,7 @@ public class History extends HttpServlet {
                     comm.setImage_id(rs.getString("image_id"));
                     comm.setUrl_image(rs.getString("i.image_url"));
                     comm.setText(rs.getString("c.text"));
-                    comm.setComm_date(rs.getTimestamp("fcomm_date"));
+                    comm.setFcomm_date(rs.getString("fcomm_date"));
                     comm.setTitle(rs.getString("i.image_name"));
                     comm.setFirst_name(own_art.getFirst_name());
                     comm.setLast_name(own_art.getLast_name()); 
