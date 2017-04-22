@@ -106,6 +106,7 @@ public class View extends HttpServlet {
                 comm.setFirst_name(rs.getString("first_name"));
                 comm.setLast_name(rs.getString("last_name"));
                 comm.setComm_date(rs.getTimestamp("comm_date"));
+                comm.setFcomm_date(rs.getString("fcomm_date"));
                 comm.setText(rs.getString("text"));
                 comm.setUrl_image(rs.getString("profile_image"));
                 allComm.add(comm);

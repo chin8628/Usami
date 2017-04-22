@@ -21,6 +21,7 @@ public class CommentModel {
     private String first_name;
     private String last_name;
     private Timestamp comm_date;
+    private String fcomm_date;
     private String text;
     private String url_image;
     private String title;
@@ -111,6 +112,14 @@ public class CommentModel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getFcomm_date() {
+        return fcomm_date;
+    }
+
+    public void setFcomm_date(String fcomm_date) {
+        this.fcomm_date = fcomm_date;
     }
     
     
