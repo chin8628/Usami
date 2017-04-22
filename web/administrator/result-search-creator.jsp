@@ -24,11 +24,11 @@
                     <tr>
                         <td>${user.getUsername()}</td>
                         <td>
-                            <a href="#">
+                            <a href="${SITE_URL}/ViewProfile/?id=${user.getUsername()}">
                                 <img src="${SITE_URL}/asset/img/avatar-img/${user.getProfile().getUrl_image()}" class="img-responsive avatar-art">
                             </a>
                         </td>
-                        <td><a href="#">${user.getProfile().getFullname()}</a></td>
+                        <td><a href="${SITE_URL}/ViewProfile/?id=${user.getUsername()}">${user.getProfile().getFullname()}</a></td>
                         <td>${user.getCoin()}</td>
                         <td class="text-center">
                             <button

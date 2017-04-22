@@ -25,11 +25,11 @@
                     <tr>
                         <td>${comm.getImage_id()}</td>
                         <td>
-                            <a href="#">
+                            <a href="${SITE_URL}/View/?id=${comm.getImage_id()}">
                                 <img src="${SITE_URL}/asset/img/art/${comm.getImage_id()}.jpg" class="img-responsive avatar-art">
                             </a>
                         </td>
-                        <td><a href="#">${comm.getUsername()}</a></td>
+                        <td><a href="${SITE_URL}/ViewProfile/?id=${comm.getUsername()}">${comm.getUsername()}</a></td>
                         <td>${comm.getText()}</td>
                         <td>${comm.getComm_date()}</td>
                         <td class="text-center">

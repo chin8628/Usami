@@ -27,12 +27,12 @@
                     <tr>
                         <td>${art.getId()}</td>
                         <td>
-                            <a href="#">
+                            <a href="${SITE_URL}/View/?id=${art.getId()}">
                                 <img src="${SITE_URL}/asset/img/art/${art.getId()}.jpg" class="img-responsive image-art">
                             </a>
                         </td>
-                        <td><a href="#">${art.getTitle()}</a></td>
-                        <td><a href="#">${art.getFullname()}</a></td>
+                        <td><a href="${SITE_URL}/View/?id=${art.getId()}">${art.getTitle()}</a></td>
+                        <td><a href="${SITE_URL}/ViewProfile/?id=${art.getUserId()}">${art.getFullname()}</a></td>
                         <td>${art.getUpload_date()}</td>
                         <td class="text-center">
                             <button
