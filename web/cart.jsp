@@ -32,7 +32,7 @@
                                 <td><%= art.getTitle() %></td>
                                 <td><%= art.getFullname() %></td>
                                 <td class="show-price"><%= art.getPrice() %></td>
-                                <td><button class="btn btn-link btn-sm cart-btn remove-cart" value="<%= art.getId() %>"><span class="glyphicon glyphicon-trash"></span></button></td>
+                                <td><button class="btn btn-link btn-sm cart-btn remove-cart" value="<%= art.getId() %>,<%= art.getTitle() %>"><span class="glyphicon glyphicon-trash"></span></button></td>
                             </tr>
                         <% } %>
                     </tbody>
@@ -40,10 +40,8 @@
             </div>
 
             <div class="col-sm-12 text-right">
-                <p id="total">Total: <%= (int)total %> <small>coin</small></p>
-                <form action="${SITE_URL}/Buy" method="POST">
-                    <p><button class="btn btn-success btn-sm">Buy</button></p>
-                </form>
+                <p id="total"><%= (int)total %> <small>coin</small></p>
+                <p><button class="btn btn-success btn-sm" id="buy">Buy</button></p>
             </div>
         <% } else { %>
 
@@ -56,7 +54,9 @@
 <script>
         // Cart Button
         $('.cart-btn').click(function() {
-            id = $(this).val();
+            text = $(this).val().split(',');
+            id = text[0];
+            title = text[1];
             btn = this;
             total_price = 0;
             cnt = 0;
@@ -66,7 +66,7 @@
                     success: function(result){
                         if ($.trim(result) === "ok") {
                             $(btn).parent().parent().remove();
-                            alertify.error("Removed <strong> </strong> from <strong>cart</strong>");
+                            alertify.error("Removed <strong>"+title+"</strong> from <strong>cart</strong>");
                             $('.show-price').each(function() {
                                 total_price += parseInt($(this).text(), 10) || 0;
                                 cnt++;
@@ -81,6 +81,24 @@
                 });
             }
 
+        });
+        
+        // Buy Button
+        $("#buy").click(function() {
+            alertify.confirm("Confirm purchase?", function () {
+                alertify.success("Purchase Successful");
+                    $.ajax({
+                        url: "${SITE_URL}/Buy",
+                        success: function(){
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        }
+                    });
+            }, function() {
+                alertify.error("Purchase Cancled");
+            });
+            
         });
 </script>
 
