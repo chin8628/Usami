@@ -191,24 +191,35 @@
                 - Download free art at the original size. <br> \n\
                 - Ads-free browsing", function () {
                 
-                if (coin >= price) {
-                    alertify.success("Purchase Successful");
-                    $.ajax({
-                        url: "${SITE_URL}/BuyPremium/?id="+pro_id,
-                        success: function(){
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000);
-                        }
-                    });
-                } else {
-                    alertify.delay(3000).error("Your money is not enough to purchase. Please add more money to your <a href=\"${SITE_URL}/Pocket\">Pocket.</a>");
+                if ("${sessionScope.user.getU_type()}" === "ADM") {
+                    alertify.delay(3000).error("Access Denied (Administrator)");
                     $.ajax({
                         url: "#",
                         success: function(){
                         }
                     });
                 }
+                else {
+                    if (coin >= price) {
+                        alertify.success("Purchase Successful");
+                        $.ajax({
+                            url: "${SITE_URL}/BuyPremium/?id="+pro_id,
+                            success: function(){
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        });
+                    } else {
+                        alertify.delay(3000).error("Your money is not enough to purchase. Please add more money to your <a href=\"${SITE_URL}/Pocket\">Pocket.</a>");
+                        $.ajax({
+                            url: "#",
+                            success: function(){
+                            }
+                        });
+                    }
+                }
+
                 
             }, function() {
                 alertify.error("Purchase Cancled");
