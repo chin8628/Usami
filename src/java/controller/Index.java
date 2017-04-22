@@ -48,7 +48,7 @@ public class Index extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            Profiles user = (Profiles) session.getAttribute("profile");
+            Profiles profile = (Profiles) session.getAttribute("profile");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             PreparedStatement pstmt;
@@ -61,7 +61,7 @@ public class Index extends HttpServlet {
                         "JOIN usami.Image i USING (image_id) WHERE  p.user_id = ? AND status = 1 " +
                         "ORDER BY upload_date DESC LIMIT 8;");
                 
-                pstmt.setString(1, user.getUsername());
+                pstmt.setString(1, profile.getUsername());
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
                     Art art = new Art(conn, rs.getString("image_id"));
@@ -108,7 +108,7 @@ public class Index extends HttpServlet {
             
             
             //New work: Following
-            pstmt =  conn.prepareStatement("SELECT * FROM User_follow JOIN Image USING (user_id) WHERE follower_id = '"+user.getUsername()+"' LIMIT 8");
+            pstmt =  conn.prepareStatement("SELECT * FROM User_follow JOIN Image USING (user_id) WHERE follower_id = '"+profile.getUsername()+"' LIMIT 8");
             
             rs = pstmt.executeQuery();
             
@@ -125,7 +125,7 @@ public class Index extends HttpServlet {
             
             // Count Follower
             pstmt = conn.prepareStatement("SELECT COUNT(follower_id) FROM usami.User_follow WHERE user_id = ?");
-            pstmt.setString(1, user.getUsername());
+            pstmt.setString(1, profile.getUsername());
             
             rs = pstmt.executeQuery();
             if(rs.next()) {
@@ -135,7 +135,7 @@ public class Index extends HttpServlet {
             
             // Count Following
             pstmt = conn.prepareStatement("SELECT COUNT(user_id) FROM usami.User_follow WHERE follower_id = ?");
-            pstmt.setString(1, user.getUsername());
+            pstmt.setString(1, profile.getUsername());
             
             rs = pstmt.executeQuery();
             if(rs.next()) {

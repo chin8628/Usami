@@ -3,8 +3,6 @@
 <%@page import="model.User"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
-<% User user = (User) request.getAttribute("user");
-   Profiles profile = (Profiles) request.getAttribute("profile"); %>
 
 <div class="page-header">
     <h1>MyProfile</h1>
@@ -14,25 +12,35 @@
     <div class="panel-body row" id="profile">
         <div class="col-xs-4 col-sm-2 text-center">
             <span class="thumbnail">
-                <img src="${SITE_URL}/asset/img/avatar-img/<%= profile.getUrl_image() %>" class="img-responsive avatar-img">
+                <img src="${SITE_URL}/asset/img/avatar-img/${requestScope.profile.getUrl_image()}" class="img-responsive avatar-img">
             </span>
         </div>
         <div class="col-xs-8 col-sm-8" id="description"
-            <h3><%= user.getUsername() %></h3>
-            <p><%= profile.getFirst_name() %> <%= profile.getLast_name() %></p>
-            <p><%= user.getEmail() %></p>
-            <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
-                <h4><%= request.getAttribute("countFollowing") %></h4>
+            <h3>${requestScope.user.getUsername()}</h3>
+            <p>${requestScope.profile.getFirst_name()} ${requestScope.profile.getLast_name()}</p>
+            <p>${requestScope.user.getEmail()}</p>
+            <a href="${SITE_URL}/ViewFollow/?id=${requestScope.user.getUsername()}">
+                <h4>${requestScope.countFollowing}</h4>
                 <small>Following</small>
             </a>
-            <a href="${SITE_URL}/ViewFollow/?id=<%= user.getUsername() %>">
-                <h4><%= request.getAttribute("countFollower") %></h4>
+            <a href="${SITE_URL}/ViewFollow/?id=${requestScope.user.getUsername()}">
+                <h4>${requestScope.countFollower}</h4>
                 <small>Follower</small>
             </a>
             <p>
-                <span class="label label-default">Standard creator</span>
-                <span class="label label-warning">Premium creator</span>
-                <p>Valid until: 99 Dec 9999</p>
+                <c:choose>
+                    <c:when test="${requestScope.user.getU_type() == 'STD'}">
+                        <p><span class="label label-default">Standard creator</span></p>
+                    </c:when>    
+                    <c:otherwise>
+                        <p><span class="label label-warning">Premium creator</span></p>
+                    </c:otherwise>
+                </c:choose>
+                
+                <c:if test="${requestScope.user.getUsername() == sessionScope.user.getUsername()}">
+                    <p>Valid until: ${sessionScope.user.getFexp_date()}</p>
+                </c:if>
+                
             </p>
             <div class="panel-body tag">
                 <c:forEach var="tag" items="${requestScope.allTag}">
@@ -44,18 +52,9 @@
 
         </div>
         <div class="col-xs-12 col-sm-2 text-right">
-<!--            <form
-                action="${SITE_URL}/Follow/?id=${sessionScope.user.getUsername()}&ownid=<%= user.getUsername() %>&at=profile"
-                method="POST" >
-                <button
-                    class='btn <%= request.getAttribute("btn-follow") %> btn-sm <%= request.getAttribute("btn-show") %>'
-                    type="submit">
-                        <%= request.getAttribute("btn-follow-text") %>
-                    </button>
-            </form>-->
             <button
                 class='btn ${requestScope.btnFollow} btn-sm ${requestScope.btnShow} btn-follow ${requestScope.btnColor} col-sm-12'
-                type="submit" value="${sessionScope.user.getUsername()},<%= user.getUsername() %>"
+                type="submit" value="${sessionScope.user.getUsername()},${requestScope.user.getUsername()}"
                 >${requestScope.btnFollowText}
             </button>
         </div>
