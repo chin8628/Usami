@@ -93,9 +93,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form method="post">
+                    <form method="post" action="${SITE_URL}/UserSearch">
                         <div class="form-group">
-                            <input type="text" class="form-control input-lg" id="search" placeholder="Search">
+                            <input type="text" class="form-control input-lg" id="search" placeholder="Search" name="key">
                         </div>
                         <button type="submit" class="btn btn-success">Go!</button>
                     </form>
