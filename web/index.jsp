@@ -19,8 +19,16 @@
                     <p>
                         <strong>${sessionScope.profile.getFirst_name()} ${sessionScope.profile.getLast_name()}</strong>
                     </p>
-                    <p><span class="label label-default">Standard creator</span></p>
-                    <p><span class="label label-warning">Premium creator</span></p>
+                    
+                    <c:choose>
+                        <c:when test="${sessionScope.user.getU_type() == 'STD'}">
+                            <p><span class="label label-default">Standard creator</span></p>
+                        </c:when>    
+                        <c:otherwise>
+                            <p><span class="label label-warning">Premium creator</span></p>
+                        </c:otherwise>
+                    </c:choose>
+                            
                 </div>
             </div>
             <div class="row">

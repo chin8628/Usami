@@ -24,13 +24,14 @@ public class User {
     private Timestamp exp_date;
     private String u_type;
     private Connection conn;
+    private String fexp_date;
     
     public User(String username) {
         this.username = username;
     }
 
     public User(Connection conn, String username) throws SQLException {
-        PreparedStatement pstmt = conn.prepareStatement("SELECT user_id, password, email, coin, exp_date, u_type FROM usami.User WHERE user_id = ?");
+        PreparedStatement pstmt = conn.prepareStatement("SELECT *, DATE_FORMAT(exp_date,'%b %d %Y %h:%i %p') 'fexp_date' FROM usami.User WHERE user_id = ?");
         pstmt.setString(1, username);
         ResultSet rs = pstmt.executeQuery();
         
@@ -41,6 +42,7 @@ public class User {
             this.coin = rs.getInt("coin");
             this.exp_date = rs.getTimestamp("exp_date");
             this.u_type = rs.getString("u_type");
+            this.fexp_date = rs.getString("fexp_date");
         }
     }
 
@@ -152,6 +154,15 @@ public class User {
     public void setConn(Connection conn) {
         this.conn = conn;
     }
+
+    public String getFexp_date() {
+        return fexp_date;
+    }
+
+    public void setFexp_date(String fexp_date) {
+        this.fexp_date = fexp_date;
+    }
+    
     
     
     

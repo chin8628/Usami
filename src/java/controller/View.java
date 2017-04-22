@@ -84,6 +84,9 @@ public class View extends HttpServlet {
             if (rs.next()){
                 art = new Art(conn, rs.getString("image_id"));
                 profile = new Profiles(conn, rs.getString("user_id"));
+                
+                User ownerArt = new User(conn, rs.getString("user_id"));
+                request.setAttribute("ownerArt", ownerArt);
  
             }
 

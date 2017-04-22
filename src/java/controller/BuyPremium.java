@@ -71,7 +71,8 @@ public class BuyPremium extends HttpServlet {
                     }
                     
                     time.setTime(time.getTime() + 2592000);
-                    user.setU_type("prm");
+                    user.setU_type("PRM");
+                    user.setExp_date(time);
                     
                     user.UpdatePremium(conn);
                 }

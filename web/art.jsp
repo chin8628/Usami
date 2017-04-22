@@ -26,7 +26,15 @@
                             <%= owner.getFirst_name() + " " + owner.getLast_name() %>
                         </a>
                     </p>
-                    <p><span class="label label-default">Standard User</span></p>
+                    
+                    <c:choose>
+                        <c:when test="${requestScope.ownerArt.getU_type() == 'STD'}">
+                            <p><span class="label label-default">Standard creator</span></p>
+                        </c:when>    
+                        <c:otherwise>
+                            <p><span class="label label-warning">Premium creator</span></p>
+                        </c:otherwise>
+                    </c:choose>
 
                         <!--Follow Button-->
                         <button
