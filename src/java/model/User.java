@@ -62,7 +62,7 @@ public class User {
         pstmt.executeUpdate();
     }
     
-    public void UpdatePremium(Connection conn) throws SQLException {
+    public void updatePremium(Connection conn) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.User SET exp_date = ?, u_type = ?, coin = ? WHERE user_id = ?");
         pstmt.setTimestamp(1, this.exp_date);
         pstmt.setString(2, this.u_type);
@@ -105,6 +105,18 @@ public class User {
     }
 
     public String getUsername() {
+        
+        Timestamp time = exp_date;
+        Timestamp curtime = new Timestamp(System.currentTimeMillis());
+        if(time.before(curtime) && u_type.equals("PRM")) {
+            u_type = "STD";
+        }
+        try {
+            updatePremium(conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return username;
     }
 
