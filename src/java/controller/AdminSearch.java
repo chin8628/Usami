@@ -66,6 +66,7 @@ public class AdminSearch extends HttpServlet {
                     out.println(user.getUsername());
                 }
                 
+                
                 request.setAttribute("allUser", allUser);
                 RequestDispatcher obj = request.getRequestDispatcher("/administrator/result-search-creator.jsp");
                 obj.forward(request, response);

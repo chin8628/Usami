@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Art;
+import model.CommentModel;
 import model.User;
 
 /**
@@ -38,6 +39,7 @@ public class Searcher {
 "WHERE lower(image_name) like ? " +
 "OR lower(first_name) like ? " +
 "OR lower(last_name) like ? " +
+"OR lower(CONCAT(first_name,' ',last_name)) like ? " +
 "OR lower(tag_name) LIKE ? " +
 "OR lower(image_id) like ? ";
         
@@ -49,6 +51,7 @@ public class Searcher {
             pstmt.setString(3, "%" + key + "%");
             pstmt.setString(4, "%" + key + "%");
             pstmt.setString(5, "%" + key + "%");
+            pstmt.setString(6, "%" + key + "%");
             rs = pstmt.executeQuery();
         
             ArrayList<Art> allArt = new ArrayList<Art>();
@@ -74,6 +77,7 @@ public class Searcher {
         sql = "SELECT DISTINCT user_id FROM usami.User JOIN usami.Profile USING (user_id) "
                 + "WHERE user_id LIKE ? "
                 + "OR first_name LIKE ? "
+                + "OR lower(CONCAT(first_name,' ',last_name)) like ? "
                 + "OR last_name LIKE ? ";
         
         
@@ -82,6 +86,7 @@ public class Searcher {
             pstmt.setString(1, "%" + key + "%");
             pstmt.setString(2, "%" + key + "%");
             pstmt.setString(3, "%" + key + "%");
+            pstmt.setString(4, "%" + key + "%");
             rs = pstmt.executeQuery();
         
             ArrayList<User> allUser = new ArrayList<User>();
@@ -102,9 +107,15 @@ public class Searcher {
         
     }
     
-    public ArrayList<Art> searchComment(String key){
+    public ArrayList<CommentModel> searchComment(String key){
     
-        sql = "";
+        sql = "SELECT * FROM usami.Comment JOIN usami.Image USING (image_id) JOIN usami.Profile USING (user_id) " +
+            "WHERE lower(image_name) like ? " +
+            "OR lower(first_name) like ? " +
+            "OR lower(last_name) like ? " +
+            "OR lower(CONCAT(first_name,' ', last_name)) like ? " +
+            "OR lower(image_id) like ? "
+                + "OR lower(text) like ?";
         
         
         try {
@@ -112,22 +123,25 @@ public class Searcher {
             pstmt.setString(1, "%" + key + "%");
             pstmt.setString(2, "%" + key + "%");
             pstmt.setString(3, "%" + key + "%");
+            pstmt.setString(4, "%" + key + "%");
+            pstmt.setString(5, "%" + key + "%");
+            pstmt.setString(6, "%" + key + "%");
             rs = pstmt.executeQuery();
         
-            ArrayList<Art> allArt = new ArrayList<Art>();
+            ArrayList<CommentModel> allCom = new ArrayList<CommentModel>();
             
-            Art temp;
+            CommentModel temp;
             
             while(rs.next()) {
-                temp = new Art(conn, rs.getString("image_id"));
-                allArt.add(temp);
+                temp = new CommentModel();
+                allCom.add(temp);
             }
             
-            return allArt;
+            return allCom;
             
         } catch (SQLException ex) {
             Logger.getLogger(Searcher.class.getName()).log(Level.SEVERE, null, ex);
-            return new ArrayList<Art>();
+            return new ArrayList<CommentModel>();
         }
         
     }
