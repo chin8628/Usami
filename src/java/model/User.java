@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static model.Hash.hashPassword;
 
 /**
@@ -24,6 +26,7 @@ public class User {
     private Timestamp exp_date;
     private String u_type;
     private Connection conn;
+    private Profiles profile;
     private String fexp_date;
     
     public User(String username) {
@@ -31,6 +34,9 @@ public class User {
     }
 
     public User(Connection conn, String username) throws SQLException {
+        
+        this.conn = conn;
+        PreparedStatement pstmt = conn.prepareStatement("SELECT user_id, password, email, coin, exp_date, u_type FROM usami.User WHERE user_id = ?");
         PreparedStatement pstmt = conn.prepareStatement("SELECT *, DATE_FORMAT(exp_date,'%b %d %Y %h:%i %p') 'fexp_date' FROM usami.User WHERE user_id = ?");
         pstmt.setString(1, username);
         ResultSet rs = pstmt.executeQuery();
@@ -163,6 +169,14 @@ public class User {
         this.fexp_date = fexp_date;
     }
     
+    public Profiles getProfile(){
+        try {
+            return new Profiles(conn, username);
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
     
     
     

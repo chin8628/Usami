@@ -1,8 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../templates/header.jsp" />
 
 <div class="page-header">
-    <h1>Result search art</h1>
+    <h1>Result search user</h1>
 </div>
 
 <div class="panel-default panel">
@@ -14,20 +15,21 @@
                         <th class="col-md-1">ID</th>
                         <th class="col-md-1"></th>
                         <th>Creator</th>
-                        <th>Signup Date</th>
+                        <th>Coin</th>
                         <th class="col-sm-1">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <c:forEach var="user" items="${requestScope.allUser}">
                     <tr>
-                        <td>1</td>
+                        <td>${user.getUsername()}</td>
                         <td>
-                            <a href="#">
-                                <img src="${SITE_URL}/asset/img/avatar.jpg" class="img-responsive avatar-art">
+                            <a href="${SITE_URL}/ViewProfile/?id=${user.getUsername()}">
+                                <img src="${SITE_URL}/asset/img/avatar-img/${user.getProfile().getUrl_image()}" class="img-responsive avatar-art">
                             </a>
                         </td>
-                        <td><a href="#">Lorem</a></td>
-                        <td>12-04-1023</td>
+                        <td><a href="${SITE_URL}/ViewProfile/?id=${user.getUsername()}">${user.getProfile().getFullname()}</a></td>
+                        <td>${user.getCoin()}</td>
                         <td class="text-center">
                             <button
                                 class="btn btn-default btn-sm"
@@ -37,6 +39,7 @@
                             </button>
                         </td>
                     </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

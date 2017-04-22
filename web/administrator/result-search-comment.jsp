@@ -1,8 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../templates/header.jsp" />
 
 <div class="page-header">
-    <h1>Result search art</h1>
+    <h1>Result search comment</h1>
 </div>
 
 <div class="panel-default panel">
@@ -12,24 +13,25 @@
                 <thead>
                     <tr>
                         <th class="col-md-1">ID</th>
-                        <th class="col-md-1"></th>
-                        <th>Creator</th>
+                        <th class="col-md-1">Art</th>
+                        <th>User</th>
                         <th>Comment</th>
                         <th>Comment Date</th>
                         <th class="col-sm-1">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <c:forEach var="comm" items="${requestScope.allComm}">
                     <tr>
-                        <td>1</td>
+                        <td>${comm.getImage_id()}</td>
                         <td>
-                            <a href="#">
-                                <img src="${SITE_URL}/asset/img/avatar.jpg" class="img-responsive avatar-art">
+                            <a href="${SITE_URL}/View/?id=${comm.getImage_id()}">
+                                <img src="${SITE_URL}/asset/img/art/${comm.getImage_id()}.jpg" class="img-responsive avatar-art">
                             </a>
                         </td>
-                        <td><a href="#">Lorem</a></td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda officiis voluptatum recusandae mollitia cupiditate eum non, voluptate et aspernatur. Laboriosam inventore vitae qui doloremque odit, adipisci dolorem nihil tempore laudantium?</td>
-                        <td>12-04-1023</td>
+                        <td><a href="${SITE_URL}/ViewProfile/?id=${comm.getUsername()}">${comm.getUsername()}</a></td>
+                        <td>${comm.getText()}</td>
+                        <td>${comm.getComm_date()}</td>
                         <td class="text-center">
                             <button
                                 class="btn btn-default btn-sm"
@@ -39,6 +41,7 @@
                             </button>
                         </td>
                     </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
