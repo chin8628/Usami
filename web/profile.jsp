@@ -15,7 +15,7 @@
                 <img src="${SITE_URL}/asset/img/avatar-img/${requestScope.profile.getUrl_image()}" class="img-responsive avatar-img">
             </span>
         </div>
-        <div class="col-xs-8 col-sm-8" id="description"
+        <div class="col-xs-8 col-sm-8" id="description">
             <h3>${requestScope.user.getUsername()}</h3>
             <p>${requestScope.profile.getFirst_name()} ${requestScope.profile.getLast_name()}</p>
             <p>${requestScope.user.getEmail()}</p>
@@ -31,16 +31,16 @@
                 <c:choose>
                     <c:when test="${requestScope.user.getU_type() == 'STD'}">
                         <p><span class="label label-default">Standard creator</span></p>
-                    </c:when>    
+                    </c:when>
                     <c:otherwise>
                         <p><span class="label label-warning">Premium creator</span></p>
                     </c:otherwise>
                 </c:choose>
-                
+
                 <c:if test="${requestScope.user.getUsername() == sessionScope.user.getUsername()}">
                     <p>Valid until: ${sessionScope.user.getFexp_date()}</p>
                 </c:if>
-                
+
             </p>
             <div class="panel-body tag">
                 <c:forEach var="tag" items="${requestScope.allTag}">
@@ -165,15 +165,15 @@
             }
         })
     });
-    
+
     // Follow Button
         $('.btn-follow').click(function() {
             text = $(this).val().split(',');
             user_id = text[0];
             own_id = text[1];
             btn = this;
-            if ($(this).hasClass('btn-green')) { 
-                
+            if ($(this).hasClass('btn-green')) {
+
                 $.ajax({
                     url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&at=profile",
                     success: function(result){
@@ -181,7 +181,7 @@
                                 .removeClass('btn-success btn-green')
                                 .addClass('btn-danger btn-red')
                                 .text('Unfollow');
-                        alertify.success("Followed <strong>"+own_id+"</strong> Already");  
+                        alertify.success("Followed <strong>"+own_id+"</strong> Already");
                         }
                     });
             }
@@ -198,7 +198,7 @@
                 });
             }
         });
-    
+
 </script>
 
 <jsp:include page="templates/footer.jsp" />
