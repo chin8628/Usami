@@ -27,7 +27,7 @@
                                     </div>
                                 </a>
                                 <div class="price">
-                                    <p>${art.getPrice()}</p>
+                                    <p>${art.getPrice()} coin</p>
                                 </div>
                                 <button
                                     data-toggle="modal"
@@ -116,7 +116,7 @@
                             <div class="form-group">
                                 <label for="price">Price</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon">$</span>
+                                    <span class="input-group-addon">Coin</span>
                                     <input type="number" class="form-control" id="${art.getId()}-price" name="price" aria-label="Amount (to the nearest dollar)" value="${art.getProduct().getPrice()}" disabled>
                                 </div>
                             </div>

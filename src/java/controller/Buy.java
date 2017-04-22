@@ -60,17 +60,11 @@ public class Buy extends HttpServlet {
             
             if(cart.size() == 0) {
                 //error code
-                out.println("No item in cart");
-                request.setAttribute("code", "item");
                 response.sendRedirect("/Usami/cart.jsp");
                 return;
             } else if(user.getCoin() < total) {
                 //insufficient coin
-                request.setAttribute("code", "coin");
-                request.setAttribute("message", "Insufficient Coin");
-                request.setAttribute("mtype", "failed");
                 response.sendRedirect("/Usami/cart.jsp");
-                out.println("Insufficient coin");
                 return;
             } else {
                 user.setCoin((int) (user.getCoin() - total));
@@ -96,10 +90,7 @@ public class Buy extends HttpServlet {
                 
                 session.setAttribute("cart", cart);
                 session.setAttribute("total", total);
-                request.setAttribute("mtype", "success");
                 
-                request.setAttribute("message", "Transaction Completed");
-                request.setAttribute("mtype", "pass");
                 response.sendRedirect("/Usami/cart.jsp");
                 
             }
