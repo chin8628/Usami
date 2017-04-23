@@ -85,6 +85,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon">฿</span>
                                     <input type="number" class="form-control" id="baht" disabled>
+                                    <input type="hidden" class="form-control" id="baht" name="baht">
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-success">Withdraw</button>
