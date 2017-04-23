@@ -19,19 +19,19 @@
                     <p>
                         <strong>${sessionScope.profile.getFirst_name()} ${sessionScope.profile.getLast_name()}</strong>
                     </p>
-                    
+
                     <c:choose>
                         <c:when test="${sessionScope.user.getU_type() == 'STD'}">
                             <p><span class="label label-default">Standard creator</span></p>
                         </c:when>
                         <c:when test="${sessionScope.user.getU_type() == 'ADM'}">
                             <p><span class="label label-primary">Administrator</span></p>
-                        </c:when>   
+                        </c:when>
                         <c:otherwise>
                             <p><span class="label label-warning">Premium creator</span></p>
                         </c:otherwise>
                     </c:choose>
-                            
+
                 </div>
             </div>
             <div class="row">
@@ -50,6 +50,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row hidden-xs" id="ads">
+        <div class="col-sm-12">
+            <img src="${SITE_URL}/asset/img/ads1.gif" class="img-responsive" style="margin-bottom:5px;">
+            <img src="${SITE_URL}/asset/img/ads2.jpg" class="img-responsive" style="margin-bottom:5px;">
+            <img src="${SITE_URL}/asset/img/ads3.jpg" class="img-responsive" style="margin-bottom:5px;">
+            <img src="${SITE_URL}/asset/img/ads4.jpg" class="img-responsive" style="margin-bottom:5px;">
+            <img src="${SITE_URL}/asset/img/ads5.jpg" class="img-responsive" style="margin-bottom:5px;">
+            <img src="${SITE_URL}/asset/img/ads6.jpg" class="img-responsive" style="margin-bottom:5px;">
+            <img src="${SITE_URL}/asset/img/ads7.jpg" class="img-responsive" style="margin-bottom:5px;">
         </div>
     </div>
 </div>
