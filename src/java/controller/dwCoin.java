@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
+import model.Transaction;
 import model.User;
 
 /**
@@ -55,20 +56,28 @@ public class dwCoin extends HttpServlet {
             
             if(mode == 0) {
                 //deposit
+                Transaction trans = new Transaction(conn, user.getUsername());
+                trans.deposit(amount);
+                
                 amount *= 5;
                 user.setCoin((int) (user.getCoin() + amount));
                 user.ChangeCoin(conn);
+                
+                
             } else if (mode == 1) {
                 //withdraw
                 
                 if(user.getCoin() < amount) {
                     request.setAttribute("message", "Insufficient Coin");
-            request.setAttribute("mtype", "fail");
+                    request.setAttribute("mtype", "fail");
                     response.sendRedirect("/Usami/Pocket");
                     return;
                 }
                 user.setCoin((int) (user.getCoin() - amount));
                 user.ChangeCoin(conn);
+                
+                Transaction trans = new Transaction(conn, user.getUsername());
+                trans.withdraw(Integer.parseInt(request.getParameter("baht")));
             }
             
             request.setAttribute("message", "Transaction Successful");
