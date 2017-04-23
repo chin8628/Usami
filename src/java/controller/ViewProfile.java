@@ -166,36 +166,26 @@ public class ViewProfile extends HttpServlet {
                 }
                 
             //display chart
-            pstmt = conn.prepareStatement("SELECT AllDays.MyJoinDate, COUNT( I.image_id ) AS NumberJoined\n" +
-                "FROM ( SELECT @curDate := Date_Add(@curDate, INTERVAL -1 day) AS MyJoinDate\n" +
-                "       FROM ( SELECT @curDate := DATE(NOW()) + INTERVAL 1 day  ) sqlvars, Image LIMIT 7 ) AllDays\n" +
-                "       LEFT JOIN Image I\n" +
-                "       ON AllDays.MyJoinDate = DATE(I.upload_date)\n" +
-                "GROUP BY AllDays.MyJoinDate");
-            
-            rs = pstmt.executeQuery();
             
             ArrayList<String> allDate = new ArrayList<String>();
             ArrayList<String> allSaleValue = new ArrayList<String>();
             ArrayList<String> allUploadTitle = new ArrayList<String>();
             
-            while(rs.next()){
-            
-                allDate.add(rs.getString("MyJoinDate"));
-                allUploadTitle.add("'" + rs.getString("MyJoinDate") + "'");
-            }
-            
-            for(int i=0; i<7;i++){
-                pstmt = conn.prepareStatement("SELECT sum(buy_price) sale FROM usami.User_buy u JOIN usami.Product p USING (product_id) WHERE DATE(buy_date) = ? AND p.user_id = ?");
-                pstmt.setString(1, allDate.get(i));
-                pstmt.setString(2, user.getUsername());
+            for(int i=6; i>=0; i--){
+                pstmt = conn.prepareStatement("SELECT sum(buy_price) amount, DATE(NOW()) - INTERVAL ? DAY day FROM usami.User_buy u JOIN usami.Product p USING (product_id) WHERE DATE(buy_date) = DATE(NOW()) - INTERVAL ? DAY AND p.user_id = ?");
+                pstmt.setInt(1, i);
+                pstmt.setInt(2, i);
+                pstmt.setString(3, user.getUsername());
                 
                 rs = pstmt.executeQuery();
-                
                 if(rs.next()){
-                    allSaleValue.add(rs.getInt("sale") + "");
+                    allDate.add(rs.getString("day"));
+                    allUploadTitle.add("'" + rs.getString("day") + "'");
+                    allSaleValue.add(rs.getInt("amount") + "");
                 }
+                
             }
+            
             
             String allSaleValueOut = String.join(",", allSaleValue);
             String allUploadTitleOut = String.join(",", allUploadTitle);
