@@ -64,7 +64,7 @@
                     <input type="hidden" value="${mode}" name="mode">
                     <div class="form-group">
                         <label for="comment">Comment</label>
-                        <input type="texte" value="${comm.getUsername()}" name="username">
+                        <input type="hidden" value="${comm.getUsername()}" name="username">
                         <input type="hidden" value="${comm.getImage_id()}" name="image_id">
                         <input type="hidden" value="${comm.getComm_date().getTime()}" name="comm_date">
                         <textarea class="form-control" rows="7" id="comment" name="text">${comm.getText()}</textarea>
@@ -72,8 +72,16 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-danger">Delete</button>
                 <button type="submit" class="btn btn-default" form="update-comm-${comm.getId()}">Update</button>
+                <button type="submit" class="btn btn-danger" form="delete-comm-${comm.getId()}">Delete</button>
+                
+                <form method="POST" action="${SITE_URL}/AdminDeleteComment" id="delete-comm-${comm.getId()}">
+                    <input type="hidden" value="${key}" name="key">
+                    <input type="hidden" value="${mode}" name="mode">
+                    <input type="hidden" value="${comm.getUsername()}" name="username">
+                    <input type="hidden" value="${comm.getImage_id()}" name="image_id">
+                    <input type="hidden" value="${comm.getComm_date().getTime()}" name="comm_date">
+                </form>
             </div>
         </div>
     </div>
