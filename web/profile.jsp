@@ -136,10 +136,10 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["1/03/2017", "8/03/2017", "16/03/2017", "24/03/2017", "31/03/2017"],
+                labels: [${requestScope.chartDate}],
                 datasets: [{
-                    label: '# of Purchased (US Dollar)',
-                    data: [20, 25, 30, 21, 27],
+                    label: '# of Purchased (Coin)',
+                    data: [${requestScope.chartSale}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)'
                     ],
