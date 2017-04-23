@@ -25,7 +25,7 @@ import model.User;
  *
  * @author frostnoxia
  */
-@WebServlet(name = "AdminSearch", urlPatterns = {"/AdminSearch"})
+@WebServlet(name = "AdminSearch", urlPatterns = {"/AdminSearch", "/AdminSearch/"})
 public class AdminSearch extends HttpServlet {
 
     /**
@@ -55,6 +55,8 @@ public class AdminSearch extends HttpServlet {
                  ArrayList<Art> allArt = searcher.searchArt(key);
                 
                 request.setAttribute("allArt", allArt);
+                request.setAttribute("mode", mode);
+                request.setAttribute("key", key);
                 RequestDispatcher obj = request.getRequestDispatcher("/administrator/result-search-art.jsp");
                 obj.forward(request, response);
                 return;
@@ -69,6 +71,8 @@ public class AdminSearch extends HttpServlet {
                 
                 
                 request.setAttribute("allUser", allUser);
+                request.setAttribute("mode", mode);
+                request.setAttribute("key", key);
                 RequestDispatcher obj = request.getRequestDispatcher("/administrator/result-search-creator.jsp");
                 obj.forward(request, response);
                 return;
@@ -78,6 +82,8 @@ public class AdminSearch extends HttpServlet {
                  ArrayList<CommentModel> allComm = searcher.searchComment(key);
                 
                 request.setAttribute("allComm", allComm);
+                request.setAttribute("mode", mode);
+                request.setAttribute("key", key);
                 RequestDispatcher obj = request.getRequestDispatcher("/administrator/result-search-comment.jsp");
                 
                 

@@ -77,7 +77,7 @@ public class Index extends HttpServlet {
             // Random Art
             ArrayList<Art> artRandom = new ArrayList<>();
             try {
-                pstmt = conn.prepareStatement("SELECT * FROM usami.Image ORDER BY RAND() LIMIT 8;");
+                pstmt = conn.prepareStatement("SELECT * FROM usami.Image WHERE status = 1 ORDER BY RAND() LIMIT 8;");
                 rs = pstmt.executeQuery();
                 
                 while (rs.next()) {
@@ -92,7 +92,7 @@ public class Index extends HttpServlet {
             
             
             // Popular Arts
-            pstmt =  conn.prepareStatement("SELECT * FROM Image ORDER BY view DESC LIMIT 8");
+            pstmt =  conn.prepareStatement("SELECT * FROM Image WHERE status = 1 ORDER BY view DESC LIMIT 8");
             
             rs = pstmt.executeQuery();
             
@@ -108,7 +108,7 @@ public class Index extends HttpServlet {
             
             
             //New work: Following
-            pstmt =  conn.prepareStatement("SELECT * FROM User_follow JOIN Image USING (user_id) WHERE follower_id = '"+profile.getUsername()+"' LIMIT 8");
+            pstmt =  conn.prepareStatement("SELECT * FROM User_follow JOIN Image USING (user_id) WHERE follower_id = '"+profile.getUsername()+"' AND status = 1 LIMIT 8");
             
             rs = pstmt.executeQuery();
             

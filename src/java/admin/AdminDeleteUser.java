@@ -3,32 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.User;
 
 /**
  *
  * @author frostnoxia
  */
-@WebServlet(name = "BuyPremium", urlPatterns = {"/BuyPremium/"})
-public class BuyPremium extends HttpServlet {
+@WebServlet(name = "AdminDeleteUser", urlPatterns = {"/AdminDeleteUser"})
+public class AdminDeleteUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,50 +35,40 @@ public class BuyPremium extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
-            
+           
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM Product WHERE product_id = ?");
-            pstmt.setString(1, request.getParameter("id"));
+            String username = request.getParameter("username");
             
-            ResultSet rs = pstmt.executeQuery();
-            if(rs.next()) {
-                int price = rs.getInt("price");
-                int duration = Integer.parseInt(request.getParameter("id").substring(3));
+            
+            try {
+                PreparedStatement pstmt;
+                pstmt = conn.prepareStatement("UPDATE usami.Image SET status = 0 WHERE user_id = ?");
+                pstmt.setString(1, username);
                 
-                if(user.getCoin() < price) {
-                    //not enough coin
-                    return;
-                } else if(!user.getU_type().equals("ADM")){
-                    user.setCoin(user.getCoin() - price);
-                    Timestamp time = user.getExp_date();
-                    Timestamp curtime = new Timestamp(System.currentTimeMillis());
-                    if(time.before(curtime)) {
-                        time = curtime;
-                    }
-                    
-                    time.setTime(time.getTime()+2592000000l);
-                    user.setU_type("PRM");
-                    user.setExp_date(time);
-                    
-                    user.updatePremium(conn);
-                    session.setAttribute("user", user);
-                }
+                pstmt.executeUpdate();
                 
+                pstmt = conn.prepareStatement("DELETE FROM usami.User WHERE user_id=?");
+                pstmt.setString(1, username);
+                
+                pstmt.executeUpdate();
+                
+                
+                
+                
+                String key = request.getParameter("key");
+                String mode = request.getParameter("mode");
+                response.sendRedirect("/Usami/AdminSearch/?key=" + key + "&mode=" + mode);
+                return;
+                
+            } catch (SQLException ex) {
+                out.print(ex.toString());
             }
-            
-            //completed
-            
-            response.sendRedirect("/Usami/Market#special");
-            return;
             
         }
     }
@@ -100,11 +85,7 @@ public class BuyPremium extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(BuyPremium.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -118,11 +99,7 @@ public class BuyPremium extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(BuyPremium.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

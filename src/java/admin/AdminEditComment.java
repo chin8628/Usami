@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,14 +18,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.User;
+import model.Profiles;
 
 /**
  *
  * @author frostnoxia
  */
-@WebServlet(name = "BuyPremium", urlPatterns = {"/BuyPremium/"})
-public class BuyPremium extends HttpServlet {
+@WebServlet(name = "AdminEditComment", urlPatterns = {"/AdminEditComment/"})
+public class AdminEditComment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,51 +37,38 @@ public class BuyPremium extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
+            String text = request.getParameter("text");
             
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM Product WHERE product_id = ?");
-            pstmt.setString(1, request.getParameter("id"));
+            String image_id = request.getParameter("image_id");
+            String username = request.getParameter("username");
+            Timestamp time = new Timestamp(Long.parseLong(request.getParameter("comm_date")));
             
-            ResultSet rs = pstmt.executeQuery();
-            if(rs.next()) {
-                int price = rs.getInt("price");
-                int duration = Integer.parseInt(request.getParameter("id").substring(3));
+            try {
+                PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.Comment SET text=? WHERE user_id=? AND image_id=? AND comm_date=?");
+                pstmt.setString(2, username);
+                pstmt.setString(3, image_id);
+                pstmt.setString(1, text);
+                pstmt.setTimestamp(4, time);
                 
-                if(user.getCoin() < price) {
-                    //not enough coin
-                    return;
-                } else if(!user.getU_type().equals("ADM")){
-                    user.setCoin(user.getCoin() - price);
-                    Timestamp time = user.getExp_date();
-                    Timestamp curtime = new Timestamp(System.currentTimeMillis());
-                    if(time.before(curtime)) {
-                        time = curtime;
-                    }
-                    
-                    time.setTime(time.getTime()+2592000000l);
-                    user.setU_type("PRM");
-                    user.setExp_date(time);
-                    
-                    user.updatePremium(conn);
-                    session.setAttribute("user", user);
-                }
+                System.out.println(username + " " + image_id + " " + text + " " +  time);
                 
+                pstmt.executeUpdate();
+                
+                String key = request.getParameter("key");
+                String mode = request.getParameter("mode");
+                response.sendRedirect("/Usami/AdminSearch/?key=" + key + "&mode=" + mode);
+                return;
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-            
-            //completed
-            
-            response.sendRedirect("/Usami/Market#special");
-            return;
-            
         }
     }
 
@@ -100,11 +84,7 @@ public class BuyPremium extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(BuyPremium.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -118,11 +98,7 @@ public class BuyPremium extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(BuyPremium.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

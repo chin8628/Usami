@@ -49,6 +49,11 @@ public class CommentModel {
         }
         
     }
+    
+    public String getId(){
+    
+        return (image_id + "" + username + "" + comm_date).hashCode() + "";
+    }
 
     public String getUsername() {
         return username;
@@ -87,6 +92,7 @@ public class CommentModel {
     }
 
     public void setComm_date(Timestamp comm_date) {
+
         this.comm_date = comm_date;
     }
     

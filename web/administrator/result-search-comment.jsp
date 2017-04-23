@@ -36,6 +36,7 @@
                             <button
                                 class="btn btn-default btn-sm"
                                 data-toggle="modal"
+                                data-target="#${comm.getId()}-modal"
                                 data-target="#modal">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </button>
@@ -47,8 +48,8 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+<c:forEach var="comm" items="${requestScope.allComm}">
+<div class="modal fade" tabindex="-1" role="dialog" id="${comm.getId()}-modal" aria-labelledby="${comm.getId()}-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -58,21 +59,34 @@
                 <h4 class="modal-title">Update comment</h4>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="post" id="update-comm-${comm.getId()}" action="${SITE_URL}/AdminEditComment/">
+                    <input type="hidden" value="${key}" name="key">
+                    <input type="hidden" value="${mode}" name="mode">
                     <div class="form-group">
                         <label for="comment">Comment</label>
-                        <textarea class="form-control" rows="7" id="comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil minus, ab totam corrupti alias iusto. Omnis culpa, fugit, repudiandae deserunt voluptas aut nemo velit ullam error aliquid tempore accusamus, fuga.</textarea>
+                        <input type="hidden" value="${comm.getUsername()}" name="username">
+                        <input type="hidden" value="${comm.getImage_id()}" name="image_id">
+                        <input type="hidden" value="${comm.getComm_date().getTime()}" name="comm_date">
+                        <textarea class="form-control" rows="7" id="comment" name="text">${comm.getText()}</textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-danger">Delete</button>
-                <button type="submit" class="btn btn-default">Update</button>
+                <button type="submit" class="btn btn-default" form="update-comm-${comm.getId()}">Update</button>
+                <button type="submit" class="btn btn-danger" form="delete-comm-${comm.getId()}">Delete</button>
+                
+                <form method="POST" action="${SITE_URL}/AdminDeleteComment" id="delete-comm-${comm.getId()}">
+                    <input type="hidden" value="${key}" name="key">
+                    <input type="hidden" value="${mode}" name="mode">
+                    <input type="hidden" value="${comm.getUsername()}" name="username">
+                    <input type="hidden" value="${comm.getImage_id()}" name="image_id">
+                    <input type="hidden" value="${comm.getComm_date().getTime()}" name="comm_date">
+                </form>
             </div>
         </div>
     </div>
 </div>
-
+</c:forEach>
 <script>
     /* Manage table */
     $(document).ready(function(){

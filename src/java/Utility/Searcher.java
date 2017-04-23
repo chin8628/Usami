@@ -60,7 +60,11 @@ public class Searcher {
             
             while(rs.next()) {
                 temp = new Art(conn, rs.getString("image_id"));
-                allArt.add(temp);
+                temp.getCurrentTags();
+                if(temp.getStatus() == 1){
+                    allArt.add(temp);
+                }
+                
             }
             
             return allArt;
@@ -136,7 +140,10 @@ public class Searcher {
             
             while(rs.next()) {
                 temp = new CommentModel(conn, rs.getString("user_id"), rs.getString("image_id"), rs.getTimestamp("comm_date"));
+                Art tempArt = new Art(conn, rs.getString("image_id"));
+                if(tempArt.getStatus() == 1){
                 allCom.add(temp);
+                }
             }
             
             return allCom;

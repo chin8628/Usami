@@ -103,7 +103,17 @@ public class EditArt extends HttpServlet {
             
             request.setAttribute("message", "Edit Successful");
             request.setAttribute("mtype", "pass");
-            response.sendRedirect("/Usami/Storage");
+            
+            
+            String key = request.getParameter("key");
+            String mode = request.getParameter("mode");
+            
+            if(key == null){
+                response.sendRedirect("/Usami/Storage");
+            } else {
+                response.sendRedirect("/Usami/AdminSearch/?key=" + key + "&mode=" + mode);
+            }
+            
             
             
         }

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 /**
  *
@@ -45,14 +46,20 @@ public class Profiles {
         pstmt.executeUpdate();
     }
     
-    public void editProfile(Connection conn) throws SQLException {
-        PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.Profile SET first_name = ?, last_name = ?, birthdate = ?, profile_image = ? WHERE user_id = ?");
-        pstmt.setString(1, this.first_name);
-        pstmt.setString(2, this.last_name);
-        pstmt.setString(3, this.birthdate);
-        pstmt.setString(4, this.url_image);
-        pstmt.setString(5, this.username);
-        pstmt.executeUpdate();
+    public void editProfile(Connection conn) {
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE usami.Profile SET first_name = ?, last_name = ?, birthdate = ?, profile_image = ? WHERE user_id = ?");
+            pstmt.setString(1, this.first_name);
+            pstmt.setString(2, this.last_name);
+            pstmt.setString(3, this.birthdate);
+            pstmt.setString(4, this.url_image);
+            pstmt.setString(5, this.username);
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
     }
     
     public ArrayList<Art> getAllArt() {
@@ -79,6 +86,8 @@ public class Profiles {
     }
 
     public String getUsername() {
+        
+        
         return username;
     }
 

@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../templates/header.jsp" />
 <div class="page-header">
-    <h1>Result search art</h1>
+    <h1>Art Search Result for ${requestScope.key}</h1>
 </div>
 
 <div class="panel-default panel">
@@ -38,6 +38,11 @@
                             <button
                                 class="btn btn-default btn-sm"
                                 data-toggle="modal"
+                                data-target="#${art.getId()}-modal"
+                                data-site-url="${SITE_URL}"
+                                data-art-id="${art.getId()}"
+                                data-art-title="${art.getTitle()}"
+                                data-art-desc="${art.getDesc()}"
                                 data-target="#modal">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </button>
@@ -50,56 +55,81 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form method="post" action="${SITE_URL}/EditArt">
-                <input type="hidden"  value="" name="id">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="editModalLabel">Edit</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" name="title" placeholder="Art's name" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="desciption">Description</label>
-                        <textarea class="form-control" name="desc"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="tags">Tags (Seperate each tag by comma)</label>
-                        <input type="tags" class="form-control" id="-tags" name="tags" value="">
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" id="-sell" name="sell"> Do you want to sell this art?
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Price</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">$</span>
-                            <input type="number" class="form-control" id="-price" name="price" aria-label="Amount (to the nearest dollar)" value="" disabled>
+<c:if test="${requestScope.allArt != null}">
+    <c:forEach var="art" items="${requestScope.allArt}">
+        <div class="modal fade" id="${art.getId()}-modal" tabindex="-1" role="dialog" aria-labelledby="${art.getId()}-modalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form method="post" action="${SITE_URL}/EditArt">
+                        <input type="hidden" value="${key}" name="key">
+                        <input type="hidden" value="${mode}" name="mode">
+                        <input type="hidden"  value="${art.getId()}" name="id">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="editModalLabel">Edit</h4>
                         </div>
-                    </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" name="title" placeholder="Art's name" value="${art.getTitle()}">
+                            </div>
+                            <div class="form-group">
+                                <label for="desciption">Description</label>
+                                <textarea class="form-control" name="desc" placeholder="Please tell us about your brilliant art!">${art.getDesc()}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="tags">Tags (Seperate each tag by comma)</label>
+                                <input type="tags" class="form-control" id="${art.getId()}-tags" name="tags" value="${art.getAllTag()}">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="${art.getId()}-sell" name="sell"> Do you want to sell this art?
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="number" class="form-control" id="${art.getId()}-price" name="price" aria-label="Amount (to the nearest dollar)" value="${art.getProduct().getPrice()}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger" form="del-form">DELETE</button>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </form>
+                    <form method="post" action="${SITE_URL}/DeleteArt/?id2=${art.getId()}" id="del-form">
+                        <input type="hidden" value="${key}" name="key">
+                        <input type="hidden" value="${mode}" name="mode">
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger" form="del-form" name="id2" value="">DELETE</button>
-                    <button type="submit" class="btn btn-success">Save</button>
-                </div>
-            </form>
-            <form method="post" action="${SITE_URL}/DeleteArt/" id="del-form">
-            </form>
+            </div>
         </div>
-    </div>
-</div>
+    </c:forEach>
+</c:if>
 
 <script>
     /* Manage table */
     $(document).ready(function(){
         $('#table').DataTable();
+        <c:if test="${requestScope.allArt != null}">
+            <c:forEach var="art" items="${requestScope.allArt}">
+                $('#${art.getId()}-tags').tagsInput({
+                    'width': "auto",
+                    'height': "auto",
+                    'delimiter': [',']
+                });
+
+                $('#${art.getId()}-sell').click(function(event) {
+                    if ($(this).is(':checked') === true) {
+                        $('#${art.getId()}-price').prop( "disabled", false );
+                    } else {
+                        $('#${art.getId()}-price').prop( "disabled", true ).val(null);
+                    }
+                });
+            </c:forEach>
+        </c:if>
     });
 </script>
 

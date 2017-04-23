@@ -30,16 +30,7 @@ import model.User;
  * @author Chiib_000
  */
 public class CookieAuthen implements Filter {
-///lksdsdjfsndlksdlvkldkvzsdflksejef
-//sdgdgdfgdzf
-///lksdsdjfsndlksdlvkldkvzsdflksejef
-//sdgdgdfgdzf
-///lksdsdjfsndlksdlvkldkvzsdflksejef
-//sdgdgdfgdzf
-///lksdsdjfsndlksdlvkldkvzsdflksejef
-//sdgdgdfgdzf
-///lksdsdjfsndlksdlvkldkvzsdflksejef
-//sdgdgdfgdzf
+
     private FilterConfig config;
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
