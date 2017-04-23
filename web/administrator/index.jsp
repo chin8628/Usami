@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../templates/header.jsp" />
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="page-header">
     <h1>Control Panel</h1>
 </div>
@@ -68,10 +68,10 @@
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ["21/03/2017", "22/03/2017", "23/03/2017", "24/03/2017", "25/03/2017", "26/03/2017"],
+            labels: [${requestScope.uploadTitle}],
             datasets: [{
                 label: '# of Uploaded Art',
-                data: [539, 693, 413, 435, 393, 932],
+                data: [${requestScope.uploadValue}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)'
                 ],
@@ -82,7 +82,7 @@
             },
             {
                 label: '# of Purchased',
-                data: [102, 232, 103, 184, 200, 302],
+                data: [${requestScope.saleValue}],
                 backgroundColor: [
                     'rgba(54, 162, 235, 0.2)'
                 ],

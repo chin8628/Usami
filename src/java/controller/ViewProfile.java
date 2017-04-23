@@ -165,6 +165,9 @@ public class ViewProfile extends HttpServlet {
                     in_coin = rs.getInt(1);
                 }
                 
+            //display chart
+            
+            
             
             request.setAttribute("allArt", allArt);
             request.setAttribute("coin", in_coin);
