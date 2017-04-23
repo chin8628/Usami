@@ -95,11 +95,13 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger" form="del-form" name="id2" value="${art.getId()}">DELETE</button>
+                            <button type="submit" class="btn btn-danger" form="del-form">DELETE</button>
                             <button type="submit" class="btn btn-success">Save</button>
                         </div>
                     </form>
-                    <form method="post" action="${SITE_URL}/DeleteArt/" id="del-form">
+                    <form method="post" action="${SITE_URL}/DeleteArt/?id2=${art.getId()}" id="del-form">
+                        <input type="hidden" value="${key}" name="key">
+                        <input type="hidden" value="${mode}" name="mode">
                     </form>
                 </div>
             </div>

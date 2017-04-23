@@ -56,29 +56,44 @@ public class DeleteArt extends HttpServlet {
             art.setStatus(0);
             art.updateArts();
             
-            /*
+            
             PreparedStatement pstmt;
             try {
-                pstmt = conn.prepareStatement("DELETE FROM usami.Image WHERE image_id = ?;");
+                pstmt = conn.prepareStatement("DELETE FROM usami.Product WHERE image_id = ?;");
                 pstmt.setString(1, id);
                 pstmt.executeUpdate();
                 
-                File file = new File(savePath + File.separator + id + ".jpg");
-                file.delete();
-                file = new File(savePath + File.separator + "protected" + File.separator + id + ".original.jpg");
-                file.delete();
-                file = new File(savePath + File.separator + "protected" + File.separator + id + ".resized.jpg");
-                file.delete();
+                pstmt = conn.prepareStatement("DELETE FROM usami.Comment WHERE image_id = ?;");
+                pstmt.setString(1, id);
+                pstmt.executeUpdate();
+                
+                pstmt = conn.prepareStatement("DELETE FROM usami.Tag_has WHERE image_id = ?;");
+                pstmt.setString(1, id);
+                pstmt.executeUpdate();
+                
+                pstmt = conn.prepareStatement("DELETE FROM usami.Tag WHERE tag_id NOT IN (SELECT tag_id FROM usami.Tag_has);");
+                pstmt.executeUpdate();
                 
                 
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-            */
+            
             
             request.setAttribute("message", "Art Deleted");
             request.setAttribute("mtype", "norm");
-            response.sendRedirect("/Usami/Storage");
+            
+            String key = request.getParameter("key");
+            String mode = request.getParameter("mode");
+            
+            
+            if(key == null){
+                response.sendRedirect("/Usami/Storage");
+            } else {
+                response.sendRedirect("/Usami/AdminSearch/?key=" + key + "&mode=" + mode);
+            }
+            
+            
             
             
             
