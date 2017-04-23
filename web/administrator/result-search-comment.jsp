@@ -60,6 +60,8 @@
             </div>
             <div class="modal-body">
                 <form method="post" id="update-comm-${comm.getId()}" action="${SITE_URL}/AdminEditComment/">
+                    <input type="hidden" value="${key}" name="key">
+                    <input type="hidden" value="${mode}" name="mode">
                     <div class="form-group">
                         <label for="comment">Comment</label>
                         <input type="texte" value="${comm.getUsername()}" name="username">

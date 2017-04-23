@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../templates/header.jsp" />
 <div class="page-header">
-    <h1>Result search art</h1>
+    <h1>Art Search Result for ${requestScope.key}</h1>
 </div>
 
 <div class="panel-default panel">
@@ -61,7 +61,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <form method="post" action="${SITE_URL}/EditArt">
-                        <input type="text" value="" name="key" hidden="true">
+                        <input type="hidden" value="${key}" name="key">
+                        <input type="hidden" value="${mode}" name="mode">
                         <input type="hidden"  value="${art.getId()}" name="id">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

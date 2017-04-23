@@ -116,7 +116,10 @@ public class AdminEditProfile extends HttpServlet {
 
 
 
-        response.sendRedirect("/Usami/administrator/index.jsp");
+        String key = request.getParameter("key");
+        String mode = request.getParameter("mode");
+        response.sendRedirect("/Usami/AdminSearch/?key=" + key + "&mode=" + mode);
+        return;
             
         }
     }

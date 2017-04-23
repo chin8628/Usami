@@ -61,7 +61,9 @@ public class AdminEditComment extends HttpServlet {
                 
                 pstmt.executeUpdate();
                 
-                response.sendRedirect("/Usami/administrator/index.jsp");
+                String key = request.getParameter("key");
+                String mode = request.getParameter("mode");
+                response.sendRedirect("/Usami/AdminSearch/?key=" + key + "&mode=" + mode);
                 return;
                 
             } catch (SQLException ex) {

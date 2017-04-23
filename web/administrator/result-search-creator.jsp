@@ -63,6 +63,8 @@
             </div>
             <div class="modal-body">
                 <form method="post" id="pedit-${user.getUsername()}" enctype="multipart/form-data" action="${SITE_URL}/AdminEditProfile/">
+                    <input type="hidden" value="${key}" name="key">
+                    <input type="hidden" value="${mode}" name="mode">
                     <div class="form-group row">
                         <div class="col-sm-3">
                             <span class="thumbnail">

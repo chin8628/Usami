@@ -105,11 +105,13 @@ public class EditArt extends HttpServlet {
             request.setAttribute("mtype", "pass");
             
             
-            String origin = request.getParameter("key");
-            if(origin == null){
+            String key = request.getParameter("key");
+            String mode = request.getParameter("mode");
+            
+            if(key == null){
                 response.sendRedirect("/Usami/Storage");
             } else {
-                response.sendRedirect("/Usami/administrator/index.jsp");
+                response.sendRedirect("/Usami/AdminSearch/?key=" + key + "&mode=" + mode);
             }
             
             
