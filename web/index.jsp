@@ -53,18 +53,22 @@
         </div>
     </div>
 
-    <div class="row hidden-xs" id="ads">
-        <div class="col-sm-12">
-            <img src="${SITE_URL}/asset/img/ads1.gif" class="img-responsive" style="margin-bottom:5px;">
-            <img src="${SITE_URL}/asset/img/ads2.jpg" class="img-responsive" style="margin-bottom:5px;">
-            <img src="${SITE_URL}/asset/img/ads3.jpg" class="img-responsive" style="margin-bottom:5px;">
-            <img src="${SITE_URL}/asset/img/ads4.jpg" class="img-responsive" style="margin-bottom:5px;">
-            <img src="${SITE_URL}/asset/img/ads5.jpg" class="img-responsive" style="margin-bottom:5px;">
-            <img src="${SITE_URL}/asset/img/ads6.jpg" class="img-responsive" style="margin-bottom:5px;">
-            <img src="${SITE_URL}/asset/img/ads7.jpg" class="img-responsive" style="margin-bottom:5px;">
+        <div class="row hidden-xs" id="ads" >
+            <div class="col-sm-12">
+                <c:if test="${sessionScope.user.getU_type().equals('STD')}">
+                <img src="${SITE_URL}/asset/img/ads1.gif" class="img-responsive" style="margin-bottom:5px;">
+                <img src="${SITE_URL}/asset/img/ads2.jpg" class="img-responsive" style="margin-bottom:5px;">
+                <img src="${SITE_URL}/asset/img/ads3.jpg" class="img-responsive" style="margin-bottom:5px;">
+                <img src="${SITE_URL}/asset/img/ads4.jpg" class="img-responsive" style="margin-bottom:5px;">
+                <img src="${SITE_URL}/asset/img/ads5.jpg" class="img-responsive" style="margin-bottom:5px;">
+                <img src="${SITE_URL}/asset/img/ads6.jpg" class="img-responsive" style="margin-bottom:5px;">
+                <img src="${SITE_URL}/asset/img/ads7.jpg" class="img-responsive" style="margin-bottom:5px;">
+                </c:if>
+            </div>
         </div>
-    </div>
-</div>
+    </div>    
+
+    
 
 
 <div class="col-sm-10">
