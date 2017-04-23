@@ -27,7 +27,7 @@
             <div class="checkbox">
                 <br>
                 <label>
-                    <input type="checkbox" id="sell" name="sell"> Sell
+                    <input type="checkbox" id="sell" name="sell"> Would you like to sell this art?
                 </label>
                 
             </div>
