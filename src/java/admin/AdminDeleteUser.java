@@ -47,10 +47,19 @@ public class AdminDeleteUser extends HttpServlet {
             
             
             try {
-                PreparedStatement pstmt = conn.prepareStatement("DELETE FROM usami.User WHERE user_id=?");
+                PreparedStatement pstmt;
+                pstmt = conn.prepareStatement("UPDATE usami.Image SET status = 0 WHERE user_id = ?");
                 pstmt.setString(1, username);
                 
                 pstmt.executeUpdate();
+                
+                pstmt = conn.prepareStatement("DELETE FROM usami.User WHERE user_id=?");
+                pstmt.setString(1, username);
+                
+                pstmt.executeUpdate();
+                
+                
+                
                 
                 String key = request.getParameter("key");
                 String mode = request.getParameter("mode");
