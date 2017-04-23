@@ -28,7 +28,7 @@ public class UsamiListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            conn = getUsami().getConnection();
+            conn = getMariadb().getConnection();
             sce.getServletContext().setAttribute("connection", conn);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -48,6 +48,12 @@ public class UsamiListener implements ServletContextListener {
         Context c = new InitialContext();
         return (DataSource) c.lookup("java:comp/env/usami");
     }
+
+    private DataSource getMariadb() throws NamingException {
+        Context c = new InitialContext();
+        return (DataSource) c.lookup("java:comp/env/mariadb");
+    }
+
     
     
 }
