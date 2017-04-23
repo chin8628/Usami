@@ -23,7 +23,7 @@
                 <a href="#history-comment" aria-controls="history-comment" role="tab" data-toggle="tab">Comment</a>
             </li>
             <li role="presentation">
-                <a href="#history-addmoney" aria-controls="history-addmoney" role="tab" data-toggle="tab">Add Money</a>
+                <a href="#history-addmoney" aria-controls="history-addmoney" role="tab" data-toggle="tab">Transaction</a>
             </li>
         </ul>
 
@@ -182,31 +182,34 @@
                 </div>
             </div>
 
-            <!--  My addmoney  -->
+            <!--  My Transaction  -->
             <div role="tabpanel" class="tab-pane" id="history-addmoney">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="addmoney-table">
                         <thead>
                             <tr>
                                 <th class="col-sm-2">ID</th>
-                                <th class="col-sm-4">Money Amount</th>
-                                <th class="col-sm-4">Coin Amount</th>
+                                <th class="col-sm-4">Type</th>
+                                <th class="col-sm-4">Amount</th>
                                 <th class="col-sm-2">Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="col-sm-2">
-                                    lorem
-                                </td>
-                                <td  class="col-sm-4">
-                                    lorem
-                                </td>
-                                <td class="col-sm-4">
-                                    lorem
-                                </td>
-                                <td class="col-sm-2">99/99/9999</td>
-                            </tr>
+                            <c:forEach var="trans" items="${requestScope.transaction}">
+                                <tr>
+                                    <td class="col-sm-2">
+                                        ${trans.getTran_id()}
+                                    </td>
+                                    <td  class="col-sm-4">
+                                        ${trans.getTran_type()}
+                                    </td>
+                                    <td class="col-sm-4">
+                                        ${trans.getAmount()} Baht
+                                    </td>
+                                    <td class="col-sm-2">${trans.getDate_time()}</td>
+                                </tr>
+                            </c:forEach>
+                            
                         </tbody>
                     </table>
                 </div>

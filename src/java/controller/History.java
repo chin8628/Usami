@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import model.Art;
 import model.CommentModel;
 import model.Profiles;
+import model.Transaction;
 
 /**
  *
@@ -136,6 +137,34 @@ public class History extends HttpServlet {
             }
             
             request.setAttribute("artUpload", artUpload);
+            
+            // Transaction
+            ArrayList<Transaction> allTrans = new ArrayList<>();
+            try {
+                pstmt = conn.prepareStatement("SELECT *, DATE_FORMAT(date,'%b %d %Y %h:%i %p') 'fdate' "
+                        + "FROM usami.Transaction WHERE user_id = ? ORDER BY fdate DESC;");
+                pstmt.setString(1, profile.getUsername());
+                
+                rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    Transaction trans = new Transaction(conn, profile.getUsername());
+                    trans.setDate_time(rs.getString("fdate"));
+                    trans.setAmount(rs.getInt("amount"));
+                    trans.setTran_id(rs.getInt("tran_id"));
+                    
+                    if (rs.getString("tran_type").equals("DEP")) {
+                        trans.setTran_type("DEPOSIT");
+                    } else {
+                        trans.setTran_type("WITHDRAW");
+                    }
+                    
+                    allTrans.add(trans);
+                }
+                request.setAttribute("transaction", allTrans);
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
 
             RequestDispatcher obj = request.getRequestDispatcher("/history.jsp");
             obj.forward(request, response);

@@ -23,6 +23,7 @@ public class Transaction {
     private String tran_type;
     private String user_id;
     private String date_time;
+    private int amount;
     
     public Transaction(Connection conn, String user_id) {
         this.conn = conn;
@@ -64,7 +65,6 @@ public class Transaction {
         }
     }
 
-
     public int getTran_id() {
         return tran_id;
     }
@@ -96,6 +96,15 @@ public class Transaction {
     public void setDate_time(String date_time) {
         this.date_time = date_time;
     }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+    
     
     
 }
