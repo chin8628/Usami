@@ -24,6 +24,7 @@ public class Transaction {
     private String user_id;
     private String date_time;
     private int amount;
+    private String currency;
     
     public Transaction(Connection conn, String user_id) {
         this.conn = conn;
@@ -55,6 +56,57 @@ public class Transaction {
                     + "VALUES (?,?,?,?);");
             pstmt.setString(1, this.user_id);
             pstmt.setString(2, "WIT");
+            pstmt.setInt(3, amount);
+            pstmt.setTimestamp(4, new Timestamp(calendar.getTime().getTime()));
+            
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void buyArt(int amount) {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.Transaction(user_id, tran_type, amount, date) "
+                    + "VALUES (?,?,?,?);");
+            pstmt.setString(1, this.user_id);
+            pstmt.setString(2, "BAR");
+            pstmt.setInt(3, amount);
+            pstmt.setTimestamp(4, new Timestamp(calendar.getTime().getTime()));
+            
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void buyPremium(int amount) {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.Transaction(user_id, tran_type, amount, date) "
+                    + "VALUES (?,?,?,?);");
+            pstmt.setString(1, this.user_id);
+            pstmt.setString(2, "BPR");
+            pstmt.setInt(3, amount);
+            pstmt.setTimestamp(4, new Timestamp(calendar.getTime().getTime()));
+            
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void artSold(int amount) {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO usami.Transaction(user_id, tran_type, amount, date) "
+                    + "VALUES (?,?,?,?);");
+            pstmt.setString(1, this.user_id);
+            pstmt.setString(2, "ASO");
             pstmt.setInt(3, amount);
             pstmt.setTimestamp(4, new Timestamp(calendar.getTime().getTime()));
             
@@ -103,6 +155,22 @@ public class Transaction {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
     
     

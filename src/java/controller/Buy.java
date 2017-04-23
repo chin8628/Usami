@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Art;
+import model.Transaction;
 import model.User;
 
 /**
@@ -82,8 +83,13 @@ public class Buy extends HttpServlet {
                     User creator = new User(conn, art.getUserId());
                     creator.setCoin((int) (creator.getCoin() + art.getProduct().getPrice()));
                     creator.ChangeCoin(conn);
+                    
+                    Transaction trans = new Transaction(conn, creator.getUsername());
+                    trans.artSold(art.getProduct().getPrice());
                 }
                 
+                Transaction trans = new Transaction(conn, user.getUsername());
+                trans.buyArt(Math.round(total));
                 
                 cart = new ArrayList<Art>();
                 total = 0f;

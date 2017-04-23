@@ -204,7 +204,7 @@
                                         ${trans.getTran_type()}
                                     </td>
                                     <td class="col-sm-4">
-                                        ${trans.getAmount()} Baht
+                                        ${trans.getAmount()} ${trans.getCurrency()}
                                     </td>
                                     <td class="col-sm-2">${trans.getDate_time()}</td>
                                 </tr>

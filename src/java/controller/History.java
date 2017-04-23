@@ -152,10 +152,12 @@ public class History extends HttpServlet {
                     trans.setAmount(rs.getInt("amount"));
                     trans.setTran_id(rs.getInt("tran_id"));
                     
-                    if (rs.getString("tran_type").equals("DEP")) {
-                        trans.setTran_type("DEPOSIT");
-                    } else {
-                        trans.setTran_type("WITHDRAW");
+                    switch (rs.getString("tran_type")) {
+                        case "DEP": trans.setTran_type("DEPOSIT"); trans.setCurrency("Baht"); break;
+                        case "WIT": trans.setTran_type("WITHDRAW"); trans.setCurrency("Baht"); break;
+                        case "BAR": trans.setTran_type("BUY ARTS"); trans.setCurrency("Coin"); break;
+                        case "BPR": trans.setTran_type("BUY PREMIUM"); trans.setCurrency("Coin"); break;
+                        case "ASO": trans.setTran_type("ART SOLD"); trans.setCurrency("Coin"); break;
                     }
                     
                     allTrans.add(trans);

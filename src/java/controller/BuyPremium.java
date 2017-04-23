@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Transaction;
 import model.User;
 
 /**
@@ -73,8 +74,12 @@ public class BuyPremium extends HttpServlet {
                     time.setTime(time.getTime()+2592000000l);
                     user.setU_type("PRM");
                     user.setExp_date(time);
-                    
                     user.updatePremium(conn);
+                    
+                    Transaction trans = new Transaction(conn, user.getUsername());
+                    trans.buyPremium(price);
+                    
+                    
                     session.setAttribute("user", user);
                 }
                 
