@@ -45,7 +45,6 @@ public class AdminDeleteUser extends HttpServlet {
             
             String username = request.getParameter("username");
             
-            out.println("**" + username + "**");
             
             try {
                 PreparedStatement pstmt = conn.prepareStatement("DELETE FROM usami.User WHERE user_id=?");
@@ -55,7 +54,7 @@ public class AdminDeleteUser extends HttpServlet {
                 
                 String key = request.getParameter("key");
                 String mode = request.getParameter("mode");
-                //response.sendRedirect("/Usami/AdminSearch/?key=" + key + "&mode=" + mode);
+                response.sendRedirect("/Usami/AdminSearch/?key=" + key + "&mode=" + mode);
                 return;
                 
             } catch (SQLException ex) {
