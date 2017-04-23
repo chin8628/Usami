@@ -104,8 +104,14 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger">Delete Account</button>
+                <button type="submit" class="btn btn-danger" form="delete-user-${comm.getId()}">Delete Account</button>
                 <button type="submit" class="btn btn-primary" form="pedit-${user.getUsername()}">Update</button>
+                
+                <form method="POST" action="${SITE_URL}/AdminDeleteUser" id="delete-user-${comm.getId()}">
+                    <input type="hidden" value="${key}" name="key">
+                    <input type="hidden" value="${mode}" name="mode">
+                    <input type="hidden" value="${user.getUsername()}" name="username">
+                </form>
             </div>
         </div>
     </div>
