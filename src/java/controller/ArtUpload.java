@@ -201,7 +201,7 @@ public class ArtUpload extends HttpServlet {
             request.setAttribute("message", "Upload Successful");
             request.setAttribute("mtype", "pass");
             response.sendRedirect("/Usami/View/?id=" + artId);
-            return;
+            return; 
         }
     }
 

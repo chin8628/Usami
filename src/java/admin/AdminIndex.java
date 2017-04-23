@@ -48,26 +48,25 @@ public class AdminIndex extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             
             PreparedStatement pstmt;
-            
-            pstmt = conn.prepareStatement("SELECT AllDays.MyJoinDate, COUNT( I.image_id ) AS NumberJoined\n" +
-                "FROM ( SELECT @curDate := Date_Add(@curDate, INTERVAL -1 day) AS MyJoinDate\n" +
-                "       FROM ( SELECT @curDate := DATE(NOW()) + INTERVAL 1 day  ) sqlvars, Image LIMIT 7 ) AllDays\n" +
-                "       LEFT JOIN Image I\n" +
-                "       ON AllDays.MyJoinDate = DATE(I.upload_date)\n" +
-                "GROUP BY AllDays.MyJoinDate");
-            
-            ResultSet rs = pstmt.executeQuery();
+            ResultSet rs;         
             
             ArrayList<String> allUploadTitle = new ArrayList<String>();
             ArrayList<String> allUploadValue = new ArrayList<String>();
             ArrayList<String> allSaleValue = new ArrayList<String>();
             ArrayList<String> allDate = new ArrayList<String>();
             
-            while(rs.next()){
-            
-                allDate.add(rs.getString("MyJoinDate"));
-                allUploadTitle.add("'" + rs.getString("MyJoinDate") + "'");
-                allUploadValue.add(rs.getInt("NumberJoined") + "");
+            for(int i=6; i>=0; i--){
+                pstmt = conn.prepareStatement("SELECT count(*) amount, DATE(NOW()) - INTERVAL ? DAY day FROM usami.image WHERE DATE(upload_date) = DATE(NOW()) - INTERVAL ? DAY");
+                pstmt.setInt(1, i);
+                pstmt.setInt(2, i);
+                
+                rs = pstmt.executeQuery();
+                if(rs.next()){
+                    allDate.add(rs.getString("day"));
+                    allUploadTitle.add("'" + rs.getString("day") + "'");
+                    allUploadValue.add(rs.getInt("amount") + "");
+                }
+                
             }
             
             for(int i=0; i<7;i++){
