@@ -63,7 +63,7 @@ public class EditArt extends HttpServlet {
             String title = request.getParameter("title");
             String desc = request.getParameter("desc");
             String tempPrice = request.getParameter("price");
-            if(tempPrice == null || !user.getU_type().equals("prm")) {
+            if(tempPrice == null || !user.getU_type().equals("PRM")) {
                 tempPrice = "0";
             }
             int price = Integer.parseInt(tempPrice);
