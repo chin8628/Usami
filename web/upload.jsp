@@ -25,9 +25,6 @@
             </div>
             <% if(user.getU_type().equals("PRM")) { %>
             <div class="checkbox">
-                <label>
-                    <input type="checkbox" id="publish" name="publish"> Publish
-                </label>
                 <br>
                 <label>
                     <input type="checkbox" id="sell" name="sell"> Sell
