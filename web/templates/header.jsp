@@ -64,7 +64,7 @@
                         </a>
                     </li>
                     <c:if test="${sessionScope.user.getU_type().equals('ADM')}">
-                    <li><a href="${SITE_URL}/administrator/index.jsp">Admin</a></li>
+                    <li><a href="${SITE_URL}/AdminIndex">Admin</a></li>
                     </c:if>
                     <li><a href="${SITE_URL}/cart.jsp">Cart</a></li>
                     <li class="dropdown">
