@@ -9,7 +9,7 @@
     <source src="${SITE_URL}/asset/video/background.mp4" type="video/mp4">
 </video>
 
-<div class="container col-sm-12" style="margin-top: 5vh;">
+<div class="col-xs-12" style="margin-top: 5vh;">
     <div class="col-sm-12 opacity-9">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -18,14 +18,14 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6 opacity-9" id="signup">
+    <div class="col-sm-12 col-md-6 col-xs-12 opacity-9" id="signup">
         <div class="panel panel-default">
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
                 <% if (request.getParameter("signup") != null) { %>
                     <div class="alert alert-success" role="alert">Thank you, You are a member now.</div>
                 <% } %>
-                
+
                 <form action="${SITE_URL}/SignUp" method="POST">
                     <div class="form-group has-feedback" id="fNameInDiv">
                         <label class="control-label" for="fullname">Full Name</label>
@@ -57,11 +57,12 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6 opacity-9" id="signin">
+
+    <div class="col-sm-12 col-md-6 col-xs-12 opacity-9" id="signin">
         <div class="panel panel-default">
             <div class="panel-heading">Sign In</div>
             <div class="panel-body">
-                
+
                 <% if (request.getParameter("signin") != null) { %>
                     <div class="alert alert-danger" role="alert">Sorry, the username and password you entered do not match. Please try again.</div>
                 <% } %>

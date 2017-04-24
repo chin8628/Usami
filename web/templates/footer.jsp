@@ -1,6 +1,6 @@
         </div>
     </div>
-    <footer class="col-sm-12">
+    <footer class="col-xs-12">
         <div class="container">
             <p>Thank you for Bootstrap that make my work success.</p>
             <p>
