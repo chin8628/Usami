@@ -163,14 +163,14 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(window).on("load", function() {
         $('.grid').isotope({
             itemSelector: '.grid-item',
             percentPosition: true,
             masonry: {
                 columnWidth: '.grid-sizer'
             }
-        })
+        });
     });
 </script>
 

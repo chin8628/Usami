@@ -110,7 +110,7 @@
                                         <div class="price">
                                             <p id="price">${art.getPrice()} <small>coin</small></p>
                                         </div>
-                                        
+
                                         <!--Buy Premium-->
                                         <button class="btn btn-success btn-sm col-sm-12" id="buy" value="${art.getProduct_id()},${art.getName()},${sessionScope.user.getCoin()},${art.getPrice()}">Buy</button>
                                     </ul>
@@ -126,7 +126,7 @@
 
 <script>
     $(document).ready(function() {
-        $('.grid').ready(function() {
+        $(window).on("load", function() {
             $('.grid').isotope({
                 itemSelector: '.grid-item',
                 percentPosition: true,
@@ -175,7 +175,7 @@
                 });
             }
         });
-        
+
         // Buy Button
         $("#buy").click(function() {
             text = $(this).val().split(',');
@@ -183,14 +183,14 @@
             title = text[1];
             coin = parseInt(text[2]);
             price = parseInt(text[3]);
-            
+
             alertify.confirm("<h3><strong>"+title+"</strong></h3>\n\
                 <img src=\"${SITE_URL}/asset/img/"+pro_id+".png\" class=\"img-responsive center-block\"> \n\
                 <h4>Premium Privilage </h4> \n\
                 - Permission to sell your art on the marketplace. <br> \n\
                 - Download free art at the original size. <br> \n\
                 - Ads-free browsing", function () {
-                
+
                 if ("${sessionScope.user.getU_type()}" === "ADM") {
                     alertify.delay(3000).error("Access Denied (Administrator)");
                     $.ajax({
@@ -220,11 +220,11 @@
                     }
                 }
 
-                
+
             }, function() {
                 alertify.error("Purchase Cancled");
             });
-            
+
         });
     });
 </script>
