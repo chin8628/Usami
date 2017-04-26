@@ -154,18 +154,16 @@
                 });
             </c:forEach>
         </c:if>
+    });
 
-        $(window).on("load", function() {
-            $('.grid').isotope({
-                itemSelector: '.grid-item',
-                percentPosition: true,
-                masonry: {
-                    columnWidth: '.grid-sizer'
-                }
-            });
+    $(window).on("load", function() {
+        $('.grid').isotope({
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            masonry: {
+                columnWidth: '.grid-sizer'
+            }
         });
-
-
     });
 </script>
 
