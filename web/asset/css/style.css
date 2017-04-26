@@ -7,11 +7,17 @@ html, body {
 }
 
 footer {
-    height: 100px;
     background: #2a2730;
+    min-height: 100px;
+    height: auto;
     padding-top: 20px;
     padding-bottom: 15px;
     color: white;
+}
+
+#main-body {
+    min-height: 100%;
+    height: auto !important;
 }
 
 .page-header{
@@ -32,6 +38,26 @@ footer {
 
 .opacity-9{
     opacity: 0.9;
+}
+
+#single-art {
+    max-height: 90vh;
+}
+
+.avatar-img {
+    max-height: 150px;
+}
+
+.image-search {
+    max-height: 100px;
+}
+
+.search-item{
+    height: 100px;
+}
+
+.image-art-thumbnail {
+    max-height: 170px;
 }
 
 /* ART PAGE */
@@ -66,7 +92,7 @@ footer {
 /* PROFILE PAGE */
 
 .image-art {
-    padding: 10px;
+    padding: 5px;
 }
 
 .image-art .title {
@@ -86,6 +112,10 @@ footer {
 }
 
 /* MARKET PAGE */
+
+.image-product img{
+    max-height: 170px;
+}
 
 .image-product img:hover{
     outline: #18bc9c solid 1px;
@@ -121,4 +151,44 @@ footer {
 #editModal textarea {
     resize:vertical;
     height: 30vh;
+}
+
+
+/* TAGS PAGE */
+.tag {
+    display: inline-block;
+}
+
+/* Injection alertify */
+.alertify-logs {
+    z-index: 99999;
+}
+
+/* AUTH PAGE */
+video#bgvid{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+    background: url('../img/video-cover.jpg') no-repeat;
+    background-size: cover;
+    transition: 1s opacity;
+}
+
+.thumbnail-2 {
+    display: block;
+    padding: 2px;
+    margin-bottom: 5px;
+    line-height: 1.42857143;
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
 }

@@ -1,56 +1,47 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../templates/header.jsp" />
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="page-header">
     <h1>Control Panel</h1>
 </div>
 
-<div class="panel-default panel">
+<div class="panel-default panel hidden-xs">
     <div class="panel-heading">Overview</div>
     <div class="panel-body">
-        <canvas id="myChart" height="100"></canvas>
+        <canvas id="myChart" height="70"></canvas>
     </div>
 </div>
 
+<div class="alert alert-warning visible-xs-block" role="alert">
+    <b>Oops!</b> This screen is too small to display Overview chart.
+</div>
+
 <div class="panel-default panel">
-    <div class="panel-heading">All Report</div>
+    <div class="panel-heading">Search</div>
     <div class="panel-body">
-        <table class="table table-bordered" id="report">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Type</th>
-                    <th>Report by</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><a href="#" data-toggle="modal" data-target="#myModal">Too explicit sexual</a></td>
-                    <td>Art</td>
-                    <td><a href="${SITE_URL}/profile.jsp">chin8628</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><a href="#" data-toggle="modal" data-target="#myModal">Found bug on system</a></td>
-                    <td>Problem usage</td>
-                    <td><a href="${SITE_URL}/profile.jsp">chin8628</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><a href="#" data-toggle="modal" data-target="#myModal">Too violation comment</a></td>
-                    <td>Comment</td>
-                    <td><a href="${SITE_URL}/profile.jsp">chin8628</a></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td><a href="#" data-toggle="modal" data-target="#myModal">I was spamed by another user</a></td>
-                    <td>User</td>
-                    <td><a href="${SITE_URL}/profile.jsp">chin8628</a></td>
-                </tr>
-            </tbody>
-        </table>
+        <form method="post" action="${SITE_URL}/AdminSearch">
+            <div class="form-group">
+                <label for="search-type">Search Type</label>
+                <div class="radio" id="search-type">
+                    <label style="margin-right: 15px;">
+                        <input type="radio" name="mode" id="optionsRadios1" value="1">
+                        Art [ID art, Name art, Artist]
+                    </label>
+                    <label style="margin-right: 15px;">
+                        <input type="radio" name="mode" id="optionsRadios2" value="2">
+                        User [Username, User ID, Firstname, Lastname]
+                    </label>
+                    <label style="margin-right: 15px;">
+                        <input type="radio" name="mode" id="optionsRadios3" value="3">
+                        Comment [Part of comment, Art of comment, User]
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="search" name="key" required="">
+            </div>
+            <button class="btn btn-primary">Search</button>
+        </form>
     </div>
 </div>
 
@@ -72,20 +63,15 @@
 </div>
 
 <script>
-    /* Manage table */
-    $(document).ready(function(){
-        $('#report').DataTable();
-    });
-
     /* Create chart by Chart.js */
     var ctx = $("#myChart");
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ["21/03/2017", "22/03/2017", "23/03/2017", "24/03/2017", "25/03/2017", "26/03/2017"],
+            labels: [${requestScope.uploadTitle}],
             datasets: [{
                 label: '# of Uploaded Art',
-                data: [539, 693, 413, 435, 393, 932],
+                data: [${requestScope.uploadValue}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)'
                 ],
@@ -96,7 +82,7 @@
             },
             {
                 label: '# of Purchased',
-                data: [102, 232, 103, 184, 200, 302],
+                data: [${requestScope.saleValue}],
                 backgroundColor: [
                     'rgba(54, 162, 235, 0.2)'
                 ],

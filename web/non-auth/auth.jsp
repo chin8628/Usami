@@ -1,5 +1,13 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../templates/header-non-auth.jsp" />
+
+<video
+    poster="${SITE_URL}/asset/img/video-cover.jpg"
+    id="bgvid"
+    playsinline autoplay muted loop >
+    <source src="${SITE_URL}/asset/video/background.mp4" type="video/mp4">
+</video>
 
 <div class="container col-sm-12" style="margin-top: 5vh;">
     <div class="col-sm-12 opacity-9">
@@ -14,24 +22,37 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign Up</div>
             <div class="panel-body">
-                <form method="post">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username">
+                <% if (request.getParameter("signup") != null) { %>
+                    <div class="alert alert-success" role="alert">Thank you, You are a member now.</div>
+                <% } %>
+                
+                <form action="${SITE_URL}/SignUp" method="POST">
+                    <div class="form-group has-feedback" id="fNameInDiv">
+                        <label class="control-label" for="fullname">Full Name</label>
+                        <input type="text" class="form-control" name="fullname" id="fNameIn" placeholder="John Doe">
+                        <span class="glyphicon glyphicon-user form-control-feedback" id="fnSpan"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email">
+                    <div class="form-group has-feedback" id="userInDiv">
+                        <label class="control-label" for="username">Username</label>
+                        <input type="text" class="form-control" name="username" id="userIn" placeholder="Johnny007">
+                        <span class="glyphicon glyphicon-globe form-control-feedback" id="usSpan"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password">
+                    <div class="form-group has-feedback" id="emailInDiv">
+                        <label class="control-label" for="email">Email address</label>
+                        <input type="email" class="form-control" name="email" id="emailIn" placeholder="Johnny_lnwza_007@gmail.com">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback" id="emSpan"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="re-password">Re-Password</label>
-                        <input type="password" class="form-control" id="re-password">
+                    <div class="form-group has-feedback" id="passInDiv">
+                        <label class="control-label" for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="passIn">
+                        <span class="glyphicon glyphicon-eye-close form-control-feedback" id="psSpan"></span>
                     </div>
-                    <button type="submit" class="btn btn-default">Sign Up</button>
+                    <div class="form-group has-feedback" id="repassInDiv">
+                        <label class="control-label" for="re-password">Re-Password</label>
+                        <input type="password" class="form-control" name="re-password" id="repassIn">
+                        <span class="glyphicon glyphicon-eye-close form-control-feedback" id="rpSpan"></span>
+                    </div>
+                    <button type="submit" class="btn btn-default" id="signUpButton">Sign Up</button>
                 </form>
             </div>
         </div>
@@ -40,14 +61,23 @@
         <div class="panel panel-default">
             <div class="panel-heading">Sign In</div>
             <div class="panel-body">
-                <form>
+                
+                <% if (request.getParameter("signin") != null) { %>
+                    <div class="alert alert-danger" role="alert">Sorry, the username and password you entered do not match. Please try again.</div>
+                <% } %>
+                <form action="${SITE_URL}/SignIn" method="POST" >
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username">
+                        <input type="text" class="form-control" name="username">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" name="password">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="remember"> Remember Me
+                        </label>
                     </div>
                     <button type="submit" class="btn btn-default">Sign In</button>
                 </form>
@@ -55,5 +85,7 @@
         </div>
     </div>
 </div>
+
+<script src="${SITE_URL}/asset/js/Authenticate.js"></script>
 
 <jsp:include page="../templates/footer.jsp" />
