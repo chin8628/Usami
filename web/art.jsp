@@ -145,11 +145,9 @@
 
                 <!--favorite button-->
                 <div class="col-sm-12">
-                    <form action="${SITE_URL}/Favorite/?&id=<%= art.getId() %>" method="POST">
-                        <button type="submit" class="btn <%= request.getAttribute("btn-fav") %> btn-xs" id="favorite-btn">
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <%= request.getAttribute("count") %>
-                        </button>
-                    </form>
+                    <button type="submit" class="btn <%= request.getAttribute("btn-fav") %> btn-xs" id="favorite-btn" value="<%= request.getAttribute("count") %>">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <%= request.getAttribute("count") %>
+                    </button>
                 </div>
 
 
@@ -263,6 +261,37 @@
                             alertify.error("Removed <strong>"+title+"</strong> from <strong>cart</strong>");
 
                         }
+                    }
+                });
+            }
+        });
+        
+        // Favorite Button
+        $('#favorite-btn').click(function() {
+            num = $(this).text();
+            num = num.replace(/\s/g, '');
+            num = parseInt(num);
+            btn = this;
+            if ($(this).hasClass('btn-success')) {
+
+                $.ajax({
+                    url: "${SITE_URL}/Favorite/?&id=<%= art.getId() %>",
+                    success: function(result){
+                        $(btn)
+                                .removeClass('btn-success')
+                                .addClass('btn-default')
+                                .html('<span class="glyphicon glyphicon-star" aria-hidden="true"></span> '+(num-1));
+                    }
+                });
+            }
+            else if ($(this).hasClass('btn-default')) {
+                $.ajax({
+                    url: "${SITE_URL}/Favorite/?&id=<%= art.getId() %>",
+                    success: function(result){
+                        $(btn)
+                                .removeClass('btn-default')
+                                .addClass('btn-success')
+                                .html('<span class="glyphicon glyphicon-star" aria-hidden="true"></span> '+(num+1));
                     }
                 });
             }
