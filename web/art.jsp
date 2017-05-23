@@ -1,17 +1,7 @@
-<%@page import="model.User"%>
-<%@page import="model.Profiles"%>
-<%@page import="model.Art"%>
-<%@page import="java.util.*"%>
-<%@page import="model.CommentModel"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<% Art art = (Art) request.getAttribute("art");%>
-<% Profiles owner = (Profiles) request.getAttribute("owner"); %>
-<% User user = (User)request.getAttribute("user"); %>
-<% String oriEna="", resEna=""; %>
-<% if(!art.downloadAble(user.getUsername(), 0)){oriEna = "disabled=''";} %>
-<% if(!art.downloadAble(user.getUsername(), 1)){resEna = "disabled=''";} %>
 
 <div class="row">
     <div class="col-sm-2">
@@ -19,11 +9,11 @@
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     <div class="thumbnail">
-                        <img src="${SITE_URL}/asset/img/avatar-img/<%=owner.getUrl_image()%>" class="img-responsive avatar-img">
+                        <img src="${SITE_URL}/asset/img/avatar-img/${requestScope.owner.getUrl_image()}" class="img-responsive avatar-img">
                     </div>
                     <p>
-                        <a href="${SITE_URL}/ViewProfile/?id=<%= owner.getUsername() %>">
-                            <%= owner.getFirst_name() + " " + owner.getLast_name() %>
+                        <a href="${SITE_URL}/ViewProfile/?id=${requestScope.owner.getUsername()}">
+                            ${requestScope.owner.getFirst_name()}  ${requestScope.owner.getLast_name()}
                         </a>
                     </p>
 
@@ -39,7 +29,7 @@
                         <!--Follow Button-->
                         <button
                             class='btn ${requestScope.btnFollow} btn-sm ${requestScope.btnShow} btn-follow ${requestScope.btnColor} col-sm-12'
-                            type="submit" value="${sessionScope.user.getUsername()},<%= owner.getUsername() %>,<%= art.getId() %>"
+                            type="submit" value="${sessionScope.user.getUsername()},${requestScope.owner.getUsername()},${requestScope.art.getId()}"
                             >${requestScope.btnFollowText}
                         </button>
 
@@ -49,41 +39,45 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <% if(!art.getPrice().equals("free")) { %> <h3><%= art.getPrice()%> <small>coin</small></h3><br> <% } %>
-                    <% if(art.getPrice().equals("free")) { %> <h2>Free</h2><br> <% } %>
-                    <% if(!art.getPrice().equals("free")) { %>
-                    <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
-                        <c:if test="${art.checkPur(sessionScope.user.getUsername())}">
-                            <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
+                    <c:if test="${requestScope.art.getPrice() != 'free'}">
+                        <h3>${requestScope.art.getPrice()} <small>coin</small></h3><br>
+                        <c:if test="${!sessionScope.user.getUsername().equals(art.getUserId())}">
+                            <c:if test="${art.checkPur(sessionScope.user.getUsername())}">
+                                <button class="btn btn-default btn-sm col-sm-12" disabled="">Purchased</button>
+                            </c:if>
+                            <c:if test="${!art.checkPur(sessionScope.user.getUsername())}">
+
+                                <!--Remove form Cart-->
+                                <c:if test="${ art.isInCart(cart) }">
+                                    <button class="btn btn-danger btn-sm col-sm-12 cart-btn remove-cart"
+                                            value="${art.getId()},${art.getTitle()}">Remove from cart
+                                    </button>
+                                </c:if>
+
+                                <!--Add to Cart-->
+                                <c:if test="${ !art.isInCart(sessionScope.cart) }">
+                                    <button class="btn btn-success btn-sm col-sm-12 cart-btn add-cart"
+                                            value="${art.getId()},${art.getTitle()}">Add to cart
+                                    </button>
+                                </c:if>
+                            </c:if>
                         </c:if>
-                        <c:if test="${!art.checkPur(sessionScope.user.getUsername())}">
-
-                            <!--Remove form Cart-->
-                            <c:if test="${ art.isInCart(cart) }">
-                                <button class="btn btn-danger btn-sm col-sm-12 cart-btn remove-cart"
-                                        value="${art.getId()},${art.getTitle()}">Remove from cart
-                                </button>
-                            </c:if>
-
-                            <!--Add to Cart-->
-                            <c:if test="${ !art.isInCart(sessionScope.cart) }">
-                                <button class="btn btn-success btn-sm col-sm-12 cart-btn add-cart"
-                                        value="${art.getId()},${art.getTitle()}">Add to cart
-                                </button>
-                            </c:if>
+                        <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
+                            <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
                         </c:if>
                     </c:if>
-                    <c:if test="${sessionScope.user.getUsername().equals(art.getUserId())}">
-                        <button class="btn btn-default btn-sm col-sm-12" disabled="">This is your art</button>
+                    
+                    <c:if test="${requestScope.art.getPrice() == 'free'}">
+                            <h2>Free</h2><br>
                     </c:if>
-                    <%}%>
+ 
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <h3> <%= art.getView() %> <small>Views</small></h3>
+                    <h3>${requestScope.art.getView()}  <small>Views</small></h3>
                 </div>
             </div>
         </div>
@@ -91,16 +85,16 @@
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     <form
-                        action="${SITE_URL}/Download/?id=<%=art.getId()%>&mode=o"
+                        action="${SITE_URL}/Download/?id=${requestScope.art.getId()}&mode=o"
                         method="POST">
-                        <button class='btn btn-primary col-sm-12' <%=oriEna%> type="submit">Download Original</button>
+                        <button class='btn btn-primary col-sm-12' ${requestScope.oriEna} type="submit">Download Original</button>
                     </form>
                 </div>
                 <div class="panel-body text-center">
                     <form
-                        action="${SITE_URL}/Download/?id=<%=art.getId()%>&mode=r"
+                        action="${SITE_URL}/Download/?id=${requestScope.art.getId()}&mode=r"
                         method="POST">
-                        <button class='btn btn-primary col-sm-12' <%=resEna%> type="submit">Download 1080p</button>
+                        <button class='btn btn-primary col-sm-12' ${requestScope.resEna} type="submit">Download 1080p</button>
                     </form>
                 </div>
             </div>
@@ -111,13 +105,13 @@
             <div class="panel-body">
                 <div class="col-sm-12">
                     <div class="page-header">
-                        <h2><%=art.getTitle()%> </h2>
-                        <h4><small> <%= art.getUpload_date() %> </small></h4>
+                        <h2>${requestScope.art.getTitle()}</h2>
+                        <h4><small> ${requestScope.art.getUpload_date()} </small></h4>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
-                    <p><%= art.getDesc() %> </p>
+                    <p>${requestScope.art.getDesc()} </p>
                 </div>
 
                 <!--Set Tag-->
@@ -135,9 +129,9 @@
 
                 <!--View Arts-->
                 <div class="col-sm-12">
-                    <a href="${SITE_URL}/asset/img/art/<%=art.getUrl()%>" target="_blank">
+                    <a href="${SITE_URL}/asset/img/art/${requestScope.art.getUrl()}" target="_blank">
                         <img
-                            src="${SITE_URL}/asset/img/art/<%=art.getUrl()%>"
+                            src="${SITE_URL}/asset/img/art/${requestScope.art.getUrl()}"
                             class="img-responsive center-block"
                             id="single-art">
                     </a>
@@ -145,11 +139,9 @@
 
                 <!--favorite button-->
                 <div class="col-sm-12">
-                    <form action="${SITE_URL}/Favorite/?&id=<%= art.getId() %>" method="POST">
-                        <button type="submit" class="btn <%= request.getAttribute("btn-fav") %> btn-xs" id="favorite-btn">
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <%= request.getAttribute("count") %>
-                        </button>
-                    </form>
+                    <button type="submit" class="btn ${requestScope.btnFav} btn-xs" id="favorite-btn" value="${requestScope.count}">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> ${requestScope.count}
+                    </button>
                 </div>
 
 
@@ -165,7 +157,7 @@
                                 <div class="media-body">
                                     <!--Comment Box-->
                                     <h4 class="media-heading">Comment</h4>
-                                    <form action="${SITE_URL}/Comment/?&id=<%= art.getId() %>" method="POST">
+                                    <form action="${SITE_URL}/Comment/?&id=${requestScope.art.getId()}" method="POST">
                                         <textarea name="comment"></textarea>
                                         <button type="submit" class="btn btn-success btn-sm">Send</button>
                                     </form>
@@ -175,21 +167,20 @@
 
                             <!--All Comment-->
 
-                            <% if (request.getAttribute("allComm") != null) { %>
-                                <% ArrayList<CommentModel> allComm = (ArrayList<CommentModel>) request.getAttribute("allComm");
-                                for (model.CommentModel comm: allComm) { %>
-                                        <div class="media comment-reply">
+                            <c:if test="${requestScope.allComm != null}">
+                                <c:forEach var="comm" items="${requestScope.allComm}">
+                                    <div class="media comment-reply">
                                             <div class="media-left">
-                                                <img class="media-object image-search" src="${SITE_URL}/asset/img/avatar-img/<%=comm.getUrl_image()%>">
+                                                <img class="media-object image-search" src="${SITE_URL}/asset/img/avatar-img/${comm.getUrl_image()}">
                                             </div>
                                             <div class="media-body">
-                                                <p><a href="${SITE_URL}/ViewProfile/?id=<%= comm.getUsername() %>"><%= comm.getFirst_name() %> <%= comm.getLast_name() %></a> <small><%= comm.getFcomm_date() %></small></p>
-                                                <p><%= comm.getText() %></p>
+                                                <p><a href="${SITE_URL}/ViewProfile/?id=${comm.getUsername()}">${comm.getFirst_name()} ${comm.getLast_name()}</a> <small>${comm.getFcomm_date()}</small></p>
+                                                <p>${comm.getText()}</p>
                                             </div>
                                             <hr>
-                                        </div>
-                                <% } %>
-                            <% } %>
+                                    </div>
+                                </c:forEach>
+                            </c:if>       
                         </div>
                     </div>
                 </div>
@@ -263,6 +254,37 @@
                             alertify.error("Removed <strong>"+title+"</strong> from <strong>cart</strong>");
 
                         }
+                    }
+                });
+            }
+        });
+        
+        // Favorite Button
+        $('#favorite-btn').click(function() {
+            num = $(this).text();
+            num = num.replace(/\s/g, '');
+            num = parseInt(num);
+            btn = this;
+            if ($(this).hasClass('btn-success')) {
+
+                $.ajax({
+                    url: "${SITE_URL}/Favorite/?&id=${requestScope.art.getId()}",
+                    success: function(result){
+                        $(btn)
+                                .removeClass('btn-success')
+                                .addClass('btn-default')
+                                .html('<span class="glyphicon glyphicon-star" aria-hidden="true"></span> '+(num-1));
+                    }
+                });
+            }
+            else if ($(this).hasClass('btn-default')) {
+                $.ajax({
+                    url: "${SITE_URL}/Favorite/?&id=${requestScope.art.getId()}",
+                    success: function(result){
+                        $(btn)
+                                .removeClass('btn-default')
+                                .addClass('btn-success')
+                                .html('<span class="glyphicon glyphicon-star" aria-hidden="true"></span> '+(num+1));
                     }
                 });
             }

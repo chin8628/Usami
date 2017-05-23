@@ -1,5 +1,5 @@
-<%@page import="model.User"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <jsp:include page="templates/header.jsp" />
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -13,7 +13,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Balance</div>
                 <div class="panel-body">
-                    <h2><%= request.getAttribute("cur_coin") %> <small>Coin</small></h2>
+                    <h2>${requestScope.cur_coin} <small>Coin</small></h2>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Income</div>
                 <div class="panel-body">
-                    <h2><%= request.getAttribute("in_coin") %> <small>Coin</small></h2>
+                    <h2>${requestScope.in_coin} <small>Coin</small></h2>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Outcome</div>
                 <div class="panel-body">
-                    <h2><%= request.getAttribute("out_coin") %> <small>Coin</small></h2>
+                    <h2>${requestScope.out_coin} <small>Coin</small></h2>
                 </div>
             </div>
         </div>
@@ -98,13 +98,13 @@
 </div>
 
 <script>
-$('#payment #baht').on('input', function() {
-    $('#payment #coin').val($(this).val() * EXCHANGE);
-});
+    $('#payment #baht').on('input', function() {
+        $('#payment #coin').val($(this).val() * EXCHANGE);
+    });
 
-$('#withdraw #coin').on('input', function() {
-    $('#withdraw #baht').val($(this).val() / EXCHANGE);
-});
+    $('#withdraw #coin').on('input', function() {
+        $('#withdraw #baht').val($(this).val() / EXCHANGE);
+    });
 </script>
 
 <jsp:include page="templates/footer.jsp" />

@@ -1,12 +1,13 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Art"%>
-<%@page import="model.Art"%>
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="templates/header.jsp" />
+
 <% ArrayList<Art> cart = (ArrayList<Art>) request.getSession().getAttribute("cart"); %>
 <% if(cart == null) {cart = new ArrayList<Art>();} %>
-<%  int total = 0; for(Art art:cart) {total += art.getProduct().getPrice();} %>
+<% int total = 0; for(Art art:cart) {total += art.getProduct().getPrice();} %>
 
 <div class="panel panel-default">
     <div class="panel-heading"><h2>Cart</h2></div>

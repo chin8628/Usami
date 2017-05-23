@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../templates/header.jsp" />
 
@@ -6,17 +7,19 @@
         <h1 class="page-title">My Profile</h1>
     </div>
 
-    <% if (request.getAttribute("pass") != null) {
-        String text = (String) request.getAttribute("pass");
-        if (text.equals("success")) { %>
-            <div class="alert alert-success" role="alert">Update Profile Complete</div>
-        <% } else if (text.equals("incorrect")) { %>
-            <div class="alert alert-danger" role="alert">New-Password and Re-Password not Match!!!!</div>
-
-        <% } else if (text.equals("notpass")) { %>
-            <div class="alert alert-danger" role="alert">Password Incorrect!!!</div>
-        <% }
-    } %>
+    <c:if test="${requestScope.pass != null}">
+        <c:choose>
+            <c:when test="${requestScope.pass == 'success'}">
+                <div class="alert alert-success" role="alert">Update Profile Complete</div>
+            </c:when>
+            <c:when test="${requestScope.pass == 'incorrect'}">
+                <div class="alert alert-danger" role="alert">New-Password and Re-Password not Match!!!!</div>
+            </c:when>
+            <c:when test="${requestScope.pass == 'notpass'}">
+                <div class="alert alert-danger" role="alert">Password Incorrect!!!</div>
+            </c:when>
+        </c:choose>
+    </c:if>
 
     <div class="panel-body">
         <div class="col-sm-8 col-sm-offset-2">

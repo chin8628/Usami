@@ -1,6 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="model.Profiles"%>
-<%@page import="model.User"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
 
@@ -130,6 +128,16 @@
 </div>
 
 <script>
+    $(window).on("load", function() {
+        $('.grid').isotope({
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            masonry: {
+                columnWidth: '.grid-sizer'
+            }
+        });
+    });
+
     $(document).ready(function() {
         /* Create chart by Chart.js */
         var ctx = $("#myChart");
@@ -159,50 +167,40 @@
                 }
             }
         });
-
-        $(window).on("load", function() {
-            $('.grid').isotope({
-                itemSelector: '.grid-item',
-                percentPosition: true,
-                masonry: {
-                    columnWidth: '.grid-sizer'
-                }
-            });
-        });
     });
 
     // Follow Button
-        $('.btn-follow').click(function() {
-            text = $(this).val().split(',');
-            user_id = text[0];
-            own_id = text[1];
-            btn = this;
-            if ($(this).hasClass('btn-green')) {
+    $('.btn-follow').click(function() {
+        text = $(this).val().split(',');
+        user_id = text[0];
+        own_id = text[1];
+        btn = this;
+        if ($(this).hasClass('btn-green')) {
 
-                $.ajax({
-                    url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&at=profile",
-                    success: function(result){
-                        $(btn)
-                                .removeClass('btn-success btn-green')
-                                .addClass('btn-danger btn-red')
-                                .text('Unfollow');
-                        alertify.success("Followed <strong>"+own_id+"</strong> Already");
-                        }
-                    });
-            }
-            else if ($(this).hasClass('btn-red')) {
-                $.ajax({
-                    url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&at=profile",
-                    success: function(result){
-                        $(btn)
-                                .removeClass('btn-danger btn-red')
-                                .addClass('btn-success btn-green')
-                                .text('Follow');
-                        alertify.error("Unfollowed <strong>"+own_id+"</strong> Already");
+            $.ajax({
+                url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&at=profile",
+                success: function(result){
+                    $(btn)
+                            .removeClass('btn-success btn-green')
+                            .addClass('btn-danger btn-red')
+                            .text('Unfollow');
+                    alertify.success("Followed <strong>"+own_id+"</strong> Already");
                     }
                 });
-            }
-        });
+        }
+        else if ($(this).hasClass('btn-red')) {
+            $.ajax({
+                url: "${SITE_URL}/Follow/?id="+user_id+"&ownid="+own_id+"&at=profile",
+                success: function(result){
+                    $(btn)
+                            .removeClass('btn-danger btn-red')
+                            .addClass('btn-success btn-green')
+                            .text('Follow');
+                    alertify.error("Unfollowed <strong>"+own_id+"</strong> Already");
+                }
+            });
+        }
+    });
 
 </script>
 

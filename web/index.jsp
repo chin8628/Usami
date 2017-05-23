@@ -1,10 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="model.Art"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="templates/header.jsp" />
-<% ArrayList<Art> popArt = (ArrayList<Art>) request.getAttribute("popArt");%>
-<% ArrayList<Art> folArt = (ArrayList<Art>) request.getAttribute("folArt");%>
 
 <div class="col-sm-2">
     <div class="panel panel-default">
@@ -56,13 +52,13 @@
         <div class="row hidden-xs" id="ads" >
             <div class="col-sm-12">
                 <c:if test="${sessionScope.user.getU_type().equals('STD')}">
-                <img src="${SITE_URL}/asset/img/ads1.gif" class="img-responsive" style="margin-bottom:5px;">
-                <img src="${SITE_URL}/asset/img/ads2.jpg" class="img-responsive" style="margin-bottom:5px;">
-                <img src="${SITE_URL}/asset/img/ads3.jpg" class="img-responsive" style="margin-bottom:5px;">
-                <img src="${SITE_URL}/asset/img/ads4.jpg" class="img-responsive" style="margin-bottom:5px;">
-                <img src="${SITE_URL}/asset/img/ads5.jpg" class="img-responsive" style="margin-bottom:5px;">
-                <img src="${SITE_URL}/asset/img/ads6.jpg" class="img-responsive" style="margin-bottom:5px;">
-                <img src="${SITE_URL}/asset/img/ads7.jpg" class="img-responsive" style="margin-bottom:5px;">
+                    <img src="${SITE_URL}/asset/img/ads1.gif" class="img-responsive" style="margin-bottom:5px;">
+                    <img src="${SITE_URL}/asset/img/ads2.jpg" class="img-responsive" style="margin-bottom:5px;">
+                    <img src="${SITE_URL}/asset/img/ads3.jpg" class="img-responsive" style="margin-bottom:5px;">
+                    <img src="${SITE_URL}/asset/img/ads4.jpg" class="img-responsive" style="margin-bottom:5px;">
+                    <img src="${SITE_URL}/asset/img/ads5.jpg" class="img-responsive" style="margin-bottom:5px;">
+                    <img src="${SITE_URL}/asset/img/ads6.jpg" class="img-responsive" style="margin-bottom:5px;">
+                    <img src="${SITE_URL}/asset/img/ads7.jpg" class="img-responsive" style="margin-bottom:5px;">
                 </c:if>
             </div>
         </div>
@@ -121,16 +117,18 @@
         <div class="panel-body">
             <div class="grid">
                 <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
-                <% for(int i=0;i < popArt.size();i++){ %>
-                <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
-                    <a  href="${SITE_URL}/View/?id=<%=popArt.get(i).getId()%>" target="blank" class="thumbnail-2 text-center">
-                        <img src="${SITE_URL}/asset/img/art/<%=popArt.get(i).getUrl()%>" class="img-responsive center-block">
-                        <div class="title">
-                            <strong> <%= popArt.get(i).getTitle() %> </strong>
-                        </div>
-                    </a>
-                </div>
-                <%}%>
+                
+                <c:forEach var="pArt" items="${requestScope.popArt}">
+                    <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
+                        <a  href="${SITE_URL}/View/?id=${pArt.getId()}" target="blank" class="thumbnail-2 text-center">
+                            <img src="${SITE_URL}/asset/img/art/${pArt.getUrl()}" class="img-responsive center-block">
+                            <div class="title">
+                                <strong> ${pArt.getTitle()} </strong>
+                            </div>
+                        </a>
+                    </div>
+                </c:forEach>
+                
             </div>
             <div class="col-sm-12 text-right">
                 <a href="${SITE_URL}/Gallery/?art=popular">>> View more</a>
@@ -144,16 +142,18 @@
         <div class="panel-body">
             <div class="grid">
                 <div class="grid-sizer col-md-3 col-sm-4 col-xs-6"></div>
-                <% for(int i=0;i < folArt.size();i++){ %>
-                <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
-                    <a  href="${SITE_URL}/View/?id=<%=folArt.get(i).getId()%>" target="blank" class="thumbnail-2 text-center">
-                        <img src="${SITE_URL}/asset/img/art/<%=folArt.get(i).getUrl()%>" class="img-responsive center-block">
-                        <div class="title">
-                            <strong> <%= folArt.get(i).getTitle() %> </strong>
-                        </div>
-                    </a>
-                </div>
-                <%}%>
+                
+                <c:forEach var="fArt" items="${requestScope.folArt}">
+                    <div class="col-md-3 col-sm-4 col-xs-6 grid-item image-art">
+                        <a  href="${SITE_URL}/View/?id=${fArt.getId()}" target="blank" class="thumbnail-2 text-center">
+                            <img src="${SITE_URL}/asset/img/art/${fArt.getUrl()}" class="img-responsive center-block">
+                            <div class="title">
+                                <strong> ${fArt.getTitle()} </strong>
+                            </div>
+                        </a>
+                    </div>
+                </c:forEach>
+                
             </div>
             <div class="col-sm-12 text-right">
                 <a href="${SITE_URL}/Gallery/?art=following">>> View more</a>
