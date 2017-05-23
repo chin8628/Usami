@@ -1,9 +1,3 @@
-<%@page import="model.User"%>
-<%@page import="model.Profiles"%>
-<%@page import="model.Art"%>
-<%@page import="java.util.*"%>
-<%@page import="model.CommentModel"%>
-
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
 
