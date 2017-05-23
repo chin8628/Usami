@@ -125,9 +125,9 @@ public class View extends HttpServlet {
             pstmt.setString(2, request.getParameter("id"));
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                request.setAttribute("btn-fav", "btn-success");
+                request.setAttribute("btnFav", "btn-success");
             } else {
-                request.setAttribute("btn-fav", "btn-default");
+                request.setAttribute("btnFav", "btn-default");
             }
             
             // Follow Button
@@ -166,6 +166,11 @@ public class View extends HttpServlet {
                 allTag.add(tag);
                 
             }
+            
+            // Download
+            if(!art.downloadAble(user.getUsername(), 0)){request.setAttribute("oriEna", "disabled=''");}
+            if(!art.downloadAble(user.getUsername(), 1)){request.setAttribute("resEna", "disabled=''");}
+            
             
             request.setAttribute("allTag", allTag);
             request.setAttribute("allComm", allComm);  
