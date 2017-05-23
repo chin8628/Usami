@@ -1,9 +1,6 @@
-<%@page import="model.User"%>
-<%@ page import="model.Art" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% User user = (User) request.getSession().getAttribute("user"); %>
+
 <jsp:include page="templates/header.jsp" />
 
 <div class="col-sm-12">
@@ -107,20 +104,22 @@
                                 <label for="tags">Tags (Seperate each tag by comma)</label>
                                 <input type="tags" class="form-control" id="${art.getId()}-tags" name="tags" value="${art.getAllTag()}">
                             </div>
-                            <% if(user.getU_type().equals("PRM")) { %>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" id="${art.getId()}-sell" name="sell"> Do you want to sell this art?
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">Coin</span>
-                                    <input type="number" class="form-control" id="${art.getId()}-price" name="price" aria-label="Amount (to the nearest dollar)" value="${art.getProduct().getPrice()}" disabled>
+                            
+                            <c:if test="${requestScope.user.getU_type() == 'PRM'}">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="${art.getId()}-sell" name="sell"> Do you want to sell this art?
+                                    </label>
                                 </div>
-                            </div>
-                                <% } %>
+                                <div class="form-group">
+                                    <label for="price">Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Coin</span>
+                                        <input type="number" class="form-control" id="${art.getId()}-price" name="price" aria-label="Amount (to the nearest dollar)" value="${art.getProduct().getPrice()}" disabled>
+                                    </div>
+                                </div>
+                            </c:if>
+                            
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-danger" form="del-form" name="id2" value="${art.getId()}">DELETE</button>
